@@ -1,0 +1,34 @@
+{
+  "document": {
+    "title": "Documento"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre nosotros"
+  },
+  "questions": {
+    "add": {
+      "multiChoice": "Añadir pregunta de selección múltiple",
+      "text": "Añadir pregunta de texto",
+      "singleChoice": "Añadir pregunta de selección única"
+    },
+    "answers": {
+      "add": "Añadir respuesta",
+      "label": "Respuesta",
+      "multiLabel": "Respuesta {index}",
+      "title": "Respuestas"
+    },
+    "question": {
+      "title": "Pregunta {index}",
+      "text": "Texto de la pregunta",
+      "placeholder": "Texto de la pregunta"
+    },
+    "title": "Preguntas"
+  },
+  "test": {
+    "create": "Crear test",
+    "new": "Nuevo test",
+    "save": "Guardar test",
+    "saveSelection": "Guardar selección"
+  }
+}
