@@ -14,19 +14,18 @@ import { RouterView } from 'vue-router';
 import NavBar from './components/nav/NavBar.vue';
 import { useUserStore } from './stores/user.js';
 
+let userStore;
+
 export default {
   components: {
     RouterView,
     NavBar,
   },
-  data() {
-    return {
-      isLoggedIn: false,
-    };
+  computed: {
+    isLoggedIn: () => userStore.isLoggedIn,
   },
-  async mounted() {
-    const userStore = useUserStore();
-    this.isLoggedIn = userStore.isLoggedIn;
+  setup() {
+    userStore = useUserStore();
   },
 };
 </script>

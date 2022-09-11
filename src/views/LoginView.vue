@@ -5,7 +5,7 @@
   <div class="flex justify-center mb-8">
     <div class="login-subtitle">
       {{ $t('login.subtitle') }}
-      <img src="../../public/vision-blue.png" class="inline w-5" />
+      <img src="../../public/images/vision-blue.png" class="inline w-5" />
     </div>
   </div>
   <div class="flex justify-center">
