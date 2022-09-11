@@ -13,11 +13,6 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue'),
-    },
-    {
       path: '/test/new',
       name: 'newTest',
       // Route level code-splitting. This generates a separate chunk for this route

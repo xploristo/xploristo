@@ -4,9 +4,6 @@
       <div class="nav-menu__item">
         <RouterLink to="/">{{ $t('nav.home') }}</RouterLink>
       </div>
-      <div class="nav-menu__item">
-        <RouterLink to="/about">a</RouterLink>
-      </div>
     </div>
   </nav>
 </template>

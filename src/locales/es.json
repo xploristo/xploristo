@@ -3,8 +3,7 @@
     "title": "Documento"
   },
   "nav": {
-    "home": "Inicio",
-    "about": "Sobre nosotros"
+    "home": "Inicio"
   },
   "questions": {
     "add": {
