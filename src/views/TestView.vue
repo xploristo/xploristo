@@ -37,7 +37,6 @@ export default {
     };
   },
   async mounted() {
-    console.log(process.env.NODE_ENV);
     const testStore = useTestStore();
     this.pdfUrl = await testStore.getDocumentUrl();
     this.questions = testStore.questions;

@@ -36,21 +36,25 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isLoginPage = to.matched.some(
-    (routeRecord) => routeRecord.name === 'login'
-  );
+  const isLoginPage = to.name === 'login';
 
-  if (!isLoginPage) {
+  if (isLoginPage) {
+    next();
+  } else {
     const userStore = useUserStore();
     const isLoggedIn = userStore.isLoggedIn;
 
     if (!isLoggedIn) {
+      // Save user landing page to redirect them after login
+      sessionStorage.setItem('landing', to.fullPath);
       next('/login');
-      return;
+    } else {
+      const landingPath = sessionStorage.getItem('landing');
+      sessionStorage.removeItem('landing');
+
+      next(landingPath);
     }
   }
-
-  next();
 });
 
 export default router;

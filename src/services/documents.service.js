@@ -6,7 +6,6 @@ const defaultHeaders = {
 
 export default {
   getDocumentUrl(documentId) {
-    console.log('env', import.meta.env);
     return fetch(`${baseUrl}/documents/${documentId}/download`, {
       method: 'GET',
       headers: defaultHeaders,
