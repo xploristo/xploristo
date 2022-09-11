@@ -3,7 +3,10 @@
     <div class="login-title">{{ $t('login.title') }}</div>
   </div>
   <div class="flex justify-center mb-8">
-    <div class="login-subtitle">{{ $t('login.subtitle') }}</div>
+    <div class="login-subtitle">
+      {{ $t('login.subtitle') }}
+      <img src="../../public/vision-blue.png" class="inline w-5" />
+    </div>
   </div>
   <div class="flex justify-center">
     <div class="form-card flex-1">
