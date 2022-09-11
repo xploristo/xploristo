@@ -2,6 +2,14 @@
   "document": {
     "title": "Documento"
   },
+  "login": {
+    "action": "Iniciar sesión",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "name{'@'}example.org",
+    "password": "Contraseña",
+    "subtitle": "en xploristo",
+    "title": "Inicia sesión"
+  },
   "nav": {
     "home": "Inicio"
   },

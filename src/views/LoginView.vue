@@ -1,20 +1,43 @@
 <template>
-  <div>
-    <form @submit.prevent="login">
-      <input
-        id="email"
-        type="email"
-        v-model="email"
-        placeholder="Correo electrónico"
-      />
-      <input
-        id="password"
-        type="password"
-        v-model="password"
-        placeholder="Contraseña"
-      />
-      <input type="submit" value="Login" />
-    </form>
+  <div class="flex justify-center mt-20">
+    <div class="login-title">{{ $t('login.title') }}</div>
+  </div>
+  <div class="flex justify-center mb-8">
+    <div class="login-subtitle">{{ $t('login.subtitle') }}</div>
+  </div>
+  <div class="flex justify-center">
+    <div class="form-card flex-1">
+      <form @submit.prevent="login">
+        <div class="mb-6">
+          <label for="email" class="input-label">{{ $t('login.email') }}</label>
+          <input
+            type="email"
+            id="email"
+            v-model="email"
+            class="text-input"
+            :placeholder="$t('login.emailPlaceholder')"
+            required=""
+          />
+        </div>
+
+        <div class="mb-6">
+          <label for="password" class="input-label">{{
+            $t('login.password')
+          }}</label>
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            class="text-input"
+            required=""
+          />
+        </div>
+
+        <button type="submit" class="submit-button">
+          {{ $t('login.action') }}
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -43,16 +66,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 50%;
-
-  input {
-    display: flex;
-    margin-top: 10px;
-  }
-}
-</style>

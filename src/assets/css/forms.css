@@ -1,0 +1,23 @@
+.form-card {
+  @apply block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md
+}
+
+.input-label {
+  @apply block mb-2 text-sm font-medium text-gray-900;
+}
+
+.text-input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+
+.submit-button {
+  @apply text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center;
+}
+
+.login-title {
+  @apply text-3xl font-bold tracking-tight leading-none text-gray-900;
+}
+
+.login-subtitle {
+  @apply text-xl font-bold tracking-tight leading-none text-blue-500;
+}
