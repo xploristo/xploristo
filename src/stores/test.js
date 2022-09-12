@@ -10,7 +10,8 @@ export const useTestStore = defineStore('test', {
       questions: [
         {
           type: 'selection',
-          question: '¿?',
+          question:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nisl et odio posuere consequat. Mauris sed finibus nunc, eu dapibus magna. Nullam sed massa ut ex mollis molestie sed quis nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam imperdiet, quam sit amet fermentum lacinia, ante tortor rutrum neque, vel blandit nisl tellus sit amet ligula. Sed sit amet consequat nisi. Cras vel rutrum diam. Aliquam tincidunt augue augue, id lacinia orci sollicitudin quis. Pellentesque ante ex, facilisis at nulla nec, accumsan aliquam magna. Praesent venenatis iaculis elit, nec scelerisque lacus iaculis quis. ',
           index: 1,
         },
       ],

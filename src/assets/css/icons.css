@@ -1,0 +1,23 @@
+.icon-small {
+  @apply h-5 w-5;
+}
+
+.icon-medium {
+  @apply h-6 w-6;
+}
+
+.icon-small-blue {
+  @apply icon-small text-blue-500;
+}
+
+.icon-small-gray {
+  @apply icon-small text-gray-400;
+}
+
+.stroke-4 {
+  stroke-width: 4;
+}
+
+.icon-inline {
+  @apply pt-1 mr-1;
+}

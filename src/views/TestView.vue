@@ -1,14 +1,27 @@
 <template>
-  <main>
-    <div>Test</div>
-    <div>{{ testId }}</div>
+  <main class="">
+    <div id="test-container" class="test-container">
+      <div class="test-title">Test</div>
+      <div v-for="(question, index) in questions" :key="question.index">
+        <div class="text-bold mb-1">
+          {{
+            $t('test.question.title', {
+              index: index + 1,
+              total: 10 /* TODO */,
+            })
+          }}
+        </div>
 
-    <!-- <question-carousel></question-carousel> -->
-    <div v-for="question in questions" :key="question.index">
-      <test-question :question="question"></test-question>
+        <test-question :question="question"></test-question>
+      </div>
     </div>
 
-    <div v-if="pdfUrl">
+    <div
+      v-if="pdfUrl"
+      id="document-container"
+      class="document-container"
+      :style="{ top: `${documentContainerTop}px` }"
+    >
       <pdf-viewer :pdf-url="pdfUrl"></pdf-viewer>
     </div>
   </main>
@@ -25,7 +38,6 @@ export default {
   components: {
     PdfViewer,
     TestQuestion,
-    /* QuestionCarousel, */
   },
   props: {
     testId: String,
@@ -34,12 +46,27 @@ export default {
     return {
       pdfUrl: null,
       questions: [],
+      documentContainerTop: 60,
     };
   },
   async mounted() {
     const testStore = useTestStore();
     this.pdfUrl = await testStore.getDocumentUrl();
     this.questions = testStore.questions;
+  },
+  updated() {
+    this.setDocumentContainerTop();
+  },
+  methods: {
+    setDocumentContainerTop() {
+      const questionCard = document.getElementById('test-container');
+      const questionCardHeight = questionCard.offsetHeight;
+      const questionCardTop = questionCard.offsetTop;
+
+      console.log('questionCardHeight', questionCardHeight);
+
+      this.documentContainerTop = questionCardHeight + questionCardTop;
+    },
   },
 };
 </script>

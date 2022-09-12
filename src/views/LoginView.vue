@@ -36,7 +36,7 @@
           />
         </div>
 
-        <button type="submit" class="submit-button">
+        <button type="submit" class="button-blue">
           {{ $t('login.action') }}
         </button>
       </form>

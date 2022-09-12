@@ -36,6 +36,12 @@
     "create": "Crear test",
     "new": "Nuevo test",
     "save": "Guardar test",
-    "saveSelection": "Guardar selección"
+    "saveSelection": "Guardar selección",
+    "question": {
+      "instructions": {
+        "selection": "Selecciona el texto del documento que corresponda a la pregunta."
+      },
+      "title": "Pregunta {index} (de {total})"
+    }
   }
 }

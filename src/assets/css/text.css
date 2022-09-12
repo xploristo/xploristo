@@ -1,0 +1,11 @@
+.text-blue {
+  @apply text-blue-500;
+}
+
+.text-gray {
+  @apply text-gray-400;
+}
+
+.text-bold {
+  @apply font-bold;
+}
