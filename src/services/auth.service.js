@@ -13,6 +13,6 @@ export default {
         password,
       }),
       headers: defaultHeaders,
-    });
+    }).then((res) => res.json());
   },
 };

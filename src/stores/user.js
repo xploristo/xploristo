@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 import authService from '../services/auth.service.js';
+import cookiesService from '../services/cookies.service.js';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -10,9 +11,14 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     async login(email, password) {
-      // TODO What if wrong password
-      this.user = await authService.login(email, password);
-      this.user.isLoggedIn = true;
+      try {
+        const { sessionToken } = await authService.login(email, password);
+        cookiesService.setSessionCookie(sessionToken);
+        this.user.isLoggedIn = true;
+      } catch (error) {
+        // TODO What if wrong password
+        console.error('Login error', error);
+      }
     },
   },
   getters: {
