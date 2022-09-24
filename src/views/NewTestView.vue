@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ $t('test.new') }}</p>
+    <div class="test-title">{{ $t('test.new') }}</div>
     <test-editor action="create"></test-editor>
   </div>
 </template>

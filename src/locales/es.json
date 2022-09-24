@@ -34,6 +34,9 @@
   },
   "test": {
     "create": "Crear test",
+    "form": {
+      "name": "Nombre del test"
+    },
     "new": "Nuevo test",
     "save": "Guardar test",
     "saveSelection": "Guardar selección",
