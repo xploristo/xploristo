@@ -8,6 +8,12 @@ import usersService from '../services/users.service.js';
 export const useUserStore = defineStore('user', {
   state: () => ({
     user: {
+      userId: null,
+      role: null,
+      email: null,
+      firstName: null,
+      lastName: null,
+      permissions: {},
       isLoggedIn: false,
     },
   }),
@@ -44,6 +50,9 @@ export const useUserStore = defineStore('user', {
   getters: {
     isLoggedIn(state) {
       return state.user.isLoggedIn;
+    },
+    permissions(state) {
+      return state.user.permissions;
     },
   },
 });

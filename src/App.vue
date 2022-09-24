@@ -3,7 +3,7 @@
     <NavBar></NavBar>
   </header>
 
-  <main>
+  <main class="main">
     <RouterView></RouterView>
   </main>
 </template>
