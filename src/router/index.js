@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     const userStore = useUserStore();
-    const isLoggedIn = userStore.isLoggedIn;
+    const isLoggedIn = userStore.isLoggedIn || userStore.checkSessionCookie();
 
     if (!isLoggedIn) {
       // Save user landing page to redirect them after login

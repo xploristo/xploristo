@@ -1,14 +1,7 @@
-const baseUrl = import.meta.env.VITE_API_URL;
-
-const defaultHeaders = {
-  'Content-Type': 'application/json',
-};
+import { customFetch } from '../helpers/custom-fetch.js';
 
 export default {
   getDocumentUrl(documentId) {
-    return fetch(`${baseUrl}/documents/${documentId}/download`, {
-      method: 'GET',
-      headers: defaultHeaders,
-    }).then((response) => response.json());
+    return customFetch(`/documents/${documentId}/download`, 'GET');
   },
 };
