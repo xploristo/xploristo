@@ -13,10 +13,9 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     async login(email, password) {
-      await authService.login(email, password);
-      this.user.isLoggedIn = true;
-
       // TODO What if wrong password
+      await authService.login(email, password);
+      await this.setUserProfile();
     },
     logout() {
       this.user = {
@@ -25,19 +24,21 @@ export const useUserStore = defineStore('user', {
       cookiesService.expireSessionCookie();
       router.push('/login');
     },
+    async refreshSession() {
+      const sessionCookie = cookiesService.getSessionCookie();
+      if (sessionCookie) {
+        await this.setUserProfile();
+
+        return true;
+      }
+    },
     async setUserProfile() {
       const userProfile = await usersService.getUserProfile();
       this.user = {
         ...this.user,
         ...userProfile,
+        isLoggedIn: true,
       };
-    },
-    checkSessionCookie() {
-      const sessionCookie = cookiesService.getSessionCookie();
-      if (sessionCookie) {
-        this.user.isLoggedIn = true;
-        return true;
-      }
     },
   },
   getters: {

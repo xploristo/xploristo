@@ -35,14 +35,15 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const isLoginPage = to.name === 'login';
 
   if (isLoginPage) {
     next();
   } else {
     const userStore = useUserStore();
-    const isLoggedIn = userStore.isLoggedIn || userStore.checkSessionCookie();
+    const isLoggedIn =
+      userStore.isLoggedIn || (await userStore.refreshSession());
 
     if (!isLoggedIn) {
       // Save user landing page to redirect them after login
