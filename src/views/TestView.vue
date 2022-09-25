@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO Test for ultra wide screens (max width?) -->
   <main class="">
     <div id="test-container" class="test-container">
       <div class="test-title">Test</div>
@@ -16,6 +17,11 @@
       </div>
     </div>
 
+    <!-- TODO: -->
+    <!-- https://github.com/FranckFreiburger/vue-pdf/issues/15 -->
+    <!-- https://stackoverflow.com/questions/55848544/zoom-part-of-webpage-independently-from-the-rest-of-the-page -->
+    <!-- https://stackoverflow.com/questions/17782465/zoom-specific-element-on-webcontent-html-css-javascript -->
+    <!-- Maybe add zoom in? Remove margins and paddings, etc. -->
     <div
       v-if="pdfUrl"
       id="document-container"
@@ -44,6 +50,7 @@ export default {
   },
   data() {
     return {
+      test: null,
       pdfUrl: null,
       questions: [],
       documentContainerTop: 60,
@@ -51,8 +58,11 @@ export default {
   },
   async mounted() {
     const testStore = useTestStore();
-    this.pdfUrl = await testStore.getDocumentUrl();
-    this.questions = testStore.questions;
+    this.test = await testStore.getTest(this.testId);
+    this.questions = testStore.questions; // TODO
+    this.pdfUrl = testStore.documentDownloadUrl;
+
+    // TODO Send home if test not found
   },
   updated() {
     this.setDocumentContainerTop();

@@ -13,6 +13,7 @@
       >
         <div class="flex flex-col justify-center items-center pt-5 pb-6">
           <template v-if="file">
+            <!-- TODO Different colour? -->
             <DocumentArrowUpIcon
               class="mb-3 w-10 h-10 text-gray-400"
             ></DocumentArrowUpIcon>
@@ -50,16 +51,20 @@
             <ArrowUpTrayIcon
               class="mb-3 w-10 h-10 text-gray-400"
             ></ArrowUpTrayIcon>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+            <p class="mb-2 text-sm text-gray-500">
               <span class="font-semibold">Haz clic</span>
               o arrastra el fichero hasta aquí
             </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              Un único PDF permitido por test
-            </p>
+            <p class="text-xs text-gray-500">Un único PDF permitido por test</p>
           </template>
         </div>
-        <input id="dropzone-file" type="file" class="hidden" />
+        <input
+          id="dropzone-file"
+          type="file"
+          accept="application/pdf"
+          class="hidden"
+          @change="onFileSelected"
+        />
       </label>
     </div>
   </div>
@@ -70,6 +75,7 @@ import {
   DocumentArrowUpIcon,
   ArrowUpTrayIcon,
 } from '@heroicons/vue/24/outline';
+import documentsService from '../../services/documents.service';
 
 export default {
   name: 'DocumentUploader',
@@ -77,13 +83,29 @@ export default {
     DocumentArrowUpIcon,
     ArrowUpTrayIcon,
   },
+  props: {
+    documentUploadUrl: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       file: null,
       isDraggingOver: false,
     };
   },
+  watch: {
+    documentUploadUrl() {
+      if (this.documentUploadUrl) {
+        this.uploadFile();
+      }
+    },
+  },
   methods: {
+    onFileSelected(event) {
+      this.file = event.target.files[0];
+    },
     dropHandler(event) {
       let file;
       if (event.dataTransfer.items) {
@@ -93,21 +115,24 @@ export default {
         // If dropped item is not a file, reject it
         if (item.kind === 'file') {
           file = item.getAsFile();
-          console.log('file name 1', file.name);
         }
       } else {
         // Use DataTransfer interface to access the file
         file = event.dataTransfer.files[0];
-        console.log('file name 2', file.name);
       }
 
       if (file.type === 'application/pdf') {
         this.file = file;
+        this.$emit('fileSelected', this.file);
       } else {
         // TODO Reject
       }
 
       this.isDraggingOver = false;
+    },
+    async uploadFile() {
+      await documentsService.uploadDocument(this.documentUploadUrl, this.file);
+      this.$emit('fileUploaded');
     },
   },
 };

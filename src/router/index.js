@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
+import { hasPermissionTo } from '../plugins/permissions.js';
 import { useUserStore } from '../stores/user.js';
 
 import HomeView from '../views/HomeView.vue';
@@ -20,6 +21,9 @@ const router = createRouter({
       // Route level code-splitting. This generates a separate chunk for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/NewTestView.vue'),
+      meta: {
+        permissions: 'test.create',
+      },
     },
     {
       path: '/test/:testId',
@@ -50,10 +54,15 @@ router.beforeEach(async (to, from, next) => {
       sessionStorage.setItem('landing', to.fullPath);
       next('/login');
     } else {
-      const landingPath = sessionStorage.getItem('landing');
-      sessionStorage.removeItem('landing');
+      if (to.meta.permissions && !hasPermissionTo(to.meta.permissions)) {
+        next('/');
+      } else {
+        // TODO Unwanted redirects ?
+        const landingPath = sessionStorage.getItem('landing');
+        sessionStorage.removeItem('landing');
 
-      next(landingPath);
+        next(landingPath);
+      }
     }
   }
 });

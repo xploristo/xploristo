@@ -1,7 +1,9 @@
-import { customFetch } from '../helpers/custom-fetch.js';
+import { externalFetch } from '../helpers/custom-fetch.js';
 
 export default {
-  getDocumentUrl(documentId) {
-    return customFetch(`/documents/${documentId}/download`, 'GET');
+  uploadDocument(documentUploadUrl, file) {
+    return externalFetch(documentUploadUrl, 'PUT', file, {
+      'Content-Type': file.type,
+    });
   },
 };
