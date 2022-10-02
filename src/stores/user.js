@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 
 import router from '../router/index.js';
 import authService from '../services/auth.service.js';
-import cookiesService from '../services/cookies.service.js';
 import usersService from '../services/users.service.js';
 
 export const useUserStore = defineStore('user', {
@@ -21,18 +20,20 @@ export const useUserStore = defineStore('user', {
     async login(email, password) {
       // TODO What if wrong password
       await authService.login(email, password);
+      localStorage.setItem('isLoggedIn', 'true');
       await this.setUserProfile();
     },
-    logout() {
+    async logout() {
       this.user = {
         isLoggedIn: false,
       };
-      cookiesService.expireSessionCookie();
+      localStorage.removeItem('isLoggedIn');
+      await authService.logout();
       router.push('/login');
     },
     async refreshSession() {
-      const sessionCookie = cookiesService.getSessionCookie();
-      if (sessionCookie) {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (isLoggedIn) {
         await this.setUserProfile();
 
         return true;

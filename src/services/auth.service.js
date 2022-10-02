@@ -7,4 +7,7 @@ export default {
       password,
     });
   },
+  logout() {
+    return customFetch('/auth', 'DELETE');
+  },
 };
