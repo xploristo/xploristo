@@ -104,7 +104,14 @@ export default {
   },
   methods: {
     onFileSelected(event) {
-      this.file = event.target.files[0];
+      const file = event.target.files[0];
+
+      if (file.type === 'application/pdf') {
+        this.file = file;
+        this.$emit('fileSelected', this.file);
+      } else {
+        // TODO Reject
+      }
     },
     dropHandler(event) {
       let file;
