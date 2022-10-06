@@ -1,0 +1,19 @@
+.document-uploader-container {
+  @apply flex justify-center items-center w-full;
+}
+
+.document-uploader-dropzone {
+  @apply flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer hover:bg-gray-100;
+}
+
+.document-uploader-content {
+  @apply flex flex-col justify-center items-center pt-5 pb-6;
+}
+
+.document-uploader-icon {
+  @apply mb-3 w-10 h-10 text-gray-900;
+}
+
+.document-uploader-separator {
+  @apply my-5 mx-auto w-36 h-px bg-gray-200 rounded border-0;
+}

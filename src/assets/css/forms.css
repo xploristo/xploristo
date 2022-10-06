@@ -1,5 +1,5 @@
 .form-card {
-  @apply block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md
+  @apply block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md;
 }
 
 .input-label {

@@ -14,23 +14,26 @@
     "home": "Inicio"
   },
   "questions": {
-    "add": {
-      "multiChoice": "Añadir pregunta de selección múltiple",
-      "text": "Añadir pregunta de texto",
-      "singleChoice": "Añadir pregunta de selección única"
-    },
+    "add": "Añadir pregunta",
     "answers": {
       "add": "Añadir respuesta",
       "label": "Respuesta",
       "multiLabel": "Respuesta {index}",
+      "select": "Seleccionar respuesta",
+      "selectLabel": "Selección",
       "title": "Respuestas"
     },
     "question": {
       "title": "Pregunta {index}",
-      "text": "Texto de la pregunta",
       "placeholder": "Texto de la pregunta"
     },
-    "title": "Preguntas"
+    "title": "Preguntas",
+    "types": {
+      "multiChoice": "Pregunta de elección múltiple",
+      "selection": "Pregunta de selección",
+      "singleChoice": "Pregunta de elección simple",
+      "text": "Pregunta de texto"
+    }
   },
   "test": {
     "create": "Crear test",

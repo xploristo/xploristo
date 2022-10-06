@@ -17,7 +17,7 @@
           {{ $t('test.saveSelection') }}
         </button>
 
-        <div class="flex">
+        <div v-if="!hideControls" class="flex">
           <ChevronLeftIcon class="icon-small-blue ml-2"></ChevronLeftIcon>
           <div class="hidden md:block">
             <!-- TODO Actual data -->
@@ -51,6 +51,7 @@ import {
   CheckIcon,
   InformationCircleIcon,
 } from '@heroicons/vue/24/outline';
+import rangySerializer from 'rangy/lib/rangy-serializer';
 
 export default {
   name: 'TestQuestion',
@@ -64,6 +65,9 @@ export default {
     question: {
       required: true,
     },
+    hideControls: {
+      default: false,
+    },
   },
   data() {
     return {
@@ -73,8 +77,12 @@ export default {
   methods: {
     saveSelection() {
       const selection = document.getSelection();
-      console.log('selection', selection.toString());
-      console.log(selection);
+      const range = selection.getRangeAt(0);
+      const serializedRange = rangySerializer.serializeRange(range, true);
+      this.$emit('selectionSaved', selection, serializedRange);
+    },
+    async sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     },
   },
 };

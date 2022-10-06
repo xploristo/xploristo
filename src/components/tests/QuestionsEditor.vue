@@ -1,34 +1,17 @@
 <template>
   <div>
-    <p>{{ $t('questions.title') }}</p>
-
-    <div class="flex space-x-4">
-      <button @click="addQuestion('text')" class="btn btn-blue flex-1">
-        {{ $t('questions.add.text') }}
-      </button>
-      <button @click="addQuestion('singleChoice')" class="btn btn-blue flex-1">
-        {{ $t('questions.add.singleChoice') }}
-      </button>
-      <button @click="addQuestion('multiChoice')" class="btn btn-blue flex-1">
-        {{ $t('questions.add.multiChoice') }}
-      </button>
-    </div>
-
-    <div v-for="question in questions" v-bind:key="question.index">
-      <div class="relative mt-5 mb-5 p-5 rounded-md border border-gray-600">
-        <h2
-          class="absolute flex top-0 left-1/4 transform -translate-x-1/2 -translate-y-1/2"
-        >
-          <span class="bg-white px-2 text-sm font-medium">{{
-            $t('questions.question.title', { index: question.index + 1 })
-          }}</span>
-        </h2>
-
+    <div
+      v-for="question in questions"
+      v-bind:key="question.index"
+      class="flex mt-4 p-4 w-full bg-white rounded-lg border shadow-md sm:p-8"
+    >
+      <div class="flex-auto">
         <div>
-          <!-- Question text -->
-          <label :for="`question${question.index}`">{{
-            $t('questions.question.text')
-          }}</label>
+          {{ $t('questions.question.title', { index: question.index + 1 }) }}
+        </div>
+
+        <!-- Question text -->
+        <div class="mt-2">
           <textarea
             v-model="question.question"
             :id="`question+${question.index}`"
@@ -36,12 +19,43 @@
             class="text-input"
           >
           </textarea>
+        </div>
 
-          <!-- TODO Allow deleting answers -->
-          <!-- TODO Allow reordering answers -->
+        <!-- Answer -->
+        <!-- TODO Allow deleting answers -->
+        <!-- TODO Allow reordering answers -->
+        <div class="mt-2">
+          <!-- Selection answer -->
+          <template v-if="question.type === 'selection'">
+            <template v-if="question.answers[0].answer">
+              <p>{{ $t('questions.answers.selectLabel') }}</p>
+              <div
+                class="mt-2 mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
+              >
+                {{ question.answers[0].answer?.textSelection }}
+              </div>
+            </template>
 
-          <!-- Question answers -->
-          <div v-if="question.type === 'text'">
+            <button
+              type="button"
+              class="button-blue mt-2"
+              @click="addSelectionAnswer(question)"
+            >
+              {{ $t('questions.answers.select') }}
+            </button>
+
+            <DocumentModal
+              v-if="questionToSelect != null"
+              :pdfUrl="pdfUrl"
+              :questionToSelect="questionToSelect"
+              @answerSelected="onAnswerSelected"
+              @close="questionToSelect = null"
+            ></DocumentModal>
+          </template>
+
+          <!-- Text answer -->
+          <template v-else-if="question.type === 'text'">
+            <!-- TODO Additional valid answers? Option for auto-correct or not -->
             <label :for="`question${question.index}-answer1`">{{
               $t('questions.answers.label')
             }}</label>
@@ -53,31 +67,24 @@
               class="text-input"
             >
             </textarea>
-          </div>
+          </template>
 
-          <div v-else>
+          <!-- Single and multi-choice answer -->
+          <template v-else>
             <p>{{ $t('questions.answers.title') }}</p>
 
             <div
               v-for="answer in question.answers"
               v-bind:key="answer.index"
-              class="flex flex-row"
+              class="flex flex-row mt-2"
             >
-              <!-- <label
-                  v-if="answer.answer.length > 0"
-                  :for="`question${question.index}-answer${answer.index}`"
-                  >{{
-                    $t('questions.answers.multiLabel', {
-                      index: answer.index + 1,
-                    })
-                  }}</label
-                > -->
-              <div class="mr-3 mt-1 py-2">
+              <div class="mr-3 py-2">
                 <input
                   v-if="question.type === 'singleChoice'"
                   type="radio"
                   :name="question.index"
                   :value="answer.index"
+                  :checked="answer.correct"
                   @change="onSingleChoiceAnswerChange($event, question.index)"
                 />
                 <input
@@ -101,50 +108,170 @@
                 >
                 </textarea>
               </div>
+
+              <!-- TODO Add trash button, move up, move down -->
             </div>
 
-            <button @click="addAnswer(question.index)">
+            <!-- TODO Add plus button on the right of last answer? -->
+            <button
+              type="button"
+              class="button-blue mt-2"
+              @click="addChoiceAnswer(question.index)"
+            >
               {{ $t('questions.answers.add') }}
             </button>
-          </div>
+          </template>
         </div>
+      </div>
+      <div class="flex-none">
+        <TrashIcon
+          aria-hidden="true"
+          class="ml-2 w-5 h-5 cursor-pointer"
+          @click="deleteQuestion(question.index)"
+        ></TrashIcon>
       </div>
     </div>
 
-    <div class="mt-4">
-      <button @click="submit()" class="btn btn-blue">
-        <!-- TODO -->
-        {{ $t('test.save') }}
-      </button>
+    <!-- Dropdown button -->
+    <button
+      data-dropdown-toggle="addQuestionDropdown"
+      id="addQuestionDropdownButton"
+      type="button"
+      class="button-blue mt-4"
+      @click="shouldShowAddQuestionDropdown = !shouldShowAddQuestionDropdown"
+    >
+      {{ $t('questions.add') }}
+      <ChevronDownIcon
+        v-if="!shouldShowAddQuestionDropdown"
+        aria-hidden="true"
+        class="ml-2 w-5 h-5"
+      ></ChevronDownIcon>
+      <ChevronUpIcon
+        v-if="shouldShowAddQuestionDropdown"
+        aria-hidden="true"
+        class="ml-2 w-5 h-5"
+      ></ChevronUpIcon>
+    </button>
+    <!-- Dropdown menu -->
+    <div
+      id="addQuestionDropdown"
+      class="z-10 w-44 mt-2 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+      :class="{ hidden: !shouldShowAddQuestionDropdown }"
+    >
+      <ul
+        class="py-1 text-sm text-gray-700 dark:text-gray-200"
+        aria-labelledby="dropdownDefault"
+      >
+        <li>
+          <a
+            @click="addQuestion('selection')"
+            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >{{ $t('questions.types.selection') }}</a
+          >
+        </li>
+        <li>
+          <a
+            @click="addQuestion('text')"
+            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >{{ $t('questions.types.text') }}</a
+          >
+        </li>
+        <li>
+          <a
+            @click="addQuestion('singleChoice')"
+            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >{{ $t('questions.types.singleChoice') }}</a
+          >
+        </li>
+        <li>
+          <a
+            @click="addQuestion('multiChoice')"
+            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >{{ $t('questions.types.multiChoice') }}</a
+          >
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline';
+
+import { useTestStore } from '../../stores/test.js';
+import DocumentModal from './DocumentModal.vue';
+
 export default {
   name: 'QuestionsEditor',
+  components: {
+    ChevronDownIcon,
+    ChevronUpIcon,
+    TrashIcon,
+    DocumentModal,
+  },
+  props: {
+    testId: String,
+  },
   data() {
     return {
-      questions: [],
+      pdfUrl: null,
+      shouldShowAddQuestionDropdown: false,
+      questionToSelect: null,
     };
+  },
+  setup() {
+    const testStore = useTestStore();
+
+    return { testStore };
+  },
+  computed: {
+    questions() {
+      return this.testStore.questions;
+    },
+  },
+  async mounted() {
+    await this.testStore.getTest(this.testId);
+    this.pdfUrl = this.testStore.documentDownloadUrl;
   },
   methods: {
     addQuestion(type) {
-      this.questions.push({
+      this.testStore.addQuestion({
         index: this.questions.length,
         question: '',
-        type: type,
+        type,
         answers: [
           {
             index: 0,
-            answer: '',
-            correct: type === 'text' ? true : false,
+            answer: null,
+            correct: ['selection', 'text'].includes(type),
           },
         ],
       });
+      this.shouldShowAddQuestionDropdown = false;
     },
-    addAnswer(questionIndex) {
-      this.questions[questionIndex].answers.push({
+    addSelectionAnswer(question) {
+      this.questionToSelect = question;
+    },
+    onAnswerSelected(selection, serializedRange) {
+      const questionIndex = this.questions.findIndex(
+        (question) => question.index === this.questionToSelect.index
+      );
+      this.testStore.saveAnswer(questionIndex, {
+        index: 0,
+        answer: {
+          selection,
+          textSelection: selection.toString(),
+          serializedRange,
+        },
+        correct: true,
+      });
+    },
+    addChoiceAnswer(questionIndex) {
+      this.testStore.addAnswer(questionIndex, {
         index: this.questions[questionIndex].answers.length,
         answer: '',
         correct: false,
@@ -152,35 +279,15 @@ export default {
     },
     onSingleChoiceAnswerChange(event, questionIndex) {
       const answerIndex = +event.target.value;
-      this.questions[questionIndex].answers.forEach((answer) => {
+      const answers = this.questions[questionIndex].answers;
+      answers.forEach((answer) => {
         answer.correct = answer.index === answerIndex;
       });
+      this.testStore.saveAnswers(questionIndex, answers);
     },
-    submit() {
-      // TODO Save questions
-      console.log('questions', this.questions);
+    deleteQuestion(questionIndex) {
+      this.testStore.deleteQuestion(questionIndex);
     },
   },
 };
 </script>
-
-// TODO https://notiz.dev/blog/floating-form-field-with-tailwindcss
-
-<style scoped>
-.btn {
-  @apply rounded py-2 px-4;
-}
-.btn-blue {
-  @apply bg-blue-100;
-}
-.btn-blue:hover {
-  @apply bg-blue-200;
-}
-
-.text-input {
-  @apply shadow appearance-none border rounded w-full py-2 px-3 mt-1 mb-2 text-gray-700 leading-tight;
-}
-.text-input:focus {
-  @apply outline-none;
-}
-</style>
