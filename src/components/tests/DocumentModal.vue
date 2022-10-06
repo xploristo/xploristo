@@ -86,11 +86,9 @@ export default {
       // TODO This works with page content but not for PDF
       const deserializedRange =
         rangySerializer.deserializeRange(serializedRange).nativeRange;
-      console.log('🔴 range 3', deserializedRange);
       const selection = document.getSelection();
       selection.removeAllRanges();
       await this.sleep(2000);
-      console.log('applying selection');
       selection.addRange(deserializedRange);
     }, */
     async sleep(ms) {

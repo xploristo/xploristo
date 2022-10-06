@@ -96,7 +96,6 @@ export default {
     await testStore.getTest(this.testId);
     this.name = testStore.name;
     this.documentName = testStore.documentName;
-    console.log('documentName', this.documentName);
   },
   methods: {
     async onFileSelected(file) {
@@ -107,7 +106,6 @@ export default {
           this.testId,
           { type: 'application/pdf', path: this.file.name }
         );
-        console.log('????');
         this.documentUploadUrl = documentUploadUrl;
       }
     },
@@ -126,8 +124,6 @@ export default {
         this.documentUploadUrl = documentUploadUrl;
         this.loading = true;
       } else {
-        console.log('name', this.name);
-        console.log('questions', this.questions);
         await testsService.updateTest(this.testId, {
           name: this.name,
           questions: this.questions,

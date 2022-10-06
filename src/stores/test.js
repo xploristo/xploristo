@@ -19,7 +19,6 @@ export const useTestStore = defineStore('test', {
     },
     addQuestion(question) {
       this.test.questions.push(question);
-      console.log('this.test.questions', this.test.questions);
     },
     deleteQuestion(questionIndex) {
       this.test.questions.splice(questionIndex, 1);
