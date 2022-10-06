@@ -11,7 +11,16 @@
     "title": "Inicia sesión"
   },
   "nav": {
-    "home": "Inicio"
+    "account": {
+      "logout": "Cerrar sesión",
+      "role": {
+        "teacher": "Docente",
+        "student": "Estudiante"
+      }
+    },
+    "home": "Inicio",
+    "tests": "Tests",
+    "groups": "Clases"
   },
   "questions": {
     "add": "Añadir pregunta",

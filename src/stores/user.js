@@ -55,5 +55,14 @@ export const useUserStore = defineStore('user', {
     permissions(state) {
       return state.user.permissions;
     },
+    fullName(state) {
+      return state.user.firstName + ' ' + state.user.lastName;
+    },
+    email(state) {
+      return state.user.email;
+    },
+    role(state) {
+      return state.user.role;
+    },
   },
 });
