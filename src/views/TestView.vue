@@ -1,6 +1,6 @@
 <template>
   <main>
-    <template v-if="$hasPermissionTo('test.edit')">
+    <template v-if="$hasPermissionTo('tests.edit')">
       <test-editor :testId="testId" :action="'update'"></test-editor>
     </template>
     <template v-else>

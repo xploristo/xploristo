@@ -4,6 +4,10 @@ export default {
   createTest(testData) {
     return customFetch('/tests', 'POST', testData);
   },
+  getTests() {
+    // TODO Paginate
+    return customFetch('/tests');
+  },
   getTest(testId) {
     return customFetch(`/tests/${testId}`);
   },
@@ -12,5 +16,8 @@ export default {
   },
   updateTestDocument(testId, document) {
     return customFetch(`/tests/${testId}/document`, 'PUT', document);
+  },
+  deleteTest(testId) {
+    return customFetch(`/tests/${testId}`, 'DELETE');
   },
 };

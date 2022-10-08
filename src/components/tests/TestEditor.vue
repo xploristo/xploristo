@@ -64,38 +64,44 @@ export default {
     QuestionsEditor,
   },
   props: {
+    testId: { type: String, required: true },
     action: { type: String, default: 'create' },
-    testId: { type: String, required: false },
   },
   data() {
     return {
       file: null,
       documentUploadUrl: null,
-      documentName: null,
       loading: false,
+      createdTestId: null,
     };
   },
   setup() {
     const testStore = useTestStore();
 
+    console.log('?', testStore.test);
+
     return { testStore };
+  },
+  async created() {
+    if (this.testId) {
+      await this.testStore.getTest(this.testId);
+    }
   },
   computed: {
     name() {
       return this.testStore.name;
     },
+    documentName() {
+      return this.testStore.documentName;
+    },
     questions() {
       return this.testStore.questions;
     },
     submitDisabled() {
+      console.log('name', this.name);
+      console.log('file', this.file);
       return !this.name.length || (this.action === 'create' && !this.file);
     },
-  },
-  async mounted() {
-    const testStore = useTestStore();
-    await testStore.getTest(this.testId);
-    this.name = testStore.name;
-    this.documentName = testStore.documentName;
   },
   methods: {
     async onFileSelected(file) {
@@ -112,22 +118,25 @@ export default {
     onFileUploaded() {
       this.loading = false;
       this.documentName = this.file.name;
-      // TODO
+
+      this.$router.push('/tests/' + this.createdTestId);
     },
     async submit() {
       if (this.action === 'create') {
-        const { documentUploadUrl } = await testsService.createTest({
+        const { documentUploadUrl, test } = await this.testStore.createTest({
           name: this.name,
-          document: { type: 'application/pdf', path: this.file.name },
+          fileName: this.file.name,
         });
 
         this.documentUploadUrl = documentUploadUrl;
+        this.createdTestId = test._id;
         this.loading = true;
       } else {
         await testsService.updateTest(this.testId, {
           name: this.name,
           questions: this.questions,
         });
+        this.$router.push('/tests');
       }
     },
   },

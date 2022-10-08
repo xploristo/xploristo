@@ -13,9 +13,28 @@ export const useTestStore = defineStore('test', {
     },
   }),
   actions: {
+    clear() {
+      /* this.test._id = null; */
+      this.test.name = '';
+      this.test.document = {};
+      this.test.documentDownloadUrl = null;
+      this.test.questions = [];
+    },
+    async createTest({ name, fileName }) {
+      const testData = await testsService.createTest({
+        name: name,
+        document: { type: 'application/pdf', path: fileName },
+      });
+      const { documentUploadUrl, ...test } = testData;
+      this.test = test;
+
+      return { documentUploadUrl, test };
+    },
     async getTest(testId) {
+      /* if (testId !== this.test._id) { */
       // TODO Send home (or not found page) if test not found
       this.test = await testsService.getTest(testId);
+      /* } */
     },
     addQuestion(question) {
       this.test.questions.push(question);
@@ -38,6 +57,7 @@ export const useTestStore = defineStore('test', {
   },
   getters: {
     name(state) {
+      console.log('??', state.test.name);
       return state.test.name;
     },
     questions(state) {

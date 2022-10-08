@@ -1,19 +1,16 @@
 <template>
-  <main>
-    <div v-if="$hasPermissionTo('test.create')">
-      <button
-        type="button"
-        class="button-blue"
-        @click="$router.push({ name: 'newTest' })"
-      >
-        {{ $t('test.create') }}
-      </button>
-    </div>
-  </main>
+  <main></main>
 </template>
 
 <script>
 export default {
   name: 'HomeView',
+  created() {
+    if (this.$hasPermissionTo('tests.list')) {
+      this.$router.push('/tests');
+    } else {
+      this.$router.push('/groups');
+    }
+  },
 };
 </script>

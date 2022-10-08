@@ -4,6 +4,7 @@ import { hasPermissionTo } from '../plugins/permissions.js';
 import { useUserStore } from '../stores/user.js';
 
 import HomeView from '../views/HomeView.vue';
+import TestsView from '../views/TestsView.vue';
 import TestView from '../views/TestView.vue';
 import LoginView from '../views/LoginView.vue';
 
@@ -16,17 +17,25 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/test/new',
+      path: '/tests',
+      name: 'tests',
+      component: TestsView,
+      meta: {
+        permissions: 'tests.list',
+      },
+    },
+    {
+      path: '/tests/new',
       name: 'newTest',
       // Route level code-splitting. This generates a separate chunk for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/NewTestView.vue'),
       meta: {
-        permissions: 'test.create',
+        permissions: 'tests.create',
       },
     },
     {
-      path: '/test/:testId',
+      path: '/tests/:testId',
       name: 'test',
       component: TestView,
       props: true,

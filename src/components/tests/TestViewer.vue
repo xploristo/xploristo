@@ -1,7 +1,7 @@
 <template>
   <!-- TODO Test for ultra wide screens (max width?) -->
   <div id="test-container" class="test-container">
-    <div class="test-title">Test</div>
+    <div class="section-title">Test</div>
     <div v-for="(question, index) in questions" :key="question.index">
       <div class="text-bold mb-1">
         {{
@@ -34,7 +34,6 @@
 <script>
 import TestQuestion from './questions/TestQuestion.vue';
 import PdfViewer from '../viewer/PdfViewer.vue';
-/* import QuestionCarousel from '../components/tests/QuestionCarousel.vue'; */
 import { useTestStore } from '../../stores/test.js';
 
 export default {

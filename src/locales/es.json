@@ -46,6 +46,13 @@
   },
   "test": {
     "create": "Crear test",
+    "delete": {
+      "modal": {
+        "title": "¿Seguro que quieres eliminar el test <b>{name}</b>?",
+        "confirm": "Sí, eliminar",
+        "cancel": "No, cancelar"
+      }
+    },
     "form": {
       "name": "Nombre del test"
     },
@@ -58,5 +65,8 @@
       },
       "title": "Pregunta {index} (de {total})"
     }
+  },
+  "tests": {
+    "empty": "Todavía no hay ningún test."
   }
 }

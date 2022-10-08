@@ -6,10 +6,6 @@
   overflow-y: auto;
 }
 
-.test-title {
-  @apply text-xl font-bold tracking-tight leading-none text-gray-900 mb-3;
-}
-
 .document-container {
   /* TODO */
   top: 60px;

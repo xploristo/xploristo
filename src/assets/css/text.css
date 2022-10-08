@@ -9,3 +9,7 @@
 .text-bold {
   @apply font-bold;
 }
+
+.section-title {
+  @apply text-xl font-bold tracking-tight leading-none text-gray-900 mb-3;
+}
