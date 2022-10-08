@@ -78,8 +78,6 @@ export default {
   setup() {
     const testStore = useTestStore();
 
-    console.log('?', testStore.test);
-
     return { testStore };
   },
   async created() {
@@ -98,8 +96,6 @@ export default {
       return this.testStore.questions;
     },
     submitDisabled() {
-      console.log('name', this.name);
-      console.log('file', this.file);
       return !this.name.length || (this.action === 'create' && !this.file);
     },
   },

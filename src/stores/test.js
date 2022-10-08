@@ -57,7 +57,6 @@ export const useTestStore = defineStore('test', {
   },
   getters: {
     name(state) {
-      console.log('??', state.test.name);
       return state.test.name;
     },
     questions(state) {
