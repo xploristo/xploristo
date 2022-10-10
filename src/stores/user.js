@@ -24,11 +24,11 @@ export const useUserStore = defineStore('user', {
       await this.setUserProfile();
     },
     async logout() {
+      await authService.logout();
       this.user = {
         isLoggedIn: false,
       };
       localStorage.removeItem('isLoggedIn');
-      await authService.logout();
       router.push('/login');
     },
     async refreshSession() {

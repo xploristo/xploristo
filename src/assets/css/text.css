@@ -13,3 +13,7 @@
 .section-title {
   @apply text-xl font-bold tracking-tight leading-none text-gray-900 mb-3;
 }
+
+.sub-section-title {
+  @apply text-gray-900 mb-3;
+}

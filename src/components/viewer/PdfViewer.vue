@@ -1,7 +1,3 @@
-<template>
-  <VuePdf v-for="page in numOfPages" :key="page" :src="pdfUrl" :page="page" />
-</template>
-
 <script>
 import { VuePdf, createLoadingTask } from 'vue3-pdfjs/esm';
 
@@ -24,3 +20,7 @@ export default {
   },
 };
 </script>
+
+<template>
+  <VuePdf v-for="page in numOfPages" :key="page" :src="pdfUrl" :page="page" />
+</template>

@@ -1,14 +1,3 @@
-<template>
-  <main>
-    <template v-if="$hasPermissionTo('tests.edit')">
-      <test-editor :testId="testId" :action="'update'"></test-editor>
-    </template>
-    <template v-else>
-      <test-viewer :testId="testId"></test-viewer>
-    </template>
-  </main>
-</template>
-
 <script>
 import TestEditor from '../components/tests/TestEditor.vue';
 import TestViewer from '../components/tests/TestViewer.vue';
@@ -24,3 +13,14 @@ export default {
   },
 };
 </script>
+
+<template>
+  <main>
+    <template v-if="$hasPermissionTo('tests.edit')">
+      <TestEditor :testId="testId" :action="'update'"></TestEditor>
+    </template>
+    <template v-else>
+      <TestViewer :testId="testId"></TestViewer>
+    </template>
+  </main>
+</template>

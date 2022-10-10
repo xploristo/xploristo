@@ -6,53 +6,58 @@
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="py-3 px-6">Test</th>
-          <th scope="col" class="py-3 px-6">Documento</th>
+          <th scope="col" class="py-3 px-6">Clase</th>
           <th scope="col" class="py-3 px-6">Fecha de última edición</th>
           <th scope="col" class="py-3 px-6">Acción</th>
         </tr>
       </thead>
       <tbody>
+        <!-- Group -->
         <tr
-          v-for="test in tests"
-          v-bind:key="test._id"
+          v-for="group in groups"
+          v-bind:key="group._id"
           class="bg-white border-b hover:bg-gray-50"
         >
           <td scope="row" class="py-4 px-6 text-blue-500 whitespace-nowrap">
             <RouterLink
-              :to="'/tests/' + test._id"
+              :to="'/groups/' + group._id"
               class="font-medium hover:text-blue-600"
             >
-              {{ test.name }}
+              {{ group.name }}
             </RouterLink>
           </td>
+
+          <!-- Update date -->
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{ test.document.path }}
+            {{ new Date(group.updatedAt).toDateString() }}
           </td>
-          <!-- TODO Translate date -->
-          <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{ new Date(test.updatedAt).toDateString() }}
-          </td>
+
+          <!-- Edit -->
           <td class="flex py-4 px-6">
             <RouterLink
-              :to="'/tests/' + test._id"
+              :to="'/groups/' + group._id"
               class="text-blue-500 hover:text-blue-600"
             >
-              <PencilSquareIcon class="mr-1 w-6 h-6"></PencilSquareIcon>
+              <PencilSquareIcon
+                v-if="$hasPermissionTo('groups.edit')"
+                class="mr-1 w-6 h-6"
+              ></PencilSquareIcon>
+              <EyeIcon v-else class="mr-1 w-6 h-6"></EyeIcon>
             </RouterLink>
             <TrashIcon
-              @click="confirmTestDelete(test)"
+              v-if="$hasPermissionTo('groups.delete')"
+              @click="confirmGroupDelete(group)"
               class="text-red-500 hover:text-red-600 mr-1 w-6 h-6 cursor-pointer"
             ></TrashIcon>
           </td>
         </tr>
         <DeleteModal
           v-if="showDeleteModal"
-          title="test.delete.modal.title"
-          :titleData="{ name: testToDelete.name }"
-          confirm="test.delete.modal.confirm"
-          cancel="test.delete.modal.cancel"
-          @confirm="deleteTest(testToDelete._id)"
+          title="group.delete.modal.title"
+          :titleData="{ name: groupToDelete.name }"
+          confirm="group.delete.modal.confirm"
+          cancel="group.delete.modal.cancel"
+          @confirm="deleteGroup(groupToDelete._id)"
           @close="showDeleteModal = false"
         ></DeleteModal>
       </tbody>
@@ -61,13 +66,18 @@
 </template>
 
 <script>
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
-import testsService from '../../services/tests.service';
+import {
+  EyeIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline';
+import groupsService from '../../services/groups.service';
 import DeleteModal from '../modals/DeleteModal.vue';
 
 export default {
-  name: 'TestsTable',
+  name: 'GroupsTable',
   components: {
+    EyeIcon,
     PencilSquareIcon,
     TrashIcon,
     DeleteModal,
@@ -75,22 +85,23 @@ export default {
   data() {
     return {
       showDeleteModal: false,
-      testToDelete: {},
+      groupToDelete: {},
     };
   },
   props: {
-    tests: { type: Array },
+    groups: { type: Array },
   },
   methods: {
-    confirmTestDelete(test) {
-      this.testToDelete = test;
+    confirmGroupDelete(group) {
+      this.groupToDelete = group;
       this.showDeleteModal = true;
     },
-    async deleteTest(testId) {
+    async deleteGroup(groupId) {
       this.showDeleteModal = false;
-      await testsService.deleteTest(testId);
+      await groupsService.deleteGroup(groupId);
+
       // Reload page
-      // TODO Remove test from table without reloading
+      // TODO Remove student from table without reloading
       this.$router.go(0);
     },
   },

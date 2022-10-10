@@ -1,6 +1,48 @@
 {
+  "assignment": {
+    "create": "Crear examen",
+    "delete": {
+      "modal": {
+        "title": "¿Seguro que quieres eliminar el examen <b>{name}</b>?",
+        "confirm": "Sí, eliminar",
+        "cancel": "No, cancelar"
+      }
+    },
+    "form": {
+      "name": "Nombre del examen",
+      "test": "Test"
+    },
+    "new": "Nuevo examen",
+    "save": "Guardar examen"
+  },
+  "assignments": {
+    "empty": "Todavía no hay ningún examen."
+  },
   "document": {
     "title": "Documento"
+  },
+  "group": {
+    "create": "Crear clase",
+    "delete": {
+      "modal": {
+        "title": "¿Seguro que quieres eliminar la clase <b>{name}</b>?",
+        "confirm": "Sí, eliminar",
+        "cancel": "No, cancelar"
+      }
+    },
+    "form": {
+      "name": "Nombre de la clase"
+    },
+    "new": "Nueva clase",
+    "save": "Guardar clase",
+    "tabs": {
+      "assignments": "Exámenes",
+      "data": "Datos",
+      "students": "Estudiantes"
+    }
+  },
+  "groups": {
+    "empty": "Todavía no hay ninguna clase."
   },
   "login": {
     "action": "Iniciar sesión",
@@ -44,7 +86,28 @@
       "text": "Pregunta de texto"
     }
   },
+  "student": {
+    "create": "Matricular estudiante",
+    "delete": {
+      "modal": {
+        "title": "¿Seguro que quieres eliminar al estudiante <b>{name}</b> de la clase?",
+        "confirm": "Sí, eliminar",
+        "cancel": "No, cancelar"
+      }
+    },
+    "form": {
+      "email": "Correo electrónico",
+      "firstName": "Nombre",
+      "lastName": "Apellidos"
+    },
+    "new": "Nuevo estudiante",
+    "save": "Guardar estudiante"
+  },
+  "students": {
+    "empty": "Todavía no hay ningún estudiante."
+  },
   "test": {
+    "complete": "Completar test",
     "create": "Crear test",
     "delete": {
       "modal": {

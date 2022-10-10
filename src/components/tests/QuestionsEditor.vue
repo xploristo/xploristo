@@ -39,17 +39,17 @@
             <button
               type="button"
               class="button-blue mt-2"
-              @click="addSelectionAnswer(question)"
+              @click="() => (questionToSelectIndex = question.index)"
             >
               {{ $t('questions.answers.select') }}
             </button>
 
             <DocumentModal
-              v-if="questionToSelect != null"
+              v-if="questionToSelectIndex != null"
               :pdfUrl="pdfUrl"
-              :questionToSelect="questionToSelect"
+              :questionIndex="questionToSelectIndex"
               @answerSelected="onAnswerSelected"
-              @close="questionToSelect = null"
+              @close="questionToSelectIndex = null"
             ></DocumentModal>
           </template>
 
@@ -220,7 +220,7 @@ export default {
     return {
       pdfUrl: null,
       shouldShowAddQuestionDropdown: false,
-      questionToSelect: null,
+      questionToSelectIndex: null,
     };
   },
   setup() {
@@ -253,12 +253,9 @@ export default {
       });
       this.shouldShowAddQuestionDropdown = false;
     },
-    addSelectionAnswer(question) {
-      this.questionToSelect = question;
-    },
     onAnswerSelected(selection, serializedRange) {
       const questionIndex = this.questions.findIndex(
-        (question) => question.index === this.questionToSelect.index
+        (question) => question.index === this.questionToSelectIndex
       );
       this.testStore.saveAnswer(questionIndex, {
         index: 0,

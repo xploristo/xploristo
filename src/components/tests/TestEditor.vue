@@ -1,51 +1,3 @@
-<template>
-  <!-- TODO test-creator vs test-editor -->
-  <div>
-    <form @submit.prevent="submit">
-      <label for="name" class="input-label">{{ $t('test.form.name') }}</label>
-      <input
-        type="text"
-        id="name"
-        v-model="name"
-        class="text-input"
-        :placeholder="$t('test.form.name')"
-        required
-      />
-
-      <p class="input-label mt-4">{{ $t('document.title') }}</p>
-      <!-- TODO Change this for test edit -->
-      <document-uploader
-        :documentName="documentName"
-        :documentUploadUrl="documentUploadUrl"
-        @fileSelected="onFileSelected"
-        @fileUploaded="onFileUploaded"
-      ></document-uploader>
-
-      <template v-if="action === 'update'">
-        <p class="input-label mt-4">{{ $t('questions.title') }}</p>
-        <questions-editor :testId="testId"></questions-editor>
-      </template>
-
-      <div class="mt-4">
-        <button
-          type="submit"
-          :disabled="submitDisabled"
-          class="button-blue mb-4"
-          :class="{
-            'button-disabled': submitDisabled,
-            'button-loading': loading,
-          }"
-        >
-          <button-spinner v-if="loading"></button-spinner>
-          {{ action === 'create' ? $t('test.create') : $t('test.save') }}
-        </button>
-      </div>
-    </form>
-
-    <!-- TODO Edit questions -->
-  </div>
-</template>
-
 // TODO Add option to shuffle questions and/or answers for students
 
 <script>
@@ -86,8 +38,13 @@ export default {
     }
   },
   computed: {
-    name() {
-      return this.testStore.name;
+    name: {
+      get() {
+        return this.testStore.name;
+      },
+      set(value) {
+        this.testStore.test.name = value;
+      },
     },
     documentName() {
       return this.testStore.documentName;
@@ -138,3 +95,47 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <form @submit.prevent="submit">
+      <label for="name" class="input-label">{{ $t('test.form.name') }}</label>
+      <input
+        type="text"
+        id="name"
+        v-model="name"
+        class="text-input"
+        :placeholder="$t('test.form.name')"
+        required
+      />
+
+      <p class="input-label mt-4">{{ $t('document.title') }}</p>
+      <document-uploader
+        :documentName="documentName"
+        :documentUploadUrl="documentUploadUrl"
+        @fileSelected="onFileSelected"
+        @fileUploaded="onFileUploaded"
+      ></document-uploader>
+
+      <template v-if="action === 'update'">
+        <p class="input-label mt-4">{{ $t('questions.title') }}</p>
+        <questions-editor :testId="testId"></questions-editor>
+      </template>
+
+      <div class="mt-4">
+        <button
+          type="submit"
+          :disabled="submitDisabled"
+          class="button-blue mb-4"
+          :class="{
+            'button-disabled': submitDisabled,
+            'button-loading': loading,
+          }"
+        >
+          <button-spinner v-if="loading"></button-spinner>
+          {{ action === 'create' ? $t('test.create') : $t('test.save') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</template>

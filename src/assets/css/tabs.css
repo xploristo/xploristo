@@ -1,0 +1,11 @@
+.tab {
+  @apply inline-block p-4 rounded-t-lg border-b-2 cursor-pointer;
+}
+
+.inactive-tab {
+  @apply tab  border-transparent hover:text-gray-600 hover:border-gray-300;
+}
+
+.active-tab {
+  @apply tab text-blue-600 border-blue-600;
+}

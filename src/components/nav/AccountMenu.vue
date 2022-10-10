@@ -36,12 +36,12 @@
       <div class="font-medium">{{ $t('nav.account.role.' + role) }}</div>
       <div class="truncate">{{ email }}</div>
     </div>
-    <ul
+    <!-- TODO Settings and credits -->
+    <!--     <ul
       class="py-1 text-sm text-gray-700 dark:text-gray-200"
       aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton"
     >
       <li>
-        <!-- TODO -->
         <a
           href="#"
           class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -49,14 +49,13 @@
         >
       </li>
       <li>
-        <!-- TODO Credits -->
         <a
           href="#"
           class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >About</a
         >
       </li>
-    </ul>
+    </ul> -->
     <div class="py-1">
       <a
         @click="logout"
