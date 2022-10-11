@@ -62,7 +62,8 @@
     },
     "home": "Inicio",
     "tests": "Tests",
-    "groups": "Clases"
+    "groups": "Clases",
+    "results": "Resultados"
   },
   "questions": {
     "add": "Añadir pregunta",
@@ -102,6 +103,12 @@
     },
     "new": "Nuevo estudiante",
     "save": "Guardar estudiante"
+  },
+  "result": {
+    "view": "Ver resultado"
+  },
+  "results": {
+    "empty": "Todavía no hay ningún resultado."
   },
   "students": {
     "empty": "Todavía no hay ningún estudiante."

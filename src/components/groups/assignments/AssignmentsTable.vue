@@ -37,6 +37,19 @@ export default {
       // TODO Remove assignment from table without reloading
       this.$router.go(0);
     },
+    completeTest(assignment) {
+      if (assignment.result) {
+        this.$router.push({
+          name: 'result',
+          params: { resultId: assignment.result._id },
+        });
+      } else {
+        this.$router.push({
+          name: 'assignmentTest',
+          params: { assignmentId: assignment._id },
+        });
+      }
+    },
   },
 };
 </script>
@@ -178,20 +191,23 @@ export default {
             <button
               type="button"
               v-if="$hasPermissionTo('tests.complete')"
-              @click="
-                () =>
-                  $router.push({
-                    name: 'assignmentTest',
-                    params: { assignmentId: assignment._id },
-                  })
-              "
+              @click="completeTest(assignment)"
               class="button-blue"
               :class="{
-                'button-disabled': !!assignment.result,
+                'button-disabled':
+                  !!assignment.result &&
+                  (new Date() < new Date(assignment.startDate) ||
+                    new Date() > new Date(assignment.endDate)),
               }"
-              :disabled="!!assignment.result"
+              :disabled="
+                !!assignment.result &&
+                (new Date() < new Date(assignment.startDate) ||
+                  new Date() > new Date(assignment.endDate))
+              "
             >
-              {{ $t('test.complete') }}
+              {{
+                !!assignment.result ? $t('result.view') : $t('test.complete')
+              }}
             </button>
           </td>
         </tr>

@@ -20,6 +20,8 @@ import AssignmentView from '../views/groups/assignments/AssignmentView.vue';
 import AssignmentDataView from '../views/groups/assignments/AssignmentDataView.vue';
 import NewAssignmentView from '../views/groups/assignments/NewAssignmentView.vue';
 import AssignmentTestView from '../views/groups/assignments/AssignmentTestView.vue';
+import ResultsView from '../views/ResultsView.vue';
+import ResultView from '../views/ResultView.vue';
 import LoginView from '../views/LoginView.vue';
 
 const router = createRouter({
@@ -168,6 +170,20 @@ const router = createRouter({
           ],
         },
       ],
+    },
+    {
+      path: '/results',
+      name: 'results',
+      component: ResultsView,
+      meta: {
+        permissions: 'results.list',
+      },
+    },
+    {
+      path: '/results/:resultId',
+      name: 'result',
+      component: ResultView,
+      props: true,
     },
     {
       path: '/login',
