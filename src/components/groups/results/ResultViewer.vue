@@ -3,7 +3,7 @@
 <script>
 import QuestionsViewer from './QuestionsViewer.vue';
 
-import resultsService from '../../services/results.service';
+import resultsService from '../../../services/results.service';
 
 export default {
   name: 'ResultViewer',

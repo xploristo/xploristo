@@ -10,6 +10,7 @@ export const useGroupStore = defineStore('group', {
       teachers: [],
       students: [],
       assignments: [],
+      results: [],
     },
   }),
   actions: {
@@ -19,6 +20,7 @@ export const useGroupStore = defineStore('group', {
       this.group.teachers = [];
       this.group.students = [];
       this.group.assignments = [];
+      this.group.results = [];
     },
     async createGroup({ name, teachers, students }) {
       const groupData = await groupsService.createGroup({
@@ -34,6 +36,15 @@ export const useGroupStore = defineStore('group', {
       /* if (groupId !== this.group._id) { */
       // TODO Send home (or not found page) if group not found
       this.group = await groupsService.getGroup(groupId);
+
+      let results = [];
+      this.group.assignments.forEach((assignment) => {
+        assignment.results = assignment.results.map((result) => {
+          return { ...result, assignment: { name: assignment.name } };
+        });
+        results = [...results, ...assignment.results];
+      });
+      this.group.results = results;
       /* } */
     },
     addTeacher(email) {
@@ -67,6 +78,9 @@ export const useGroupStore = defineStore('group', {
     },
     assignments(state) {
       return state.group.assignments;
+    },
+    results(state) {
+      return state.group.results;
     },
   },
 });
