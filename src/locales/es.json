@@ -38,6 +38,7 @@
     "tabs": {
       "assignments": "Exámenes",
       "data": "Datos",
+      "results": "Resultados",
       "students": "Estudiantes"
     }
   },
@@ -105,7 +106,9 @@
     "save": "Guardar estudiante"
   },
   "result": {
-    "view": "Ver resultado"
+    "view": "Ver resultado",
+    "correct": "Respuesta correcta: {value}",
+    "correctSelection": "Selección correcta: {value}"
   },
   "results": {
     "empty": "Todavía no hay ningún resultado."

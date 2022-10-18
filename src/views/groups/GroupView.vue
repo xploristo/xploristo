@@ -34,6 +34,15 @@
             >{{ $t('group.tabs.assignments') }}</a
           >
         </li>
+        <!-- Results tab -->
+        <li class="mr-2">
+          <a
+            @click="changeActiveTab('results')"
+            id="results-tab"
+            :class="activeTab === 'results' ? 'active-tab' : 'inactive-tab'"
+            >{{ $t('group.tabs.results') }}</a
+          >
+        </li>
       </ul>
     </div>
 

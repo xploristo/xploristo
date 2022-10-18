@@ -23,7 +23,7 @@ export default {
   },
   props: {
     assignments: { type: Array },
-    groupId: { type: String, required: true },
+    groupId: { type: String },
   },
   methods: {
     confirmAssignmentDelete(assignment) {
@@ -107,17 +107,17 @@ export default {
             "
           >
             <RouterLink
+              v-if="$hasPermissionTo('assignments.edit')"
               :to="{
                 name: 'assignment',
                 params: { assignmentId: assignment._id },
               }"
               class="font-medium"
-              :class="
-                $hasPermissionTo('assignments.edit') && 'hover:text-blue-600'
-              "
+              :class="'hover:text-blue-600'"
             >
               {{ assignment.name }}
             </RouterLink>
+            <template v-else>{{ assignment.name }}</template>
           </td>
 
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">

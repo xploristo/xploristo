@@ -22,7 +22,10 @@
         >
           <td scope="row" class="py-4 px-6 text-blue-500 whitespace-nowrap">
             <RouterLink
-              :to="'/results/' + result._id"
+              :to="{
+                name: 'result',
+                params: { resultId: result._id },
+              }"
               class="font-medium hover:text-blue-600"
             >
               {{ result.assignment.name }}
@@ -47,7 +50,10 @@
           </td>
           <td class="flex py-4 px-6">
             <RouterLink
-              :to="'/results/' + result._id"
+              :to="{
+                name: 'result',
+                params: { resultId: result._id },
+              }"
               class="text-blue-500 hover:text-blue-600"
             >
               <EyeIcon class="mr-1 w-6 h-6"></EyeIcon>

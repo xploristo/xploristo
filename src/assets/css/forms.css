@@ -17,3 +17,11 @@
 .login-subtitle {
   @apply text-xl font-bold tracking-tight leading-none text-blue-500;
 }
+
+.incorrect-input {
+  @apply bg-red-200;
+}
+
+.correct-input {
+  @apply bg-green-200;
+}

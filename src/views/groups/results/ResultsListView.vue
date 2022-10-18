@@ -16,22 +16,27 @@
 <script>
 import { FolderOpenIcon } from '@heroicons/vue/24/outline';
 
-import resultsService from '../services/results.service.js';
-import ResultsTable from '../components/results/ResultsTable.vue';
+import { useGroupStore } from '../../../stores/group.js';
+import ResultsTable from '../../../components/groups/results/ResultsTable.vue';
 
 export default {
-  name: 'ResultsView',
+  name: 'ResultsListView',
   components: {
     FolderOpenIcon,
     ResultsTable,
   },
-  data() {
-    return {
-      results: [],
-    };
+  props: {
+    groupId: { type: String, required: true },
   },
-  async mounted() {
-    this.results = await resultsService.getResults();
+  setup() {
+    const groupStore = useGroupStore();
+
+    return { groupStore };
+  },
+  computed: {
+    results() {
+      return this.groupStore.results;
+    },
   },
 };
 </script>

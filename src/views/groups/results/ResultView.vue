@@ -1,5 +1,5 @@
 <script>
-import ResultViewer from '../components/results/ResultViewer.vue';
+import ResultViewer from '../../../components/groups/results/ResultViewer.vue';
 
 export default {
   name: 'ResultView',
@@ -7,7 +7,7 @@ export default {
     ResultViewer,
   },
   props: {
-    resultId: String,
+    resultId: { type: String, required: true },
   },
 };
 </script>
