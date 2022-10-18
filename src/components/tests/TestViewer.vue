@@ -110,9 +110,7 @@ export default {
 
       <div class="flex">
         <ChevronLeftIcon
-          @click="
-            questionIndex > 0 && (selectedQuestionIndex = questionIndex - 1)
-          "
+          @click="selectedQuestionIndex > 0 && selectedQuestionIndex--"
           class="icon-small-blue ml-2 cursor-pointer"
         ></ChevronLeftIcon>
         <div class="hidden md:block">
@@ -131,8 +129,8 @@ export default {
         </div>
         <ChevronRightIcon
           @click="
-            questionIndex < questions.length - 1 &&
-              (selectedQuestionIndex = questionIndex + 1)
+            selectedQuestionIndex < questions.length - 1 &&
+              selectedQuestionIndex++
           "
           class="icon-small-blue ml-2 cursor-pointer"
         ></ChevronRightIcon>
