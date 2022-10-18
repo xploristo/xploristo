@@ -28,7 +28,7 @@ export default {
 
 <template>
   <div>
-    <p class="text-xl text-gray-900">{{ result?.assignment?.name }}</p>
+    <p class="section-title">{{ result?.assignment?.name }}</p>
     <questions-viewer :result="result"></questions-viewer>
   </div>
 </template>

@@ -39,10 +39,12 @@ export const useGroupStore = defineStore('group', {
 
       let results = [];
       this.group.assignments.forEach((assignment) => {
-        assignment.results = assignment.results.map((result) => {
-          return { ...result, assignment: { name: assignment.name } };
-        });
-        results = [...results, ...assignment.results];
+        if (assignment.results?.length) {
+          assignment.results = assignment.results.map((result) => {
+            return { ...result, assignment: { name: assignment.name } };
+          });
+          results = [...results, ...assignment.results];
+        }
       });
       this.group.results = results;
       /* } */

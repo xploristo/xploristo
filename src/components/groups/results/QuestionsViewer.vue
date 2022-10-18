@@ -17,8 +17,22 @@
             <template v-if="question.answers[0].answer">
               <div
                 class="mt-2 mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
+                :class="{
+                  'correct-input': isAnswerCorrect(question.answers[0]),
+                  'incorrect-input': !isAnswerCorrect(question.answers[0]),
+                }"
               >
                 {{ question.answers[0].answer?.textSelection }}
+              </div>
+              <div
+                v-if="!isAnswerCorrect(question.answers[0])"
+                class="mt-2 mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
+              >
+                {{
+                  $t('result.correctSelection', {
+                    value: getCorrectAnswer(question.answers[0]),
+                  })
+                }}
               </div>
             </template>
           </template>
@@ -33,8 +47,22 @@
               :placeholder="$t('questions.answers.label')"
               class="text-input"
               disabled
+              :class="{
+                'correct-input': isAnswerCorrect(question.answers[0]),
+                'incorrect-input': !isAnswerCorrect(question.answers[0]),
+              }"
             >
             </textarea>
+            <div
+              v-if="!isAnswerCorrect(question.answers[0])"
+              class="mt-2 mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
+            >
+              {{
+                $t('result.correct', {
+                  value: getCorrectAnswer(question.answers[0]),
+                })
+              }}
+            </div>
           </template>
 
           <!-- Single and multi-choice answer -->
@@ -68,6 +96,10 @@
                   :id="`question${question.index}-answer${answer.index}`"
                   class="text-input"
                   disabled
+                  :class="{
+                    'correct-input': isAnswerCorrect(answer, question.type),
+                    'incorrect-input': !isAnswerCorrect(answer),
+                  }"
                 >
                 </textarea>
               </div>
@@ -85,6 +117,16 @@ export default {
   name: 'QuestionsViewer',
   props: {
     result: Object,
+  },
+  methods: {
+    isAnswerCorrect(answer, type) {
+      return ['singleChoice', 'multiChoice'].includes(type)
+        ? answer.correct && answer.correctAnswer?.correct
+        : answer.correctAnswer?.correct;
+    },
+    getCorrectAnswer(answer) {
+      return answer.correctAnswer?.value;
+    },
   },
 };
 </script>
