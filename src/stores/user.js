@@ -19,9 +19,17 @@ export const useUserStore = defineStore('user', {
   actions: {
     async login(email, password) {
       // TODO What if wrong password
-      await authService.login(email, password);
-      localStorage.setItem('isLoggedIn', 'true');
-      await this.setUserProfile();
+      const result = await authService.login(email, password);
+      if (!result.mustResetPassword) {
+        localStorage.setItem('isLoggedIn', 'true');
+      }
+      await this.setUserProfile({ isLoggedIn: !result.mustResetPassword });
+      return result;
+    },
+    async setPassword(email, oldPassword, password) {
+      // TODO What if wrong password
+      await authService.setPassword(oldPassword, password);
+      await this.login(email, password);
     },
     async logout() {
       await authService.logout();
@@ -39,12 +47,13 @@ export const useUserStore = defineStore('user', {
         return true;
       }
     },
-    async setUserProfile() {
+    async setUserProfile(data) {
       const userProfile = await usersService.getUserProfile();
       this.user = {
         ...this.user,
         ...userProfile,
         isLoggedIn: true,
+        ...data,
       };
     },
   },
