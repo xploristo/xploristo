@@ -37,9 +37,8 @@
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             {{ result.user.lastName }}
           </td>
-          <!-- TODO Translate date -->
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{ new Date(result.createdAt).toDateString() }}
+            {{ this.parseDate(result.createdAt) }}
           </td>
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             <span class="flex"
@@ -67,6 +66,7 @@
 
 <script>
 import { CheckIcon, EyeIcon } from '@heroicons/vue/24/outline';
+import DateMixin from '../../../mixins/parse-date.js';
 
 export default {
   name: 'ResultsTable',
@@ -74,6 +74,7 @@ export default {
     CheckIcon,
     EyeIcon,
   },
+  mixins: [DateMixin],
   props: {
     results: { type: Array },
   },

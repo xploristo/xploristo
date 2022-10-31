@@ -29,9 +29,8 @@
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             {{ test.document.path }}
           </td>
-          <!-- TODO Translate date -->
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{ new Date(test.updatedAt).toDateString() }}
+            {{ this.parseDate(test.updatedAt) }}
           </td>
           <td class="flex py-4 px-6">
             <RouterLink
@@ -64,6 +63,7 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import testsService from '../../services/tests.service';
 import DeleteModal from '../modals/DeleteModal.vue';
+import DateMixin from '../../mixins/parse-date.js';
 
 export default {
   name: 'TestsTable',
@@ -78,6 +78,7 @@ export default {
       testToDelete: {},
     };
   },
+  mixins: [DateMixin],
   props: {
     tests: { type: Array },
   },

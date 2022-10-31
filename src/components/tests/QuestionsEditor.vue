@@ -22,7 +22,6 @@
         </div>
 
         <!-- Answer -->
-        <!-- TODO Allow deleting answers -->
         <!-- TODO Allow reordering answers -->
         <div class="mt-2">
           <!-- Selection answer -->
@@ -109,7 +108,7 @@
                 </textarea>
               </div>
 
-              <!-- TODO Add trash button, move up, move down -->
+              <!-- TODO Add buttons: move up, move down -->
             </div>
 
             <!-- TODO Add plus button on the right of last answer? -->

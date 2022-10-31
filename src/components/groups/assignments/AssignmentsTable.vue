@@ -6,6 +6,7 @@ import {
 } from '@heroicons/vue/24/outline';
 import groupsService from '../../../services/groups.service';
 import DeleteModal from '../../modals/DeleteModal.vue';
+import DateMixin from '../../../mixins/parse-date.js';
 
 export default {
   name: 'AssignmentsTable',
@@ -21,6 +22,7 @@ export default {
       assignmentToDelete: {},
     };
   },
+  mixins: [DateMixin],
   props: {
     assignments: { type: Array },
     groupId: { type: String },
@@ -133,16 +135,11 @@ export default {
           </td>
 
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{
-              assignment.startDate &&
-              new Date(assignment.startDate).toDateString()
-            }}
+            {{ this.parseDate(assignment.startDate) }}
           </td>
 
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{
-              assignment.endDate && new Date(assignment.endDate).toDateString()
-            }}
+            {{ this.parseDate(assignment.endDate) }}
           </td>
 
           <!-- Completion date -->
@@ -151,10 +148,7 @@ export default {
             scope="row"
             class="py-4 px-6 text-gray-900 whitespace-nowrap"
           >
-            {{
-              assignment.result?.createdAt &&
-              new Date(assignment.result.createdAt).toDateString()
-            }}
+            {{ this.parseDate(assignment.result?.createdAt) }}
           </td>
 
           <!-- Score -->
