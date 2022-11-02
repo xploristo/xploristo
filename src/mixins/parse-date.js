@@ -19,5 +19,11 @@ export default {
 
       return dateTime;
     },
+    isDateWithinInterval({ startDate, endDate }, date = new Date()) {
+      if (!startDate && !endDate) return true;
+      if (!startDate) return date < new Date(endDate);
+      if (!endDate) return date > new Date(startDate);
+      return date > new Date(startDate) && date < new Date(endDate);
+    },
   },
 };

@@ -189,14 +189,10 @@ export default {
               class="button-blue"
               :class="{
                 'button-disabled':
-                  !!assignment.result &&
-                  (new Date() < new Date(assignment.startDate) ||
-                    new Date() > new Date(assignment.endDate)),
+                  !assignment.result && !this.isDateWithinInterval(assignment),
               }"
               :disabled="
-                !!assignment.result &&
-                (new Date() < new Date(assignment.startDate) ||
-                  new Date() > new Date(assignment.endDate))
+                !assignment.result && !this.isDateWithinInterval(assignment)
               "
             >
               {{
