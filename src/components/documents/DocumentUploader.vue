@@ -130,6 +130,7 @@ export default {
     async uploadFile() {
       await documentsService.uploadDocument(this.documentUploadUrl, this.file);
       this.$emit('fileUploaded');
+      this.file = null;
     },
   },
 };

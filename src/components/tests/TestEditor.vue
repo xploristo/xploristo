@@ -46,8 +46,13 @@ export default {
         this.testStore.test.name = value;
       },
     },
-    documentName() {
-      return this.testStore.documentName;
+    documentName: {
+      get() {
+        return this.testStore.documentName;
+      },
+      set(value) {
+        this.testStore.test.document.path = value;
+      },
     },
     questions() {
       return this.testStore.questions;
@@ -72,7 +77,9 @@ export default {
       this.loading = false;
       this.documentName = this.file.name;
 
-      this.$router.push('/tests/' + this.createdTestId);
+      if (this.createdTestId) {
+        this.$router.push('/tests/' + this.createdTestId);
+      }
     },
     async submit() {
       if (this.action === 'create') {
