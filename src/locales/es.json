@@ -22,19 +22,19 @@
     "title": "Documento"
   },
   "group": {
-    "create": "Crear clase",
+    "create": "Crear asignatura",
     "delete": {
       "modal": {
-        "title": "¿Seguro que quieres eliminar la clase <b>{name}</b>?",
+        "title": "¿Seguro que quieres eliminar la asignatura <b>{name}</b>?",
         "confirm": "Sí, eliminar",
         "cancel": "No, cancelar"
       }
     },
     "form": {
-      "name": "Nombre de la clase"
+      "name": "Nombre de la asignatura"
     },
-    "new": "Nueva clase",
-    "save": "Guardar clase",
+    "new": "Nueva asignatura",
+    "save": "Guardar asignatura",
     "tabs": {
       "assignments": "Exámenes",
       "data": "Datos",
@@ -43,7 +43,7 @@
     }
   },
   "groups": {
-    "empty": "Todavía no hay ninguna clase."
+    "empty": "Todavía no hay ninguna asignatura."
   },
   "login": {
     "action": "Iniciar sesión",
@@ -63,7 +63,7 @@
     },
     "home": "Inicio",
     "tests": "Tests",
-    "groups": "Clases",
+    "groups": "Asignaturas",
     "results": "Resultados"
   },
   "questions": {
@@ -92,7 +92,7 @@
     "create": "Matricular estudiante",
     "delete": {
       "modal": {
-        "title": "¿Seguro que quieres eliminar al estudiante <b>{name}</b> de la clase?",
+        "title": "¿Seguro que quieres eliminar al estudiante <b>{name}</b> de la asignatura?",
         "confirm": "Sí, eliminar",
         "cancel": "No, cancelar"
       }
