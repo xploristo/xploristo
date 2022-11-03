@@ -29,7 +29,7 @@
 
           <!-- Update date -->
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{ new Date(group.updatedAt).toDateString() }}
+            {{ this.parseDate(group.updatedAt) }}
           </td>
 
           <!-- Edit -->
@@ -73,6 +73,7 @@ import {
 } from '@heroicons/vue/24/outline';
 import groupsService from '../../services/groups.service';
 import DeleteModal from '../modals/DeleteModal.vue';
+import DateMixin from '../../mixins/parse-date.js';
 
 export default {
   name: 'GroupsTable',
@@ -88,6 +89,7 @@ export default {
       groupToDelete: {},
     };
   },
+  mixins: [DateMixin],
   props: {
     groups: { type: Array },
   },

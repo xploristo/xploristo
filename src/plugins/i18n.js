@@ -20,6 +20,7 @@ export function setI18nLocale(locale) {
     loadLocaleMessages(locale);
   }
   i18n.global.locale = locale;
+  sessionStorage.setItem('lang', locale);
 }
 
 export default i18n;
