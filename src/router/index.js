@@ -6,6 +6,8 @@ import { useUserStore } from '../stores/user.js';
 import HomeView from '../views/HomeView.vue';
 import TestsView from '../views/TestsView.vue';
 import TestView from '../views/TestView.vue';
+import TeachersView from '../views/TeachersView.vue';
+import TeacherView from '../views/TeacherView.vue';
 import GroupsView from '../views/GroupsView.vue';
 import NewGroupView from '../views/NewGroupView.vue';
 import GroupView from '../views/groups/GroupView.vue';
@@ -35,11 +37,41 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/teachers',
+      name: 'teachers',
+      component: TeachersView,
+      meta: {
+        permissions: 'teachers.list',
+        sectionName: 'teachers',
+      },
+    },
+    {
+      path: '/teachers/new',
+      name: 'newTeacher',
+      // Route level code-splitting. This generates a separate chunk for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/NewTeacherView.vue'),
+      meta: {
+        permissions: 'teachers.create',
+        sectionName: 'teachers',
+      },
+    },
+    {
+      path: '/teachers/:teacherId',
+      name: 'teacher',
+      component: TeacherView,
+      props: true,
+      meta: {
+        sectionName: 'teachers',
+      },
+    },
+    {
       path: '/tests',
       name: 'tests',
       component: TestsView,
       meta: {
         permissions: 'tests.list',
+        sectionName: 'tests',
       },
     },
     {
@@ -50,6 +82,7 @@ const router = createRouter({
       component: () => import('../views/NewTestView.vue'),
       meta: {
         permissions: 'tests.create',
+        sectionName: 'tests',
       },
     },
     {
@@ -57,6 +90,9 @@ const router = createRouter({
       name: 'test',
       component: TestView,
       props: true,
+      meta: {
+        sectionName: 'tests',
+      },
     },
     {
       path: '/groups',
@@ -64,6 +100,7 @@ const router = createRouter({
       component: GroupsView,
       meta: {
         permissions: 'groups.list',
+        sectionName: 'groups',
       },
     },
     {
@@ -72,12 +109,16 @@ const router = createRouter({
       component: NewGroupView,
       meta: {
         permissions: 'groups.create',
+        sectionName: 'groups',
       },
     },
     {
       path: '/groups/:groupId',
       component: GroupView,
       props: true,
+      meta: {
+        sectionName: 'groups',
+      },
       children: [
         {
           path: '',

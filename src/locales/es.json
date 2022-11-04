@@ -66,11 +66,13 @@
     "account": {
       "logout": "Cerrar sesión",
       "role": {
+        "admin": "Docente (admin)",
         "teacher": "Docente",
         "student": "Estudiante"
       }
     },
     "home": "Inicio",
+    "teachers": "Docentes",
     "tests": "Tests",
     "groups": "Asignaturas",
     "results": "Resultados"
@@ -124,6 +126,32 @@
   },
   "students": {
     "empty": "Todavía no hay ningún estudiante."
+  },
+  "teacher": {
+    "create": "Crear docente",
+    "delete": {
+      "modal": {
+        "title": "¿Seguro que deseas eliminar el docente <b>{name}</b>?",
+        "confirm": "Sí, eliminar",
+        "cancel": "No, cancelar"
+      }
+    },
+    "form": {
+      "email": "Correo electrónico",
+      "firstName": "Nombre",
+      "lastName": "Apellidos"
+    },
+    "new": "Nuevo docente",
+    "save": "Guardar docente"
+  },
+  "teachers": {
+    "empty": "Todavía no hay ningún docente",
+    "table": {
+      "action": "Acción",
+      "email": "Correo electrónico",
+      "firstName": "Nombre",
+      "lastName": "Apellidos"
+    }
   },
   "test": {
     "complete": "Completar test",
