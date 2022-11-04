@@ -26,10 +26,10 @@ export const useUserStore = defineStore('user', {
       await this.setUserProfile({ isLoggedIn: !result.mustResetPassword });
       return result;
     },
-    async setPassword(email, oldPassword, password) {
+    async setPassword(oldPassword, password) {
       // TODO What if wrong password
       await authService.setPassword(oldPassword, password);
-      await this.login(email, password);
+      localStorage.setItem('isLoggedIn', 'true');
     },
     async logout() {
       await authService.logout();

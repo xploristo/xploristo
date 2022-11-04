@@ -63,11 +63,7 @@ export default {
     async setPassword() {
       try {
         const userStore = useUserStore();
-        await userStore.setPassword(
-          this.email,
-          this.oldPassword,
-          this.password
-        );
+        await userStore.setPassword(this.oldPassword, this.password);
         this.$router.push({ name: 'home' });
       } catch (error) {
         // TODO Handle error properly
