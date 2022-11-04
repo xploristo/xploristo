@@ -1,31 +1,32 @@
 <template>
   <div class="flex justify-center mt-20">
-    <div class="login-title">{{ $t('login.title') }}</div>
+    <div class="login-title">{{ $t('reset.title') }}</div>
   </div>
   <div class="flex justify-center mb-8">
     <div class="login-subtitle">
-      {{ $t('login.subtitle') }}
+      {{ $t('reset.subtitle') }}
       <img src="/images/vision-blue.png" class="inline w-5" />
     </div>
   </div>
   <div class="flex justify-center">
     <div class="form-card flex-1">
-      <form @submit.prevent="login">
+      <form @submit.prevent="setPassword">
         <div class="mb-6">
-          <label for="email" class="input-label">{{ $t('login.email') }}</label>
+          <label for="oldPassword" class="input-label">{{
+            $t('reset.oldPassword')
+          }}</label>
           <input
-            type="email"
-            id="email"
-            v-model="email"
+            type="password"
+            id="oldPassword"
+            v-model="oldPassword"
             class="text-input"
-            :placeholder="$t('login.emailPlaceholder')"
             required=""
           />
         </div>
 
         <div class="mb-6">
           <label for="password" class="input-label">{{
-            $t('login.password')
+            $t('reset.password')
           }}</label>
           <input
             type="password"
@@ -37,7 +38,7 @@
         </div>
 
         <button type="submit" class="button-blue">
-          {{ $t('login.action') }}
+          {{ $t('reset.action') }}
         </button>
       </form>
     </div>
@@ -48,29 +49,22 @@
 import { useUserStore } from '../stores/user.js';
 
 export default {
-  name: 'LoginView',
+  name: 'ResetPasswordView',
+  props: {
+    generatedPassword: { type: String },
+  },
   data() {
     return {
-      email: null,
+      oldPassword: this.generatedPassword,
       password: null,
     };
   },
   methods: {
-    async login() {
+    async setPassword() {
       try {
         const userStore = useUserStore();
-        const { mustResetPassword } = await userStore.login(
-          this.email,
-          this.password
-        );
-        if (mustResetPassword) {
-          this.$router.push({
-            name: 'resetPassword',
-            params: { generatedPassword: this.password },
-          });
-        } else {
-          this.$router.push({ name: 'home' });
-        }
+        await userStore.setPassword(this.oldPassword, this.password);
+        this.$router.push({ name: 'home' });
       } catch (error) {
         // TODO Handle error properly
         console.error(error);

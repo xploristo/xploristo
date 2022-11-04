@@ -53,6 +53,15 @@
     "subtitle": "en xploristo",
     "title": "Inicia sesión"
   },
+  "reset": {
+    "action": "Resetear contraseña",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "name{'@'}example.org",
+    "oldPassword": "Contraseña actual",
+    "password": "Nueva contraseña",
+    "subtitle": "en xploristo",
+    "title": "Resetea tu contraseña"
+  },
   "nav": {
     "account": {
       "logout": "Cerrar sesión",

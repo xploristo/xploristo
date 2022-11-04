@@ -24,6 +24,7 @@ import ResultsView from '../views/groups/results/ResultsView.vue';
 import ResultsListView from '../views/groups/results/ResultsListView.vue';
 import ResultView from '../views/groups/results/ResultView.vue';
 import LoginView from '../views/LoginView.vue';
+import ResetPasswordView from '../views/ResetPasswordView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -201,11 +202,17 @@ const router = createRouter({
       name: 'login',
       component: LoginView,
     },
+    {
+      path: '/reset',
+      name: 'resetPassword',
+      component: ResetPasswordView,
+      props: true,
+    },
   ],
 });
 
 router.beforeEach(async (to, from, next) => {
-  const isLoginPage = to.name === 'login';
+  const isLoginPage = ['login', 'resetPassword'].includes(to.name);
 
   if (isLoginPage) {
     next();
