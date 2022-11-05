@@ -51,7 +51,7 @@
             ></TrashIcon>
           </td>
         </tr>
-        <DeleteModal
+        <ConfirmModal
           v-if="showDeleteModal"
           title="group.delete.modal.title"
           :titleData="{ name: groupToDelete.name }"
@@ -59,7 +59,7 @@
           cancel="group.delete.modal.cancel"
           @confirm="deleteGroup(groupToDelete._id)"
           @close="showDeleteModal = false"
-        ></DeleteModal>
+        ></ConfirmModal>
       </tbody>
     </table>
   </div>
@@ -72,7 +72,7 @@ import {
   TrashIcon,
 } from '@heroicons/vue/24/outline';
 import groupsService from '../../services/groups.service';
-import DeleteModal from '../modals/DeleteModal.vue';
+import ConfirmModal from '../modals/ConfirmModal.vue';
 import DateMixin from '../../mixins/parse-date.js';
 
 export default {
@@ -81,7 +81,7 @@ export default {
     EyeIcon,
     PencilSquareIcon,
     TrashIcon,
-    DeleteModal,
+    ConfirmModal,
   },
   data() {
     return {

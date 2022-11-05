@@ -55,7 +55,7 @@
             ></TrashIcon>
           </td>
         </tr>
-        <DeleteModal
+        <ConfirmModal
           v-if="showDeleteModal"
           title="student.delete.modal.title"
           :titleData="{ name: studentToDelete.firstName }"
@@ -63,7 +63,7 @@
           cancel="student.delete.modal.cancel"
           @confirm="deleteStudent(studentToDelete._id)"
           @close="showDeleteModal = false"
-        ></DeleteModal>
+        ></ConfirmModal>
       </tbody>
     </table>
   </div>
@@ -72,14 +72,14 @@
 <script>
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import usersService from '../../../services/users.service';
-import DeleteModal from '../../modals/DeleteModal.vue';
+import ConfirmModal from '../../modals/ConfirmModal.vue';
 
 export default {
   name: 'StudentsTable',
   components: {
     PencilSquareIcon,
     TrashIcon,
-    DeleteModal,
+    ConfirmModal,
   },
   data() {
     return {

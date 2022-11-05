@@ -1,7 +1,11 @@
 <script>
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  WrenchIcon,
+} from '@heroicons/vue/24/outline';
 import teachersService from '../../services/teachers.service.js';
-import DeleteModal from '../modals/DeleteModal.vue';
+import ConfirmModal from '../modals/ConfirmModal.vue';
 import DateMixin from '../../mixins/parse-date.js';
 
 export default {
@@ -9,12 +13,14 @@ export default {
   components: {
     PencilSquareIcon,
     TrashIcon,
-    DeleteModal,
+    WrenchIcon,
+    ConfirmModal,
   },
   data() {
     return {
       showDeleteModal: false,
-      teacherToDelete: {},
+      showChangeAdminStatusModal: false,
+      teacherToActOn: {},
     };
   },
   mixins: [DateMixin],
@@ -23,14 +29,30 @@ export default {
   },
   methods: {
     confirmTeacherDelete(teacher) {
-      this.teacherToDelete = teacher;
+      this.teacherToActOn = teacher;
       this.showDeleteModal = true;
+    },
+    confirmChangeAdminStatus(teacher) {
+      this.teacherToActOn = teacher;
+      this.showChangeAdminStatusModal = true;
     },
     async deleteTeacher(teacherId) {
       this.showDeleteModal = false;
       await teachersService.deleteTeacher(teacherId);
       // Reload page
       // TODO Remove teacher from table without reloading
+      this.$router.go(0);
+    },
+    async changeAdminStatus(teacher) {
+      if (teacher.role === 'admin') {
+        await teachersService.updateTeacherRole(teacher._id, 'teacher');
+      } else {
+        await teachersService.updateTeacherRole(teacher._id, 'admin');
+      }
+
+      this.showChangeAdminStatusModal = false;
+      // Reload page
+      // TODO Apply changes to table without reloading
       this.$router.go(0);
     },
   },
@@ -53,6 +75,9 @@ export default {
           </th>
           <th scope="col" class="py-3 px-6">
             {{ $t('teachers.table.email') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('teachers.table.admin') }}
           </th>
           <th scope="col" class="py-3 px-6">
             {{ $t('teachers.table.action') }}
@@ -79,6 +104,17 @@ export default {
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             {{ teacher.email }}
           </td>
+          <td
+            scope="row"
+            class="py-4 px-6 text-gray-900 whitespace-nowrap"
+            :class="{ 'text-green-400': teacher.role === 'admin' }"
+          >
+            {{
+              teacher.role === 'admin'
+                ? $t('teachers.table.adminYes')
+                : $t('teachers.table.adminNo')
+            }}
+          </td>
           <td class="flex py-4 px-6">
             <RouterLink
               :to="'/teachers/' + teacher._id"
@@ -86,24 +122,60 @@ export default {
             >
               <PencilSquareIcon class="mr-1 w-6 h-6"></PencilSquareIcon>
             </RouterLink>
+            <WrenchIcon
+              @click="confirmChangeAdminStatus(teacher)"
+              class="mr-1 w-6 h-6 cursor-pointer"
+              :class="
+                teacher.role === 'admin'
+                  ? 'text-red-500 hover:text-red-600'
+                  : 'text-blue-500 hover:text-blue-600'
+              "
+            ></WrenchIcon>
             <TrashIcon
               @click="confirmTeacherDelete(teacher)"
               class="text-red-500 hover:text-red-600 mr-1 w-6 h-6 cursor-pointer"
             ></TrashIcon>
+            <!-- TODO Tooltips -->
           </td>
         </tr>
 
-        <DeleteModal
+        <!-- Confirm delete modal -->
+        <ConfirmModal
           v-if="showDeleteModal"
           title="teacher.delete.modal.title"
           :titleData="{
-            name: `${teacherToDelete.firstName} ${teacherToDelete.lastName}`,
+            name: `${teacherToActOn.firstName} ${teacherToActOn.lastName}`,
           }"
           confirm="teacher.delete.modal.confirm"
           cancel="teacher.delete.modal.cancel"
-          @confirm="deleteTeacher(teacherToDelete._id)"
+          @confirm="deleteTeacher(teacherToActOn._id)"
           @close="showDeleteModal = false"
-        ></DeleteModal>
+        ></ConfirmModal>
+
+        <!-- Confirm change admin status modal -->
+        <ConfirmModal
+          v-if="showChangeAdminStatusModal"
+          :title="
+            teacherToActOn.role === 'admin'
+              ? 'teacher.unsetAdmin.modal.title'
+              : 'teacher.setAdmin.modal.title'
+          "
+          :titleData="{
+            name: `${teacherToActOn.firstName} ${teacherToActOn.lastName}`,
+          }"
+          :confirm="
+            teacherToActOn.role === 'admin'
+              ? 'teacher.unsetAdmin.modal.confirm'
+              : 'teacher.setAdmin.modal.confirm'
+          "
+          :cancel="
+            teacherToActOn.role === 'admin'
+              ? 'teacher.unsetAdmin.modal.cancel'
+              : 'teacher.setAdmin.modal.cancel'
+          "
+          @confirm="changeAdminStatus(teacherToActOn)"
+          @close="showChangeAdminStatusModal = false"
+        ></ConfirmModal>
       </tbody>
     </table>
   </div>

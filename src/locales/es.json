@@ -142,12 +142,29 @@
       "lastName": "Apellidos"
     },
     "new": "Nuevo docente",
-    "save": "Guardar docente"
+    "save": "Guardar docente",
+    "setAdmin": {
+      "modal": {
+        "title": "¿Seguro que deseas dar permisos de admin al docente <b>{name}</b>?",
+        "confirm": "Sí, proceder",
+        "cancel": "No, cancelar"
+      }
+    },
+    "unsetAdmin": {
+      "modal": {
+        "title": "¿Seguro que deseas quitar los permisos de admin al docente <b>{name}</b>?",
+        "confirm": "Sí, proceder",
+        "cancel": "No, cancelar"
+      }
+    }
   },
   "teachers": {
     "empty": "Todavía no hay ningún docente",
     "table": {
       "action": "Acción",
+      "admin": "Admin",
+      "adminNo": "No",
+      "adminYes": "Sí",
       "email": "Correo electrónico",
       "firstName": "Nombre",
       "lastName": "Apellidos"
