@@ -45,7 +45,7 @@
             ></TrashIcon>
           </td>
         </tr>
-        <DeleteModal
+        <ConfirmModal
           v-if="showDeleteModal"
           title="test.delete.modal.title"
           :titleData="{ name: testToDelete.name }"
@@ -53,7 +53,7 @@
           cancel="test.delete.modal.cancel"
           @confirm="deleteTest(testToDelete._id)"
           @close="showDeleteModal = false"
-        ></DeleteModal>
+        ></ConfirmModal>
       </tbody>
     </table>
   </div>
@@ -62,7 +62,7 @@
 <script>
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import testsService from '../../services/tests.service';
-import DeleteModal from '../modals/DeleteModal.vue';
+import ConfirmModal from '../modals/ConfirmModal.vue';
 import DateMixin from '../../mixins/parse-date.js';
 
 export default {
@@ -70,7 +70,7 @@ export default {
   components: {
     PencilSquareIcon,
     TrashIcon,
-    DeleteModal,
+    ConfirmModal,
   },
   data() {
     return {

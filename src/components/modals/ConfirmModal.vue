@@ -43,7 +43,7 @@
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
 
 export default {
-  name: 'DeleteModal',
+  name: 'ConfirmModal',
   components: {
     ExclamationTriangleIcon,
   },

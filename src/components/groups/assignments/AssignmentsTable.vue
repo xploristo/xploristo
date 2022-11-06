@@ -5,7 +5,7 @@ import {
   CheckIcon,
 } from '@heroicons/vue/24/outline';
 import groupsService from '../../../services/groups.service';
-import DeleteModal from '../../modals/DeleteModal.vue';
+import ConfirmModal from '../../modals/ConfirmModal.vue';
 import DateMixin from '../../../mixins/parse-date.js';
 
 export default {
@@ -14,7 +14,7 @@ export default {
     PencilSquareIcon,
     TrashIcon,
     CheckIcon,
-    DeleteModal,
+    ConfirmModal,
   },
   data() {
     return {
@@ -201,7 +201,7 @@ export default {
             </button>
           </td>
         </tr>
-        <DeleteModal
+        <ConfirmModal
           v-if="showDeleteModal"
           title="assignment.delete.modal.title"
           :titleData="{ name: assignmentToDelete.name }"
@@ -209,7 +209,7 @@ export default {
           cancel="assignment.delete.modal.cancel"
           @confirm="deleteAssignment(assignmentToDelete._id)"
           @close="showDeleteModal = false"
-        ></DeleteModal>
+        ></ConfirmModal>
       </tbody>
     </table>
   </div>
