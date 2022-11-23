@@ -1,6 +1,10 @@
 <template>
   <div>
-    <StudentEditor :groupId="groupId" :userId="userId"></StudentEditor>
+    <StudentEditor
+      :groupId="groupId"
+      :userId="userId"
+      action="update"
+    ></StudentEditor>
   </div>
 </template>
 

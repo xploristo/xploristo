@@ -11,7 +11,7 @@ export default {
   },
   props: {
     teacherId: { type: String },
-    action: { type: String, default: 'create' },
+    action: { type: String, required: true },
   },
   data() {
     return {

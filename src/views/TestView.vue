@@ -17,7 +17,7 @@ export default {
 <template>
   <main>
     <template v-if="$hasPermissionTo('tests.edit')">
-      <TestEditor :testId="testId" :action="'update'"></TestEditor>
+      <TestEditor :testId="testId" action="update"></TestEditor>
     </template>
     <template v-else>
       <TestViewer :testId="testId"></TestViewer>

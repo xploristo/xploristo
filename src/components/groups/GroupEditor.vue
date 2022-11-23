@@ -48,7 +48,7 @@ export default {
   },
   props: {
     groupId: { type: String, required: true },
-    action: { type: String, default: 'create' },
+    action: { type: String, required: true },
   },
   data() {
     return {

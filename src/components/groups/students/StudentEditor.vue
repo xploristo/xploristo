@@ -69,7 +69,7 @@ export default {
   props: {
     userId: { type: String },
     groupId: { type: String, required: true },
-    action: { type: String, default: 'create' },
+    action: { type: String, required: true },
   },
   data() {
     return {

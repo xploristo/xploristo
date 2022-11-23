@@ -1,6 +1,6 @@
 <template>
   <template v-if="$hasPermissionTo('groups.edit')">
-    <GroupEditor :groupId="groupId" :action="'update'"></GroupEditor>
+    <GroupEditor :groupId="groupId" action="update"></GroupEditor>
   </template>
   <template v-else>
     <GroupViewer :groupId="groupId"></GroupViewer>

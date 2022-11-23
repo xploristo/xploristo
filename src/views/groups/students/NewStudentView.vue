@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="section-title">{{ $t('student.new') }}</div>
-    <StudentEditor :groupId="groupId"></StudentEditor>
+    <StudentEditor :groupId="groupId" action="create"></StudentEditor>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="section-title">{{ $t('group.new') }}</div>
-    <GroupEditor :action="'create'"></GroupEditor>
+    <GroupEditor action="create"></GroupEditor>
   </div>
 </template>
 
