@@ -5,7 +5,7 @@
         $t('student.form.email')
       }}</label>
       <input
-        type="text"
+        type="email"
         id="email"
         v-model="email"
         class="text-input mb-4"
@@ -18,7 +18,7 @@
       }}</label>
       <input
         type="text"
-        id="email"
+        id="firstName"
         v-model="firstName"
         class="text-input mb-4"
         :placeholder="$t('student.form.firstName')"

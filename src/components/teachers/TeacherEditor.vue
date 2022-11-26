@@ -90,7 +90,7 @@ export default {
         $t('teacher.form.email')
       }}</label>
       <input
-        type="text"
+        type="email"
         id="email"
         v-model="email"
         class="text-input mb-4"
