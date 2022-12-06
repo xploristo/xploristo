@@ -53,6 +53,10 @@
     "subtitle": "en xploristo",
     "title": "Inicia sesión"
   },
+  "notifications": {
+    "close": "Cerrar",
+    "error": "Error"
+  },
   "reset": {
     "action": "Resetear contraseña",
     "email": "Correo electrónico",

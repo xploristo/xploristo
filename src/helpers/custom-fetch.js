@@ -1,4 +1,5 @@
 import { useUserStore } from '../stores/user.js';
+import { useNotificationsStore } from '../stores/notifications.js';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -43,9 +44,15 @@ async function handleResponse(response) {
     if (response.status === 401) {
       const userStore = useUserStore();
       userStore.logout();
+    } else {
+      const notificationsStore = useNotificationsStore();
+      response = await response.json();
+      notificationsStore.addError({
+        errorCode: response.errorCode || response.error,
+        message: response.message,
+      });
     }
 
-    // TODO Show error notification
     return Promise.reject(response);
   }
 

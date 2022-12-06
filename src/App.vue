@@ -4,6 +4,7 @@
   </header>
 
   <main class="main">
+    <ErrorNotification></ErrorNotification>
     <RouterView></RouterView>
   </main>
 </template>
@@ -12,6 +13,7 @@
 import { RouterView } from 'vue-router';
 
 import NavBar from './components/nav/NavBar.vue';
+import ErrorNotification from './components/notifications/ErrorNotification.vue';
 import { useUserStore } from './stores/user.js';
 
 let userStore;
@@ -20,6 +22,7 @@ export default {
   components: {
     RouterView,
     NavBar,
+    ErrorNotification,
   },
   computed: {
     isLoggedIn: () => userStore.isLoggedIn,
