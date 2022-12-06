@@ -37,6 +37,20 @@
           />
         </div>
 
+        <div class="mb-6">
+          <label for="confirmPassword" class="input-label">{{
+            $t('reset.confirmPassword')
+          }}</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            v-model="confirmPassword"
+            class="text-input"
+            :pattern="password"
+            required=""
+          />
+        </div>
+
         <button type="submit" class="button-blue">
           {{ $t('reset.action') }}
         </button>
@@ -57,13 +71,18 @@ export default {
     return {
       oldPassword: this.generatedPassword,
       password: null,
+      confirmPassword: null,
     };
   },
   methods: {
     async setPassword() {
       try {
         const userStore = useUserStore();
-        await userStore.setPassword(this.oldPassword, this.password);
+        await userStore.setPassword(
+          this.oldPassword,
+          this.password,
+          this.confirmPassword
+        );
         this.$router.push({ name: 'home' });
       } catch (error) {
         // TODO Handle error properly

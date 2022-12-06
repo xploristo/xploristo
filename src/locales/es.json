@@ -59,6 +59,7 @@
   },
   "reset": {
     "action": "Resetear contraseña",
+    "confirmPassword": "Confirma la contraseña",
     "email": "Correo electrónico",
     "emailPlaceholder": "name{'@'}example.org",
     "oldPassword": "Contraseña actual",

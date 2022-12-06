@@ -1,10 +1,11 @@
 import { customFetch } from '../helpers/custom-fetch.js';
 
 export default {
-  setPassword(oldPassword, password) {
+  setPassword(oldPassword, password, confirmPassword) {
     return customFetch('/auth/password', 'PUT', {
       oldPassword,
       password,
+      confirmPassword,
     });
   },
   login(email, password) {

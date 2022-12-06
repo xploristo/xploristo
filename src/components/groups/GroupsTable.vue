@@ -6,7 +6,7 @@
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="py-3 px-6">Clase</th>
+          <th scope="col" class="py-3 px-6">Asignatura</th>
           <th scope="col" class="py-3 px-6">Fecha de última edición</th>
           <th scope="col" class="py-3 px-6">Acción</th>
         </tr>
