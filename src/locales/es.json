@@ -191,6 +191,7 @@
     "new": "Nuevo test",
     "save": "Guardar test",
     "saveSelection": "Guardar selección",
+    "sendResult": "Enviar",
     "question": {
       "instructions": {
         "selection": "Selecciona el texto del documento que corresponda a la pregunta."

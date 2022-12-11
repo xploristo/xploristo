@@ -3,7 +3,15 @@
 }
 
 .button-blue {
-  @apply button text-white bg-blue-500 hover:bg-blue-600  focus:ring-blue-200 ;
+  @apply button text-white bg-blue-500 hover:bg-blue-600  focus:ring-blue-200;
+}
+
+.button-small {
+  @apply focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full h-5 sm:w-auto px-4 py-2.5 text-center inline-flex items-center;
+}
+
+.button-small-blue {
+  @apply button-small text-white bg-blue-500 hover:bg-blue-600  focus:ring-blue-200;
 }
 
 .button-disabled {

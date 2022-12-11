@@ -1,9 +1,5 @@
 <script>
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CheckIcon,
-} from '@heroicons/vue/24/outline';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 
 import TestQuestion from './questions/TestQuestion.vue';
 import PdfViewer from '../viewer/PdfViewer.vue';
@@ -15,7 +11,6 @@ export default {
   components: {
     ChevronLeftIcon,
     ChevronRightIcon,
-    CheckIcon,
     PdfViewer,
     TestQuestion,
   },
@@ -134,12 +129,14 @@ export default {
           "
           class="icon-small-blue ml-2 cursor-pointer"
         ></ChevronRightIcon>
-        <!-- TODO + modal ? -->
-        <CheckIcon
+        <!-- TODO Confirm modal -->
+        <button
           v-if="assignmentId"
           @click="sendResult"
-          class="icon-small-blue ml-2 stroke-4 cursor-pointer"
-        ></CheckIcon>
+          class="button-small button-blue ml-2"
+        >
+          {{ $t('test.sendResult') }}
+        </button>
       </div>
     </div>
 
