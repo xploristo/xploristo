@@ -106,7 +106,12 @@ export default {
       <div class="flex">
         <ChevronLeftIcon
           @click="selectedQuestionIndex > 0 && selectedQuestionIndex--"
-          class="icon-small-blue ml-2 cursor-pointer"
+          class="ml-2"
+          :class="
+            selectedQuestionIndex > 0
+              ? 'icon-small-blue cursor-pointer'
+              : 'icon-small-disabled'
+          "
         ></ChevronLeftIcon>
         <div class="hidden md:block">
           <div
@@ -127,7 +132,12 @@ export default {
             selectedQuestionIndex < questions.length - 1 &&
               selectedQuestionIndex++
           "
-          class="icon-small-blue ml-2 cursor-pointer"
+          class="ml-2"
+          :class="
+            selectedQuestionIndex < questions.length - 1
+              ? 'icon-small-blue cursor-pointer'
+              : 'icon-small-disabled'
+          "
         ></ChevronRightIcon>
         <!-- TODO Confirm modal -->
         <button
