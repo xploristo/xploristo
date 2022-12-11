@@ -238,17 +238,24 @@ export default {
   },
   methods: {
     addQuestion(type) {
+      const answers = [
+        {
+          index: 0,
+          answer: null,
+          correct: ['selection', 'text'].includes(type),
+        },
+      ];
+
+      if (['singleChoice', 'multiChoice'].includes(type)) {
+        answers.push({ index: 1, answer: null, correct: false });
+        answers.push({ index: 2, answer: null, correct: false });
+      }
+
       this.testStore.addQuestion({
         index: this.questions.length,
         question: '',
         type,
-        answers: [
-          {
-            index: 0,
-            answer: null,
-            correct: ['selection', 'text'].includes(type),
-          },
-        ],
+        answers,
       });
       this.shouldShowAddQuestionDropdown = false;
     },
