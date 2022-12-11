@@ -48,6 +48,10 @@
             class="text-input"
             :pattern="password"
             required=""
+            @invalid="
+              (event) =>
+                event.target.setCustomValidity($t('reset.passwordsDoNotMatch'))
+            "
           />
         </div>
 

@@ -64,6 +64,7 @@
     "emailPlaceholder": "name{'@'}example.org",
     "oldPassword": "Contraseña actual",
     "password": "Nueva contraseña",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden.",
     "subtitle": "en xploristo",
     "title": "Resetea tu contraseña"
   },
