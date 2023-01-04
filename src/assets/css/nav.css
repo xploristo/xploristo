@@ -14,3 +14,11 @@ nav {
 .nav-section-active {
   @apply block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white;
 }
+
+.account-menu-dropdown {
+  @apply z-10 mt-8 w-44 bg-white rounded divide-y divide-gray-100 shadow;
+
+  position: absolute;
+  inset: 0px auto auto 0px;
+  transform: translate3d(0px, 10px, 0px);
+}
