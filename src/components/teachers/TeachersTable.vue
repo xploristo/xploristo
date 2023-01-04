@@ -1,17 +1,20 @@
 <script>
 import {
   PencilSquareIcon,
+  EnvelopeIcon,
   TrashIcon,
   WrenchIcon,
 } from '@heroicons/vue/24/outline';
 import teachersService from '../../services/teachers.service.js';
 import ConfirmModal from '../modals/ConfirmModal.vue';
 import DateMixin from '../../mixins/parse-date.js';
+import authService from '../../services/auth.service';
 
 export default {
   name: 'TeachersTable',
   components: {
     PencilSquareIcon,
+    EnvelopeIcon,
     TrashIcon,
     WrenchIcon,
     ConfirmModal,
@@ -19,6 +22,7 @@ export default {
   data() {
     return {
       showDeleteModal: false,
+      showResendPasswordEmailModal: false,
       showChangeAdminStatusModal: false,
       teacherToActOn: {},
     };
@@ -32,6 +36,10 @@ export default {
       this.teacherToActOn = teacher;
       this.showDeleteModal = true;
     },
+    confirmResendPasswordEmail(teacher) {
+      this.teacherToActOn = teacher;
+      this.showResendPasswordEmailModal = true;
+    },
     confirmChangeAdminStatus(teacher) {
       this.teacherToActOn = teacher;
       this.showChangeAdminStatusModal = true;
@@ -42,6 +50,11 @@ export default {
       // Reload page
       // TODO Remove teacher from table without reloading
       this.$router.go(0);
+    },
+    async resendPasswordEmail(teacherId) {
+      await authService.resetPassword({ userId: teacherId });
+      // TODO Show confirm
+      // TODO Do this for students too
     },
     async changeAdminStatus(teacher) {
       if (teacher.role === 'admin') {
@@ -122,6 +135,11 @@ export default {
             >
               <PencilSquareIcon class="mr-1 w-6 h-6"></PencilSquareIcon>
             </RouterLink>
+            <EnvelopeIcon
+              @click="confirmResendPasswordEmail(teacher)"
+              class="text-blue-500 hover:text-blue-600 mr-1 w-6 h-6 cursor-pointer"
+            >
+            </EnvelopeIcon>
             <WrenchIcon
               @click="confirmChangeAdminStatus(teacher)"
               class="mr-1 w-6 h-6 cursor-pointer"
@@ -150,6 +168,19 @@ export default {
           cancel="teacher.delete.modal.cancel"
           @confirm="deleteTeacher(teacherToActOn._id)"
           @close="showDeleteModal = false"
+        ></ConfirmModal>
+
+        <!-- Confirm resend password email modal -->
+        <ConfirmModal
+          v-if="showResendPasswordEmailModal"
+          title="teacher.resendPasswordEmail.modal.title"
+          :titleData="{
+            name: `${teacherToActOn.firstName} ${teacherToActOn.lastName}`,
+          }"
+          confirm="teacher.resendPasswordEmail.modal.confirm"
+          cancel="teacher.resendPasswordEmail.modal.cancel"
+          @confirm="resendPasswordEmail(teacherToActOn._id)"
+          @close="showResendPasswordEmailModal = false"
         ></ConfirmModal>
 
         <!-- Confirm change admin status modal -->

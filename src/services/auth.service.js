@@ -8,6 +8,12 @@ export default {
       confirmPassword,
     });
   },
+  resetPassword({ userId, email }) {
+    let path =
+      '/auth/password' + (userId ? `?userId=${userId}` : `?email=${email}`);
+
+    return customFetch(path, 'DELETE');
+  },
   login(email, password) {
     return customFetch('/auth', 'POST', {
       email,
