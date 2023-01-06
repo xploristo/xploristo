@@ -1,3 +1,56 @@
+<script>
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  EnvelopeIcon,
+} from '@heroicons/vue/24/outline';
+import authService from '../../../services/auth.service';
+import usersService from '../../../services/users.service';
+import ConfirmModal from '../../modals/ConfirmModal.vue';
+
+export default {
+  name: 'StudentsTable',
+  components: {
+    PencilSquareIcon,
+    TrashIcon,
+    EnvelopeIcon,
+    ConfirmModal,
+  },
+  data() {
+    return {
+      showDeleteModal: false,
+      showResendPasswordEmailModal: false,
+      studentToActOn: {},
+    };
+  },
+  props: {
+    students: { type: Array },
+    groupId: { type: String, required: true },
+  },
+  methods: {
+    confirmStudentDelete(student) {
+      this.studentToActOn = student;
+      this.showDeleteModal = true;
+    },
+    confirmResendPasswordEmail(student) {
+      this.studentToActOn = student;
+      this.showResendPasswordEmailModal = true;
+    },
+    async deleteStudent(studentId) {
+      this.showDeleteModal = false;
+      await usersService.deleteUser(studentId, this.groupId);
+      // Reload page
+      // TODO Remove student from table without reloading
+      this.$router.go(0);
+    },
+    async resendPasswordEmail(studentId) {
+      await authService.resetPassword({ userId: studentId });
+      // TODO Show confirm
+    },
+  },
+};
+</script>
+
 <template>
   <div class="overflow-x-auto relative sm:rounded-lg">
     <!-- TODO Search input -->
@@ -49,60 +102,42 @@
             >
               <PencilSquareIcon class="mr-1 w-6 h-6"></PencilSquareIcon>
             </RouterLink>
+            <EnvelopeIcon
+              @click="confirmResendPasswordEmail(student)"
+              class="text-blue-500 hover:text-blue-600 mr-1 w-6 h-6 cursor-pointer"
+            >
+            </EnvelopeIcon>
             <TrashIcon
               @click="confirmStudentDelete(student)"
               class="text-red-500 hover:text-red-600 mr-1 w-6 h-6 cursor-pointer"
             ></TrashIcon>
           </td>
         </tr>
+
+        <!-- Confirm delete modal -->
         <ConfirmModal
           v-if="showDeleteModal"
           title="student.delete.modal.title"
-          :titleData="{ name: studentToDelete.firstName }"
+          :titleData="{ name: studentToActOn.firstName }"
           confirm="student.delete.modal.confirm"
           cancel="student.delete.modal.cancel"
-          @confirm="deleteStudent(studentToDelete._id)"
+          @confirm="deleteStudent(studentToActOn._id)"
           @close="showDeleteModal = false"
+        ></ConfirmModal>
+
+        <!-- Confirm resend password email modal -->
+        <ConfirmModal
+          v-if="showResendPasswordEmailModal"
+          title="student.resendPasswordEmail.modal.title"
+          :titleData="{
+            name: `${studentToActOn.firstName} ${studentToActOn.lastName}`,
+          }"
+          confirm="student.resendPasswordEmail.modal.confirm"
+          cancel="student.resendPasswordEmail.modal.cancel"
+          @confirm="resendPasswordEmail(studentToActOn._id)"
+          @close="showResendPasswordEmailModal = false"
         ></ConfirmModal>
       </tbody>
     </table>
   </div>
 </template>
-
-<script>
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
-import usersService from '../../../services/users.service';
-import ConfirmModal from '../../modals/ConfirmModal.vue';
-
-export default {
-  name: 'StudentsTable',
-  components: {
-    PencilSquareIcon,
-    TrashIcon,
-    ConfirmModal,
-  },
-  data() {
-    return {
-      showDeleteModal: false,
-      studentToDelete: {},
-    };
-  },
-  props: {
-    students: { type: Array },
-    groupId: { type: String, required: true },
-  },
-  methods: {
-    confirmStudentDelete(student) {
-      this.studentToDelete = student;
-      this.showDeleteModal = true;
-    },
-    async deleteStudent(studentId) {
-      this.showDeleteModal = false;
-      await usersService.deleteUser(studentId, this.groupId);
-      // Reload page
-      // TODO Remove student from table without reloading
-      this.$router.go(0);
-    },
-  },
-};
-</script>

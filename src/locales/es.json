@@ -120,6 +120,13 @@
       "lastName": "Apellidos"
     },
     "new": "Nuevo estudiante",
+    "resendPasswordEmail": {
+      "modal": {
+        "title": "¿Deseas reenviar el email con su contraseña a {name}? Si ha definido una contraseña, esta se reestablecerá.",
+        "confirm": "Sí, proceder",
+        "cancel": "No, cancelar"
+      }
+    },
     "save": "Guardar estudiante"
   },
   "result": {

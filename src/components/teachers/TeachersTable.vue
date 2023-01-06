@@ -54,7 +54,6 @@ export default {
     async resendPasswordEmail(teacherId) {
       await authService.resetPassword({ userId: teacherId });
       // TODO Show confirm
-      // TODO Do this for students too
     },
     async changeAdminStatus(teacher) {
       if (teacher.role === 'admin') {
