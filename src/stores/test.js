@@ -49,10 +49,12 @@ export const useTestStore = defineStore('test', {
       this.test.questions[questionIndex].answers.push(answer);
     },
     deleteAnswer(questionIndex, answerIndex) {
-      this.test.questions[questionIndex].answers.splice(answerIndex, 1);
-      this.test.questions[questionIndex].answers.forEach((answer, index) => {
-        answer.index = index;
-      });
+      if (this.test.questions[questionIndex].answers.length > 1) {
+        this.test.questions[questionIndex].answers.splice(answerIndex, 1);
+        this.test.questions[questionIndex].answers.forEach((answer, index) => {
+          answer.index = index;
+        });
+      }
     },
     saveAnswer(questionIndex, answer) {
       this.test.questions[questionIndex].answers[answer.index] = answer;

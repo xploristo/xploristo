@@ -214,7 +214,11 @@ export default {
               <div class="ml-3 py-2">
                 <TrashIcon
                   aria-hidden="true"
-                  class="w-5 h-5 cursor-pointer"
+                  class="w-5 h-5"
+                  :class="{
+                    'cursor-pointer': question.answers.length > 1,
+                    'text-white': question.answers.length < 2,
+                  }"
                   @click="deleteAnswer(question.index, answer.index)"
                 ></TrashIcon>
               </div>
