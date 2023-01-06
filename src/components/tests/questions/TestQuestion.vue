@@ -149,8 +149,6 @@ export default {
           <div class="basis-full">
             {{ answer.answer }}
           </div>
-
-          <!-- TODO Add trash button, move up, move down -->
         </div>
       </template>
     </div>

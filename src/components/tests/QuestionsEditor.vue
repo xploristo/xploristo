@@ -1,3 +1,107 @@
+<script>
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline';
+
+import { useTestStore } from '../../stores/test.js';
+import DocumentModal from './DocumentModal.vue';
+
+export default {
+  name: 'QuestionsEditor',
+  components: {
+    ChevronDownIcon,
+    ChevronUpIcon,
+    TrashIcon,
+    DocumentModal,
+  },
+  props: {
+    testId: String,
+  },
+  data() {
+    return {
+      pdfUrl: null,
+      shouldShowAddQuestionDropdown: false,
+      questionToSelectIndex: null,
+    };
+  },
+  setup() {
+    const testStore = useTestStore();
+
+    return { testStore };
+  },
+  computed: {
+    questions() {
+      return this.testStore.questions;
+    },
+  },
+  async mounted() {
+    await this.testStore.getTest(this.testId);
+    this.pdfUrl = this.testStore.documentDownloadUrl;
+  },
+  methods: {
+    addQuestion(type) {
+      const answers = [
+        {
+          index: 0,
+          answer: null,
+          correct: ['selection', 'text'].includes(type),
+        },
+      ];
+
+      if (['singleChoice', 'multiChoice'].includes(type)) {
+        answers.push({ index: 1, answer: null, correct: false });
+        answers.push({ index: 2, answer: null, correct: false });
+      }
+
+      this.testStore.addQuestion({
+        index: this.questions.length,
+        question: '',
+        type,
+        answers,
+      });
+      this.shouldShowAddQuestionDropdown = false;
+    },
+    onAnswerSelected(selection, serializedRange) {
+      const questionIndex = this.questions.findIndex(
+        (question) => question.index === this.questionToSelectIndex
+      );
+      this.testStore.saveAnswer(questionIndex, {
+        index: 0,
+        answer: {
+          selection,
+          textSelection: selection.toString(),
+          serializedRange,
+        },
+        correct: true,
+      });
+    },
+    addChoiceAnswer(questionIndex) {
+      this.testStore.addAnswer(questionIndex, {
+        index: this.questions[questionIndex].answers.length,
+        answer: '',
+        correct: false,
+      });
+    },
+    onSingleChoiceAnswerChange(event, questionIndex) {
+      const answerIndex = +event.target.value;
+      const answers = this.questions[questionIndex].answers;
+      answers.forEach((answer) => {
+        answer.correct = answer.index === answerIndex;
+      });
+      this.testStore.saveAnswers(questionIndex, answers);
+    },
+    deleteQuestion(questionIndex) {
+      this.testStore.deleteQuestion(questionIndex);
+    },
+    deleteAnswer(questionIndex, answerIndex) {
+      this.testStore.deleteAnswer(questionIndex, answerIndex);
+    },
+  },
+};
+</script>
+
 <template>
   <div>
     <div
@@ -107,6 +211,13 @@
                 >
                 </textarea>
               </div>
+              <div class="ml-3 py-2">
+                <TrashIcon
+                  aria-hidden="true"
+                  class="w-5 h-5 cursor-pointer"
+                  @click="deleteAnswer(question.index, answer.index)"
+                ></TrashIcon>
+              </div>
 
               <!-- TODO Add buttons: move up, move down -->
             </div>
@@ -193,104 +304,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  TrashIcon,
-} from '@heroicons/vue/24/outline';
-
-import { useTestStore } from '../../stores/test.js';
-import DocumentModal from './DocumentModal.vue';
-
-export default {
-  name: 'QuestionsEditor',
-  components: {
-    ChevronDownIcon,
-    ChevronUpIcon,
-    TrashIcon,
-    DocumentModal,
-  },
-  props: {
-    testId: String,
-  },
-  data() {
-    return {
-      pdfUrl: null,
-      shouldShowAddQuestionDropdown: false,
-      questionToSelectIndex: null,
-    };
-  },
-  setup() {
-    const testStore = useTestStore();
-
-    return { testStore };
-  },
-  computed: {
-    questions() {
-      return this.testStore.questions;
-    },
-  },
-  async mounted() {
-    await this.testStore.getTest(this.testId);
-    this.pdfUrl = this.testStore.documentDownloadUrl;
-  },
-  methods: {
-    addQuestion(type) {
-      const answers = [
-        {
-          index: 0,
-          answer: null,
-          correct: ['selection', 'text'].includes(type),
-        },
-      ];
-
-      if (['singleChoice', 'multiChoice'].includes(type)) {
-        answers.push({ index: 1, answer: null, correct: false });
-        answers.push({ index: 2, answer: null, correct: false });
-      }
-
-      this.testStore.addQuestion({
-        index: this.questions.length,
-        question: '',
-        type,
-        answers,
-      });
-      this.shouldShowAddQuestionDropdown = false;
-    },
-    onAnswerSelected(selection, serializedRange) {
-      const questionIndex = this.questions.findIndex(
-        (question) => question.index === this.questionToSelectIndex
-      );
-      this.testStore.saveAnswer(questionIndex, {
-        index: 0,
-        answer: {
-          selection,
-          textSelection: selection.toString(),
-          serializedRange,
-        },
-        correct: true,
-      });
-    },
-    addChoiceAnswer(questionIndex) {
-      this.testStore.addAnswer(questionIndex, {
-        index: this.questions[questionIndex].answers.length,
-        answer: '',
-        correct: false,
-      });
-    },
-    onSingleChoiceAnswerChange(event, questionIndex) {
-      const answerIndex = +event.target.value;
-      const answers = this.questions[questionIndex].answers;
-      answers.forEach((answer) => {
-        answer.correct = answer.index === answerIndex;
-      });
-      this.testStore.saveAnswers(questionIndex, answers);
-    },
-    deleteQuestion(questionIndex) {
-      this.testStore.deleteQuestion(questionIndex);
-    },
-  },
-};
-</script>
