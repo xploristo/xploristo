@@ -56,6 +56,41 @@ export const useTestStore = defineStore('test', {
         });
       }
     },
+    moveAnswerUp(questionIndex, answerIndex) {
+      if (
+        answerIndex > 0 &&
+        this.test.questions[questionIndex].answers.length > 1
+      ) {
+        const previousAnswer =
+          this.test.questions[questionIndex].answers[answerIndex - 1];
+        previousAnswer.index = answerIndex;
+
+        this.test.questions[questionIndex].answers[answerIndex - 1] =
+          this.test.questions[questionIndex].answers[answerIndex];
+        this.test.questions[questionIndex].answers[answerIndex - 1].index =
+          answerIndex - 1;
+
+        this.test.questions[questionIndex].answers[answerIndex] =
+          previousAnswer;
+      }
+    },
+    moveAnswerDown(questionIndex, answerIndex) {
+      if (
+        this.test.questions[questionIndex].answers.length > 1 &&
+        answerIndex < this.test.questions[questionIndex].answers.length - 1
+      ) {
+        const nextAnswer =
+          this.test.questions[questionIndex].answers[answerIndex + 1];
+        nextAnswer.index = answerIndex;
+
+        this.test.questions[questionIndex].answers[answerIndex + 1] =
+          this.test.questions[questionIndex].answers[answerIndex];
+        this.test.questions[questionIndex].answers[answerIndex + 1].index =
+          answerIndex + 1;
+
+        this.test.questions[questionIndex].answers[answerIndex] = nextAnswer;
+      }
+    },
     saveAnswer(questionIndex, answer) {
       this.test.questions[questionIndex].answers[answer.index] = answer;
     },

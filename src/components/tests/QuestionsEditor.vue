@@ -98,6 +98,12 @@ export default {
     deleteAnswer(questionIndex, answerIndex) {
       this.testStore.deleteAnswer(questionIndex, answerIndex);
     },
+    moveAnswerUp(questionIndex, answerIndex) {
+      this.testStore.moveAnswerUp(questionIndex, answerIndex);
+    },
+    moveAnswerDown(questionIndex, answerIndex) {
+      this.testStore.moveAnswerDown(questionIndex, answerIndex);
+    },
   },
 };
 </script>
@@ -211,19 +217,48 @@ export default {
                 >
                 </textarea>
               </div>
+              <!-- Move answer up -->
+              <div class="ml-3 py-2">
+                <ChevronUpIcon
+                  aria-hidden="true"
+                  class="icon-small"
+                  :class="{
+                    'cursor-pointer':
+                      question.answers.length > 1 && answer.index > 0,
+                    'icon-small-disabled':
+                      question.answers.length < 2 || answer.index < 1,
+                  }"
+                  @click="moveAnswerUp(question.index, answer.index)"
+                ></ChevronUpIcon>
+              </div>
+              <!-- Move answer down -->
+              <div class="ml-3 py-2">
+                <ChevronDownIcon
+                  aria-hidden="true"
+                  class="icon-small"
+                  :class="{
+                    'cursor-pointer':
+                      question.answers.length > 1 &&
+                      answer.index < question.answers.length - 1,
+                    'icon-small-disabled':
+                      question.answers.length < 2 ||
+                      answer.index === question.answers.length - 1,
+                  }"
+                  @click="moveAnswerDown(question.index, answer.index)"
+                ></ChevronDownIcon>
+              </div>
+              <!-- Delete answer -->
               <div class="ml-3 py-2">
                 <TrashIcon
                   aria-hidden="true"
-                  class="w-5 h-5"
+                  class="icon-small"
                   :class="{
                     'cursor-pointer': question.answers.length > 1,
-                    'text-white': question.answers.length < 2,
+                    'icon-small-disabled': question.answers.length < 2,
                   }"
                   @click="deleteAnswer(question.index, answer.index)"
                 ></TrashIcon>
               </div>
-
-              <!-- TODO Add buttons: move up, move down -->
             </div>
 
             <!-- TODO Add plus button on the right of last answer? -->
