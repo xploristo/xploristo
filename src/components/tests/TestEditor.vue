@@ -57,8 +57,16 @@ export default {
     questions() {
       return this.testStore.questions;
     },
+    testValidationErrors() {
+      // TODO Show errors!
+      return this.testStore.testValidationErrors;
+    },
     submitDisabled() {
-      return !this.name.length || (this.action === 'create' && !this.file);
+      return (
+        !this.name.length ||
+        (this.action === 'create' && !this.file) ||
+        this.testValidationErrors.length
+      );
     },
   },
   methods: {

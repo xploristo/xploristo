@@ -1,59 +1,3 @@
-<template>
-  <div>
-    <div
-      class="document-uploader-container"
-      @drop.prevent="dropHandler"
-      @dragover.prevent="isDraggingOver = true"
-      @dragleave="isDraggingOver = false"
-    >
-      <label
-        for="dropzone-file"
-        class="document-uploader-dropzone"
-        :class="{ 'bg-gray-100': isDraggingOver }"
-      >
-        <div class="document-uploader-content">
-          <template v-if="file || documentName">
-            <DocumentArrowUpIcon
-              v-if="file"
-              class="document-uploader-icon"
-            ></DocumentArrowUpIcon>
-            <DocumentIcon v-else class="document-uploader-icon"></DocumentIcon>
-            <p class="text-sm text-gray-900">
-              {{ file?.name || documentName }}
-            </p>
-            <hr class="document-uploader-separator" />
-            <p class="text-sm text-gray-500">
-              <span class="font-semibold">¿Quieres subir otro documento?</span>
-            </p>
-            <p class="mb-2 text-sm text-gray-500">
-              Haz clic o arrastra el nuevo fichero hasta aquí
-            </p>
-            <p class="text-xs text-gray-500">Un único PDF permitido por test</p>
-          </template>
-
-          <template v-else>
-            <ArrowUpTrayIcon
-              class="mb-3 w-10 h-10 text-gray-400"
-            ></ArrowUpTrayIcon>
-            <p class="mb-2 text-sm text-gray-500">
-              <span class="font-semibold">Haz clic</span>
-              o arrastra el fichero hasta aquí
-            </p>
-            <p class="text-xs text-gray-500">Un único PDF permitido por test</p>
-          </template>
-        </div>
-        <input
-          id="dropzone-file"
-          type="file"
-          accept="application/pdf"
-          class="hidden"
-          @change="onFileSelected"
-        />
-      </label>
-    </div>
-  </div>
-</template>
-
 <script>
 import {
   DocumentIcon,
@@ -135,3 +79,59 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <div
+      class="document-uploader-container"
+      @drop.prevent="dropHandler"
+      @dragover.prevent="isDraggingOver = true"
+      @dragleave="isDraggingOver = false"
+    >
+      <label
+        for="dropzone-file"
+        class="document-uploader-dropzone"
+        :class="{ 'bg-gray-100': isDraggingOver }"
+      >
+        <div class="document-uploader-content">
+          <template v-if="file || documentName">
+            <DocumentArrowUpIcon
+              v-if="file"
+              class="document-uploader-icon"
+            ></DocumentArrowUpIcon>
+            <DocumentIcon v-else class="document-uploader-icon"></DocumentIcon>
+            <p class="text-sm text-gray-900">
+              {{ file?.name || documentName }}
+            </p>
+            <hr class="document-uploader-separator" />
+            <p class="text-sm text-gray-500">
+              <span class="font-semibold">¿Quieres subir otro documento?</span>
+            </p>
+            <p class="mb-2 text-sm text-gray-500">
+              Haz clic o arrastra el nuevo fichero hasta aquí
+            </p>
+            <p class="text-xs text-gray-500">Un único PDF permitido por test</p>
+          </template>
+
+          <template v-else>
+            <ArrowUpTrayIcon
+              class="mb-3 w-10 h-10 text-gray-400"
+            ></ArrowUpTrayIcon>
+            <p class="mb-2 text-sm text-gray-500">
+              <span class="font-semibold">Haz clic</span>
+              o arrastra el fichero hasta aquí
+            </p>
+            <p class="text-xs text-gray-500">Un único PDF permitido por test</p>
+          </template>
+        </div>
+        <input
+          id="dropzone-file"
+          type="file"
+          accept="application/pdf"
+          class="hidden"
+          @change="onFileSelected"
+        />
+      </label>
+    </div>
+  </div>
+</template>

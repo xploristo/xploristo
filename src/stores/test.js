@@ -138,5 +138,58 @@ export const useTestStore = defineStore('test', {
     documentDownloadUrl(state) {
       return state.test.documentDownloadUrl;
     },
+    testValidationErrors(state) {
+      let errors = [];
+
+      state.test.questions.forEach((question) => {
+        if (!question.question) {
+          errors.push({
+            questionIndex: question.index,
+            reason: 'emptyQuestion',
+          });
+        }
+
+        let isCorrectAnswerSelected = false;
+        question.answers.forEach((answer) => {
+          if (question.type === 'selection') {
+            isCorrectAnswerSelected = true;
+            if (!answer.answer.textSelection) {
+              errors.push({
+                questionIndex: question.index,
+                reason: 'emptySelectionAnswer',
+              });
+            }
+          } else if (question.type === 'text') {
+            isCorrectAnswerSelected = true;
+            if (!answer.answer) {
+              errors.push({
+                questionIndex: question.index,
+                reason: 'emptyTextAnswer',
+              });
+            }
+          } else {
+            if (answer.correct) {
+              isCorrectAnswerSelected = true;
+            }
+            if (!answer.answer) {
+              errors.push({
+                questionIndex: question.index,
+                answerIndex: answer.index,
+                reason: 'emptyChoiceAnswer',
+              });
+            }
+          }
+        });
+
+        if (!isCorrectAnswerSelected) {
+          errors.push({
+            questionIndex: question.index,
+            reason: 'noCorrectAnswerSelected',
+          });
+        }
+      });
+
+      return errors;
+    },
   },
 });
