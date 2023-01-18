@@ -45,6 +45,33 @@ export const useTestStore = defineStore('test', {
         question.index = index;
       });
     },
+    moveQuestionUp(questionIndex) {
+      if (questionIndex > 0 && this.test.questions.length > 1) {
+        const previousQuestion = this.test.questions[questionIndex - 1];
+        previousQuestion.index = questionIndex;
+
+        this.test.questions[questionIndex - 1] =
+          this.test.questions[questionIndex];
+        this.test.questions[questionIndex - 1].index = questionIndex - 1;
+
+        this.test.questions[questionIndex] = previousQuestion;
+      }
+    },
+    moveQuestionDown(questionIndex) {
+      if (
+        this.test.questions.length > 1 &&
+        questionIndex < this.test.questions.length - 1
+      ) {
+        const nextQuestion = this.test.questions[questionIndex + 1];
+        nextQuestion.index = questionIndex;
+
+        this.test.questions[questionIndex + 1] =
+          this.test.questions[questionIndex];
+        this.test.questions[questionIndex + 1].index = questionIndex + 1;
+
+        this.test.questions[questionIndex] = nextQuestion;
+      }
+    },
     addAnswer(questionIndex, answer) {
       this.test.questions[questionIndex].answers.push(answer);
     },

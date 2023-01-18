@@ -95,6 +95,12 @@ export default {
     deleteQuestion(questionIndex) {
       this.testStore.deleteQuestion(questionIndex);
     },
+    moveQuestionUp(questionIndex) {
+      this.testStore.moveQuestionUp(questionIndex);
+    },
+    moveQuestionDown(questionIndex) {
+      this.testStore.moveQuestionDown(questionIndex);
+    },
     deleteAnswer(questionIndex, answerIndex) {
       this.testStore.deleteAnswer(questionIndex, answerIndex);
     },
@@ -223,10 +229,8 @@ export default {
                   aria-hidden="true"
                   class="icon-small"
                   :class="{
-                    'cursor-pointer':
-                      question.answers.length > 1 && answer.index > 0,
-                    'icon-small-disabled':
-                      question.answers.length < 2 || answer.index < 1,
+                    'cursor-pointer': answer.index > 0,
+                    'icon-small-disabled': answer.index < 1,
                   }"
                   @click="moveAnswerUp(question.index, answer.index)"
                 ></ChevronUpIcon>
@@ -275,9 +279,29 @@ export default {
       <div class="flex-none">
         <TrashIcon
           aria-hidden="true"
-          class="ml-2 w-5 h-5 cursor-pointer"
+          class="ml-2 icon-small cursor-pointer"
           @click="deleteQuestion(question.index)"
         ></TrashIcon>
+        <ChevronUpIcon
+          aria-hidden="true"
+          class="mt-2 ml-2 icon-small"
+          :class="{
+            'cursor-pointer': question.index > 0,
+            'icon-small-disabled': question.index < 1,
+          }"
+          @click="moveQuestionUp(question.index)"
+        ></ChevronUpIcon>
+        <ChevronDownIcon
+          aria-hidden="true"
+          class="mt-2 ml-2 icon-small"
+          :class="{
+            'cursor-pointer':
+              questions.length > 1 && question.index < questions.length - 1,
+            'icon-small-disabled':
+              questions.length < 2 || question.index === questions.length - 1,
+          }"
+          @click="moveQuestionDown(question.index)"
+        ></ChevronDownIcon>
       </div>
     </div>
 
