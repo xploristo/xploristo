@@ -22,7 +22,7 @@
   <div
     v-if="showDropdown"
     id="dropdownAvatarName"
-    class="z-10 mt-8 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+    class="z-50 mt-8 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
     style="
       position: absolute;
       inset: 0px auto auto 0px;

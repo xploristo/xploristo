@@ -1,5 +1,5 @@
 .test-container {
-  @apply bg-white px-5 sm:px-10 py-5 sm:py-10 fixed w-full h-auto z-20 left-0 border-b border-gray-200;
+  @apply bg-white px-5 sm:px-10 py-5 sm:py-10 fixed w-full h-auto z-10 left-0 border-b border-gray-200;
 
   top: 60px;
   max-height: 50%;
