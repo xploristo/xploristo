@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 import testsService from '../services/tests.service.js';
+import { useAssignmentStore } from './assignment.js';
 
 export const useTestStore = defineStore('test', {
   // TODO Maintain data in local storage for unwanted refresh? 🤔
@@ -32,8 +33,13 @@ export const useTestStore = defineStore('test', {
     },
     async getTest(testId) {
       /* if (testId !== this.test._id) { */
-      // TODO Send home (or not found page) if test not found
-      this.test = await testsService.getTest(testId);
+      const assignment = useAssignmentStore();
+      if (assignment.test?.questions) {
+        this.test = assignment.test;
+      } else {
+        // TODO Send home (or not found page) if test not found
+        this.test = await testsService.getTest(testId);
+      }
       /* } */
     },
     addQuestion(question) {
