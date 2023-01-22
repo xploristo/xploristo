@@ -5,6 +5,7 @@ import {
   ArrowUpTrayIcon,
 } from '@heroicons/vue/24/outline';
 import documentsService from '../../services/documents.service';
+import SpinnerIcon from '../icons/SpinnerIcon.vue';
 
 export default {
   name: 'DocumentUploader',
@@ -12,6 +13,7 @@ export default {
     DocumentIcon,
     DocumentArrowUpIcon,
     ArrowUpTrayIcon,
+    SpinnerIcon,
   },
   props: {
     documentName: {
@@ -95,12 +97,16 @@ export default {
       >
         <div class="document-uploader-content">
           <template v-if="file || documentName">
+            <SpinnerIcon
+              v-if="file && documentName"
+              class="mb-3 w-10 h-10 text-blue-500"
+            ></SpinnerIcon>
             <DocumentArrowUpIcon
-              v-if="file"
-              class="document-uploader-icon"
+              v-else-if="file"
+              class="document-uploader-icon-blue"
             ></DocumentArrowUpIcon>
             <DocumentIcon v-else class="document-uploader-icon"></DocumentIcon>
-            <p class="text-sm text-gray-900">
+            <p class="text-sm font-semibold" :class="{ 'text-blue-500': file }">
               {{ file?.name || documentName }}
             </p>
             <hr class="document-uploader-separator" />

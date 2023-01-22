@@ -47,7 +47,7 @@
             'button-loading': loading,
           }"
         >
-          <ButtonSpinner v-if="loading"></ButtonSpinner>
+          <SpinnerIcon v-if="loading"></SpinnerIcon>
           {{ action === 'create' ? $t('student.create') : $t('student.save') }}
         </button>
       </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import ButtonSpinner from '../../buttons/ButtonSpinner.vue';
+import SpinnerIcon from '../../icons/SpinnerIcon.vue';
 
 import { useStudentStore } from '../../../stores/student.js';
 import usersService from '../../../services/users.service';
@@ -64,7 +64,7 @@ import usersService from '../../../services/users.service';
 export default {
   name: 'StudentEditor',
   components: {
-    ButtonSpinner,
+    SpinnerIcon,
   },
   props: {
     userId: { type: String },

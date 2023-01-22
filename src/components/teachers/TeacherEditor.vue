@@ -1,5 +1,5 @@
 <script>
-import ButtonSpinner from '../buttons/ButtonSpinner.vue';
+import SpinnerIcon from '../icons/SpinnerIcon.vue';
 
 import { useTeacherStore } from '../../stores/teacher.js';
 import teachersService from '../../services/teachers.service';
@@ -7,7 +7,7 @@ import teachersService from '../../services/teachers.service';
 export default {
   name: 'TeacherEditor',
   components: {
-    ButtonSpinner,
+    SpinnerIcon,
   },
   props: {
     teacherId: { type: String },
@@ -132,7 +132,7 @@ export default {
             'button-loading': loading,
           }"
         >
-          <ButtonSpinner v-if="loading"></ButtonSpinner>
+          <SpinnerIcon v-if="loading"></SpinnerIcon>
           {{ action === 'create' ? $t('teacher.create') : $t('teacher.save') }}
         </button>
       </div>

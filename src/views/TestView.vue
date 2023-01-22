@@ -20,6 +20,7 @@ export default {
       <TestEditor :testId="testId" action="update"></TestEditor>
     </template>
     <template v-else>
+      <!-- TODO Does this ever happen? Students go through AssignmentTestView -->
       <TestViewer :testId="testId"></TestViewer>
     </template>
   </main>

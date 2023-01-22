@@ -27,7 +27,7 @@
             'button-loading': loading,
           }"
         >
-          <ButtonSpinner v-if="loading"></ButtonSpinner>
+          <SpinnerIcon v-if="loading"></SpinnerIcon>
           {{ action === 'create' ? $t('group.create') : $t('group.save') }}
         </button>
       </div>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import ButtonSpinner from '../buttons/ButtonSpinner.vue';
+import SpinnerIcon from '../icons/SpinnerIcon.vue';
 
 import { useGroupStore } from '../../stores/group.js';
 import groupsService from '../../services/groups.service';
@@ -44,7 +44,7 @@ import groupsService from '../../services/groups.service';
 export default {
   name: 'GroupEditor',
   components: {
-    ButtonSpinner,
+    SpinnerIcon,
   },
   props: {
     groupId: { type: String, required: true },

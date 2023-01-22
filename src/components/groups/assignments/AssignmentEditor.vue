@@ -128,7 +128,7 @@
             'button-loading': loading,
           }"
         >
-          <ButtonSpinner v-if="loading"></ButtonSpinner>
+          <SpinnerIcon v-if="loading"></SpinnerIcon>
           {{ assignmentId ? $t('assignment.save') : $t('assignment.create') }}
         </button>
       </div>
@@ -141,7 +141,7 @@ import { EyeIcon, CalendarIcon, ClockIcon } from '@heroicons/vue/24/outline';
 
 import { useAssignmentStore } from '../../../stores/assignment.js';
 import testsService from '../../../services/tests.service.js';
-import ButtonSpinner from '../../buttons/ButtonSpinner.vue';
+import SpinnerIcon from '../../icons/SpinnerIcon.vue';
 
 export default {
   name: 'AssignmentEditor',
@@ -149,7 +149,7 @@ export default {
     EyeIcon,
     CalendarIcon,
     ClockIcon,
-    ButtonSpinner,
+    SpinnerIcon,
   },
   props: {
     assignmentId: { type: String },

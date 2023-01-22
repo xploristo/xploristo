@@ -40,9 +40,6 @@ export default {
   getAssignment(groupId, assignmentId) {
     return customFetch(`/groups/${groupId}/assignments/${assignmentId}`);
   },
-  getAssignments(groupId) {
-    return customFetch(`/groups/${groupId}/assignments`);
-  },
   enrollStudents(groupId, studentsData) {
     return customFetch(`/groups/${groupId}/students`, 'POST', studentsData);
   },

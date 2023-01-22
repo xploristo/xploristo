@@ -1,7 +1,7 @@
 // TODO Add option to shuffle questions and/or answers for students
 
 <script>
-import ButtonSpinner from '../buttons/ButtonSpinner.vue';
+import SpinnerIcon from '../icons/SpinnerIcon.vue';
 import DocumentUploader from '../documents/DocumentUploader.vue';
 import QuestionsEditor from './QuestionsEditor.vue';
 
@@ -11,7 +11,7 @@ import testsService from '../../services/tests.service';
 export default {
   name: 'TestEditor',
   components: {
-    ButtonSpinner,
+    SpinnerIcon,
     DocumentUploader,
     QuestionsEditor,
   },

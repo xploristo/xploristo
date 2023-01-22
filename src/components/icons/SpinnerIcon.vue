@@ -20,6 +20,6 @@
 
 <script>
 export default {
-  name: 'ButtonSpinner',
+  name: 'SpinnerIcon',
 };
 </script>
