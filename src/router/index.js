@@ -6,6 +6,7 @@ import { useUserStore } from '../stores/user.js';
 import HomeView from '../views/HomeView.vue';
 import TestsView from '../views/TestsView.vue';
 import TestView from '../views/TestView.vue';
+import TestPreview from '../views/TestPreview.vue';
 import TeachersView from '../views/TeachersView.vue';
 import TeacherView from '../views/TeacherView.vue';
 import GroupsView from '../views/GroupsView.vue';
@@ -91,6 +92,17 @@ const router = createRouter({
       component: TestView,
       props: true,
       meta: {
+        // TODO Permissions?
+        sectionName: 'tests',
+      },
+    },
+    {
+      path: '/tests/:testId/preview',
+      name: 'testPreview',
+      component: TestPreview,
+      props: true,
+      meta: {
+        permissions: 'tests.preview',
         sectionName: 'tests',
       },
     },

@@ -1,5 +1,9 @@
 <script>
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
+import {
+  PencilSquareIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@heroicons/vue/24/outline';
 
 import TestQuestion from './questions/TestQuestion.vue';
 import PdfViewer from '../viewer/PdfViewer.vue';
@@ -9,12 +13,14 @@ import { useTestStore } from '../../stores/test.js';
 export default {
   name: 'TestView',
   components: {
+    PencilSquareIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
     PdfViewer,
     TestQuestion,
   },
   props: {
+    isPreview: { type: Boolean, default: false },
     testId: { type: String, required: true },
     assignmentId: { type: String },
     groupId: { type: String },
@@ -104,6 +110,7 @@ export default {
       </div>
 
       <div class="flex">
+        <!-- Question navigation -->
         <ChevronLeftIcon
           @click="selectedQuestionIndex > 0 && selectedQuestionIndex--"
           class="ml-2"
@@ -139,10 +146,16 @@ export default {
               : 'icon-small-disabled'
           "
         ></ChevronRightIcon>
+
+        <RouterLink v-if="isPreview" :to="'/tests/' + testId" replace>
+          <PencilSquareIcon
+            class="ml-2 icon-small-blue cursor-pointer"
+          ></PencilSquareIcon>
+        </RouterLink>
         <!-- TODO Confirm modal -->
         <button
-          v-if="assignmentId"
-          @click="sendResult"
+          v-else-if="assignmentId"
+          @click="!isPreview && sendResult"
           class="button-small button-blue ml-2"
         >
           {{ $t('test.sendResult') }}
@@ -155,6 +168,7 @@ export default {
       :questionIndex="selectedQuestionIndex"
       :questionCount="questions.length"
       :completedQuestions="completedQuestions"
+      :isPreview="isPreview"
     ></TestQuestion>
   </div>
 

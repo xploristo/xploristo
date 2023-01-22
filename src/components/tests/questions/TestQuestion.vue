@@ -10,6 +10,7 @@ export default {
     InformationCircleIcon,
   },
   props: {
+    isPreview: { type: Boolean, default: false },
     question: {
       required: true,
     },
@@ -100,7 +101,12 @@ export default {
         >
           {{ questions[questionIndex].answers[0].answer?.textSelection }}
         </div>
-        <button type="button" class="button-blue" @click="saveSelection()">
+        <button
+          type="button"
+          :class="isPreview ? 'button-disabled' : 'button-blue'"
+          @click="!isPreview && saveSelection()"
+          :disabled="isPreview"
+        >
           {{ $t('test.saveSelection') }}
         </button>
       </div>
@@ -112,6 +118,7 @@ export default {
           :id="`question${question.index}-answer1`"
           :placeholder="$t('questions.answers.label')"
           class="text-input"
+          :disabled="isPreview"
         >
         </textarea>
       </div>
@@ -136,7 +143,8 @@ export default {
               :name="questions[questionIndex].index"
               :value="answer.index"
               :checked="answer.correct"
-              @change="onSingleChoiceAnswerChange"
+              @change="!isPreview && onSingleChoiceAnswerChange"
+              :disabled="isPreview"
             />
             <input
               v-else
@@ -144,6 +152,7 @@ export default {
               :id="`check${questionIndex}-${answer.index}`"
               :value="true"
               v-model="answer.correct"
+              :disabled="isPreview"
             />
           </div>
           <div class="basis-full">

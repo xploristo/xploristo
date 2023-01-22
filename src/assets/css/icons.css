@@ -10,6 +10,10 @@
   @apply icon-small text-blue-500;
 }
 
+.icon-medium-blue {
+  @apply icon-medium text-blue-500;
+}
+
 .icon-small-gray {
   @apply icon-small text-gray-400;
 }

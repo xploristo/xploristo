@@ -39,6 +39,12 @@
             >
               <PencilSquareIcon class="mr-1 w-6 h-6"></PencilSquareIcon>
             </RouterLink>
+            <RouterLink
+              :to="'/tests/' + test._id + '/preview'"
+              class="text-blue-500 hover:text-blue-600"
+            >
+              <EyeIcon class="mr-1 w-6 h-6"></EyeIcon>
+            </RouterLink>
             <TrashIcon
               @click="confirmTestDelete(test)"
               class="text-red-500 hover:text-red-600 mr-1 w-6 h-6 cursor-pointer"
@@ -60,7 +66,11 @@
 </template>
 
 <script>
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
+import {
+  PencilSquareIcon,
+  EyeIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline';
 import testsService from '../../services/tests.service';
 import ConfirmModal from '../modals/ConfirmModal.vue';
 import DateMixin from '../../mixins/parse-date.js';
@@ -69,6 +79,7 @@ export default {
   name: 'TestsTable',
   components: {
     PencilSquareIcon,
+    EyeIcon,
     TrashIcon,
     ConfirmModal,
   },
