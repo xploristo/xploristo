@@ -38,8 +38,7 @@ export default {
   },
   async created() {
     await this.testStore.getTest(this.testId);
-  },
-  updated() {
+
     this.setDocumentContainerTop();
   },
   computed: {
