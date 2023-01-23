@@ -99,7 +99,7 @@ export default {
           <template v-if="file || documentName">
             <SpinnerIcon
               v-if="file && documentName"
-              class="mb-3 w-10 h-10 text-blue-500"
+              customClass="mb-3 w-10 h-10 text-blue-500"
             ></SpinnerIcon>
             <DocumentArrowUpIcon
               v-else-if="file"

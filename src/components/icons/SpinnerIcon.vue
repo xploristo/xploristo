@@ -1,8 +1,18 @@
+<script>
+export default {
+  name: 'SpinnerIcon',
+  props: {
+    customClass: { type: String },
+  },
+};
+</script>
+
 <template>
   <svg
     aria-hidden="true"
     role="status"
-    class="inline mr-3 w-4 h-4 text-white animate-spin"
+    class="inline animate-spin"
+    :class="customClass ?? 'mr-3 w-4 h-4 text-white'"
     viewBox="0 0 100 101"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -17,9 +27,3 @@
     />
   </svg>
 </template>
-
-<script>
-export default {
-  name: 'SpinnerIcon',
-};
-</script>
