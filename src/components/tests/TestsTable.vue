@@ -1,3 +1,50 @@
+<script>
+import {
+  PencilSquareIcon,
+  EyeIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline';
+
+import { useTestsStore } from '../../stores/tests.js';
+import ConfirmModal from '../modals/ConfirmModal.vue';
+import DateMixin from '../../mixins/parse-date.js';
+
+export default {
+  name: 'TestsTable',
+  components: {
+    PencilSquareIcon,
+    EyeIcon,
+    TrashIcon,
+    ConfirmModal,
+  },
+  mixins: [DateMixin],
+  props: {
+    tests: { type: Array },
+  },
+  data() {
+    return {
+      showDeleteModal: false,
+      testToDelete: {},
+    };
+  },
+  setup() {
+    const testsStore = useTestsStore();
+
+    return { testsStore };
+  },
+  methods: {
+    confirmTestDelete(test) {
+      this.testToDelete = test;
+      this.showDeleteModal = true;
+    },
+    async deleteTest(testId) {
+      this.showDeleteModal = false;
+      await this.testsStore.deleteTest(testId);
+    },
+  },
+};
+</script>
+
 <template>
   <div class="overflow-x-auto relative sm:rounded-lg">
     <!-- TODO Search input -->
@@ -64,47 +111,3 @@
     </table>
   </div>
 </template>
-
-<script>
-import {
-  PencilSquareIcon,
-  EyeIcon,
-  TrashIcon,
-} from '@heroicons/vue/24/outline';
-import testsService from '../../services/tests.service';
-import ConfirmModal from '../modals/ConfirmModal.vue';
-import DateMixin from '../../mixins/parse-date.js';
-
-export default {
-  name: 'TestsTable',
-  components: {
-    PencilSquareIcon,
-    EyeIcon,
-    TrashIcon,
-    ConfirmModal,
-  },
-  data() {
-    return {
-      showDeleteModal: false,
-      testToDelete: {},
-    };
-  },
-  mixins: [DateMixin],
-  props: {
-    tests: { type: Array },
-  },
-  methods: {
-    confirmTestDelete(test) {
-      this.testToDelete = test;
-      this.showDeleteModal = true;
-    },
-    async deleteTest(testId) {
-      this.showDeleteModal = false;
-      await testsService.deleteTest(testId);
-      // Reload page
-      // TODO Remove test from table without reloading
-      this.$router.go(0);
-    },
-  },
-};
-</script>

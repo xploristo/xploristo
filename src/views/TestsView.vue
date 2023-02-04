@@ -1,3 +1,31 @@
+<script>
+import { FolderOpenIcon } from '@heroicons/vue/24/outline';
+
+import { useTestsStore } from '../stores/tests.js';
+import TestsTable from '../components/tests/TestsTable.vue';
+
+export default {
+  name: 'TestsView',
+  components: {
+    FolderOpenIcon,
+    TestsTable,
+  },
+  setup() {
+    const testsStore = useTestsStore();
+
+    return { testsStore };
+  },
+  async created() {
+    await this.testsStore.getTests();
+  },
+  computed: {
+    tests() {
+      return this.testsStore.tests;
+    },
+  },
+};
+</script>
+
 <template>
   <div>
     <div v-if="tests?.length">
@@ -33,26 +61,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { FolderOpenIcon } from '@heroicons/vue/24/outline';
-
-import testsService from '../services/tests.service.js';
-import TestsTable from '../components/tests/TestsTable.vue';
-
-export default {
-  name: 'TestsView',
-  components: {
-    FolderOpenIcon,
-    TestsTable,
-  },
-  data() {
-    return {
-      tests: [],
-    };
-  },
-  async mounted() {
-    this.tests = await testsService.getTests();
-  },
-};
-</script>
