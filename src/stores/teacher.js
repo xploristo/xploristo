@@ -34,7 +34,6 @@ export const useTeacherStore = defineStore('teacher', {
       /* if (teacherId !== this.teacher._id) { */
       // TODO Send home (or not found page) if teacher not found
       this.teacher = await teachersService.getTeacher(teacherId);
-      console.log('this.teacher', this.teacher);
       /* } */
     },
   },

@@ -5,10 +5,11 @@ import {
   TrashIcon,
   WrenchIcon,
 } from '@heroicons/vue/24/outline';
-import teachersService from '../../services/teachers.service.js';
+
+import authService from '../../services/auth.service';
+import { useTeachersStore } from '../../stores/teachers.js';
 import ConfirmModal from '../modals/ConfirmModal.vue';
 import DateMixin from '../../mixins/parse-date.js';
-import authService from '../../services/auth.service';
 
 export default {
   name: 'TeachersTable',
@@ -26,6 +27,11 @@ export default {
       showChangeAdminStatusModal: false,
       teacherToActOn: {},
     };
+  },
+  setup() {
+    const teachersStore = useTeachersStore();
+
+    return { teachersStore };
   },
   mixins: [DateMixin],
   props: {
@@ -46,26 +52,19 @@ export default {
     },
     async deleteTeacher(teacherId) {
       this.showDeleteModal = false;
-      await teachersService.deleteTeacher(teacherId);
-      // Reload page
-      // TODO Remove teacher from table without reloading
-      this.$router.go(0);
+      await this.teachersStore.deleteTeacher(teacherId);
     },
     async resendPasswordEmail(teacherId) {
       await authService.resetPassword({ userId: teacherId });
       // TODO Show confirm
     },
     async changeAdminStatus(teacher) {
-      if (teacher.role === 'admin') {
-        await teachersService.updateTeacherRole(teacher._id, 'teacher');
-      } else {
-        await teachersService.updateTeacherRole(teacher._id, 'admin');
-      }
-
       this.showChangeAdminStatusModal = false;
-      // Reload page
-      // TODO Apply changes to table without reloading
-      this.$router.go(0);
+      if (teacher.role === 'admin') {
+        await this.teachersStore.updateTeacherRole(teacher._id, 'teacher');
+      } else {
+        await this.teachersStore.updateTeacherRole(teacher._id, 'admin');
+      }
     },
   },
 };

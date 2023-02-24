@@ -1,7 +1,7 @@
 <script>
 import { FolderOpenIcon } from '@heroicons/vue/24/outline';
 
-import teachersService from '../services/teachers.service.js';
+import { useTeachersStore } from '../stores/teachers.js';
 import TeachersTable from '../components/teachers/TeachersTable.vue';
 
 export default {
@@ -10,13 +10,18 @@ export default {
     FolderOpenIcon,
     TeachersTable,
   },
-  data() {
-    return {
-      teachers: [],
-    };
+  setup() {
+    const teachersStore = useTeachersStore();
+
+    return { teachersStore };
   },
-  async mounted() {
-    this.teachers = await teachersService.getTeachers();
+  async created() {
+    await this.teachersStore.getTeachers();
+  },
+  computed: {
+    teachers() {
+      return this.teachersStore.teachers;
+    },
   },
 };
 </script>

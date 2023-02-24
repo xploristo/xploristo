@@ -147,7 +147,7 @@ export default {
             'button-loading': loading,
           }"
         >
-          <button-spinner v-if="loading"></button-spinner>
+          <spinner-icon v-if="loading"></spinner-icon>
           {{ action === 'create' ? $t('test.create') : $t('test.save') }}
         </button>
       </div>
