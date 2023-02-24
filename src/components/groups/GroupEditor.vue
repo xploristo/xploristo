@@ -47,13 +47,12 @@ export default {
     SpinnerIcon,
   },
   props: {
-    groupId: { type: String, required: true },
+    groupId: { type: String },
     action: { type: String, required: true },
   },
   data() {
     return {
       loading: false,
-      createdGroupId: null,
     };
   },
   setup() {
@@ -90,8 +89,7 @@ export default {
           students: this.students,
         });
 
-        this.createdGroupId = group._id;
-        this.$router.push({ name: 'groups' });
+        this.$router.push({ name: 'group', params: { groupId: group._id } });
       } else {
         this.loading = true;
         await groupsService.updateGroup(this.groupId, {
