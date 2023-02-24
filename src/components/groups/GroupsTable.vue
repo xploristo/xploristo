@@ -1,3 +1,50 @@
+<script>
+import {
+  EyeIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline';
+
+import { useGroupsStore } from '../../stores/groups.js';
+import ConfirmModal from '../modals/ConfirmModal.vue';
+import DateMixin from '../../mixins/parse-date.js';
+
+export default {
+  name: 'GroupsTable',
+  components: {
+    EyeIcon,
+    PencilSquareIcon,
+    TrashIcon,
+    ConfirmModal,
+  },
+  mixins: [DateMixin],
+  props: {
+    groups: { type: Array },
+  },
+  data() {
+    return {
+      showDeleteModal: false,
+      groupToDelete: {},
+    };
+  },
+  setup() {
+    const groupsStore = useGroupsStore();
+
+    return { groupsStore };
+  },
+  methods: {
+    confirmGroupDelete(group) {
+      this.groupToDelete = group;
+      this.showDeleteModal = true;
+    },
+    async deleteGroup(groupId) {
+      this.showDeleteModal = false;
+      await this.groupsStore.deleteGroup(groupId);
+    },
+  },
+};
+</script>
+
 <template>
   <div class="overflow-x-auto relative sm:rounded-lg">
     <!-- TODO Search input -->
@@ -64,48 +111,3 @@
     </table>
   </div>
 </template>
-
-<script>
-import {
-  EyeIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from '@heroicons/vue/24/outline';
-import groupsService from '../../services/groups.service';
-import ConfirmModal from '../modals/ConfirmModal.vue';
-import DateMixin from '../../mixins/parse-date.js';
-
-export default {
-  name: 'GroupsTable',
-  components: {
-    EyeIcon,
-    PencilSquareIcon,
-    TrashIcon,
-    ConfirmModal,
-  },
-  data() {
-    return {
-      showDeleteModal: false,
-      groupToDelete: {},
-    };
-  },
-  mixins: [DateMixin],
-  props: {
-    groups: { type: Array },
-  },
-  methods: {
-    confirmGroupDelete(group) {
-      this.groupToDelete = group;
-      this.showDeleteModal = true;
-    },
-    async deleteGroup(groupId) {
-      this.showDeleteModal = false;
-      await groupsService.deleteGroup(groupId);
-
-      // Reload page
-      // TODO Remove student from table without reloading
-      this.$router.go(0);
-    },
-  },
-};
-</script>

@@ -1,3 +1,31 @@
+<script>
+import { FolderOpenIcon } from '@heroicons/vue/24/outline';
+
+import { useGroupsStore } from '../stores/groups.js';
+import GroupsTable from '../components/groups/GroupsTable.vue';
+
+export default {
+  name: 'GroupsView',
+  components: {
+    FolderOpenIcon,
+    GroupsTable,
+  },
+  setup() {
+    const groupsStore = useGroupsStore();
+
+    return { groupsStore };
+  },
+  async created() {
+    await this.groupsStore.getGroups();
+  },
+  computed: {
+    groups() {
+      return this.groupsStore.groups;
+    },
+  },
+};
+</script>
+
 <template>
   <div>
     <div v-if="groups?.length">
@@ -33,26 +61,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { FolderOpenIcon } from '@heroicons/vue/24/outline';
-
-import groupsService from '../services/groups.service.js';
-import GroupsTable from '../components/groups/GroupsTable.vue';
-
-export default {
-  name: 'GroupsView',
-  components: {
-    FolderOpenIcon,
-    GroupsTable,
-  },
-  data() {
-    return {
-      groups: [],
-    };
-  },
-  async mounted() {
-    this.groups = await groupsService.getGroups();
-  },
-};
-</script>
