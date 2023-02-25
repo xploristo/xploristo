@@ -73,6 +73,36 @@ export const useGroupStore = defineStore('group', {
         (s) => s._id !== studentId
       );
     },
+    async createAssignment({ name, testId, startDate, endDate }) {
+      const assignment = await groupsService.createAssignment(this.group._id, {
+        name,
+        testId,
+        startDate,
+        endDate,
+      });
+
+      this.group.assignments.push(assignment); // TODO Unshift?
+
+      return assignment;
+    },
+    async updateAssignment(assignmentId, { name, startDate, endDate }) {
+      const assignment = await groupsService.updateAssignment(
+        this.group._id,
+        assignmentId,
+        {
+          name,
+          startDate,
+          endDate,
+        }
+      );
+
+      const index = this.group.assignments.findIndex(
+        (a) => a._id === assignmentId
+      );
+      this.group.assignments[index] = assignment;
+
+      return assignment;
+    },
     async deleteAssignment(assignmentId) {
       await groupsService.deleteAssignment(this.group._id, assignmentId);
       this.group.assignments = this.group.assignments.filter(

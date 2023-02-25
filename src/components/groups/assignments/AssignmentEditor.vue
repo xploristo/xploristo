@@ -1,3 +1,129 @@
+<script>
+import { EyeIcon, CalendarIcon, ClockIcon } from '@heroicons/vue/24/outline';
+
+import { useAssignmentStore } from '../../../stores/assignment.js';
+import testsService from '../../../services/tests.service.js';
+import SpinnerIcon from '../../icons/SpinnerIcon.vue';
+
+export default {
+  name: 'AssignmentEditor',
+  components: {
+    EyeIcon,
+    CalendarIcon,
+    ClockIcon,
+    SpinnerIcon,
+  },
+  props: {
+    assignmentId: { type: String },
+    groupId: { type: String },
+  },
+  data() {
+    return {
+      testId: null,
+      loading: false,
+      tests: [],
+    };
+  },
+  setup() {
+    const assignmentStore = useAssignmentStore();
+
+    return { assignmentStore };
+  },
+  async created() {
+    if (this.assignmentId) {
+      await this.assignmentStore.getAssignment(this.groupId, this.assignmentId);
+    } else {
+      // Creating new assignment
+      this.assignmentStore.clear();
+      this.tests = await testsService.getTests();
+    }
+  },
+  computed: {
+    name: {
+      get() {
+        return this.assignmentStore.name;
+      },
+      set(value) {
+        this.assignmentStore.assignment.name = value;
+      },
+    },
+    startDay: {
+      get() {
+        return this.assignmentStore.startDay;
+      },
+      set(value) {
+        this.assignmentStore.assignment.startDay = value;
+      },
+    },
+    endDay: {
+      get() {
+        return this.assignmentStore.endDay;
+      },
+      set(value) {
+        this.assignmentStore.assignment.endDay = value;
+      },
+    },
+    startTime: {
+      get() {
+        return this.assignmentStore.startTime;
+      },
+      set(value) {
+        this.assignmentStore.assignment.startTime = value;
+      },
+    },
+    endTime: {
+      get() {
+        return this.assignmentStore.endTime;
+      },
+      set(value) {
+        this.assignmentStore.assignment.endTime = value;
+      },
+    },
+    test() {
+      return this.assignmentStore.test;
+    },
+    submitDisabled() {
+      return !this.name.length || (!this.testId && !this.test);
+    },
+  },
+  methods: {
+    async submit() {
+      if (this.assignmentId) {
+        // TODO Do this via store
+        this.loading = true;
+        await this.assignmentStore.updateAssignment(
+          this.groupId,
+          this.assignmentId,
+          {
+            name: this.name,
+            startDay: this.startDay,
+            endDay: this.endDay,
+            startTime: this.startTime,
+            endTime: this.endTime,
+          }
+        );
+
+        // TODO Show feedback instead of routing
+        this.$router.push({ name: 'assignments' });
+      } else {
+        this.loading = true;
+        await this.assignmentStore.createAssignment(this.groupId, {
+          name: this.name,
+          testId: this.testId,
+          startDay: this.startDay,
+          endDay: this.endDay,
+          startTime: this.startTime,
+          endTime: this.endTime,
+        });
+
+        // TODO Assignment view?
+        this.$router.push({ name: 'assignments' });
+      }
+    },
+  },
+};
+</script>
+
 <template>
   <div>
     <form @submit.prevent="submit">
@@ -135,129 +261,3 @@
     </form>
   </div>
 </template>
-
-<script>
-import { EyeIcon, CalendarIcon, ClockIcon } from '@heroicons/vue/24/outline';
-
-import { useAssignmentStore } from '../../../stores/assignment.js';
-import testsService from '../../../services/tests.service.js';
-import SpinnerIcon from '../../icons/SpinnerIcon.vue';
-
-export default {
-  name: 'AssignmentEditor',
-  components: {
-    EyeIcon,
-    CalendarIcon,
-    ClockIcon,
-    SpinnerIcon,
-  },
-  props: {
-    assignmentId: { type: String },
-    groupId: { type: String },
-  },
-  data() {
-    return {
-      testId: null,
-      loading: false,
-      tests: [],
-    };
-  },
-  setup() {
-    const assignmentStore = useAssignmentStore();
-
-    return { assignmentStore };
-  },
-  async created() {
-    if (this.assignmentId) {
-      await this.assignmentStore.getAssignment(this.groupId, this.assignmentId);
-    } else {
-      // Creating new assignment
-      this.assignmentStore.clear();
-      this.tests = await testsService.getTests();
-    }
-  },
-  computed: {
-    name: {
-      get() {
-        return this.assignmentStore.name;
-      },
-      set(value) {
-        this.assignmentStore.assignment.name = value;
-      },
-    },
-    startDay: {
-      get() {
-        return this.assignmentStore.startDay;
-      },
-      set(value) {
-        this.assignmentStore.assignment.startDay = value;
-      },
-    },
-    endDay: {
-      get() {
-        return this.assignmentStore.endDay;
-      },
-      set(value) {
-        this.assignmentStore.assignment.endDay = value;
-      },
-    },
-    startTime: {
-      get() {
-        return this.assignmentStore.startTime;
-      },
-      set(value) {
-        this.assignmentStore.assignment.startTime = value;
-      },
-    },
-    endTime: {
-      get() {
-        return this.assignmentStore.endTime;
-      },
-      set(value) {
-        this.assignmentStore.assignment.endTime = value;
-      },
-    },
-    test() {
-      return this.assignmentStore.test;
-    },
-    submitDisabled() {
-      return !this.name.length || (!this.testId && !this.test);
-    },
-  },
-  methods: {
-    async submit() {
-      if (this.assignmentId) {
-        // TODO Do this via store
-        this.loading = true;
-        await this.assignmentStore.updateAssignment(
-          this.groupId,
-          this.assignmentId,
-          {
-            name: this.name,
-            startDay: this.startDay,
-            endDay: this.endDay,
-            startTime: this.startTime,
-            endTime: this.endTime,
-          }
-        );
-
-        // TODO Show feedback instead of routing
-        this.$router.push({ name: 'assignments' });
-      } else {
-        this.loading = true;
-        await this.assignmentStore.createAssignment(this.groupId, {
-          name: this.name,
-          testId: this.testId,
-          startDay: this.startDay,
-          endDay: this.endDay,
-          startTime: this.startTime,
-          endTime: this.endTime,
-        });
-
-        // TODO Assignment view?
-        this.$router.push({ name: 'assignments' });
-      }
-    },
-  },
-};
-</script>

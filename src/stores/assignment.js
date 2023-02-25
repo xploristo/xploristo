@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 
+import { useGroupStore } from './group.js';
 import groupsService from '../services/groups.service.js';
 
 const timeFormat = new Intl.NumberFormat('en-US', {
@@ -7,7 +8,6 @@ const timeFormat = new Intl.NumberFormat('en-US', {
 });
 
 export const useAssignmentStore = defineStore('assignment', {
-  // TODO Maintain data in local storage for unwanted refresh? 🤔
   state: () => ({
     assignment: {
       name: '',
@@ -42,13 +42,14 @@ export const useAssignmentStore = defineStore('assignment', {
       };
       const startDate = formatDate(startDay, startTime);
       const endDate = formatDate(endDay, endTime);
-      const assignment = await groupsService.createAssignment(groupId, {
+
+      const groupStore = useGroupStore();
+      this.assignment = await groupStore.createAssignment({
         name,
         testId,
         startDate,
         endDate,
       });
-      this.assignment = assignment;
     },
     async updateAssignment(
       groupId,
@@ -65,16 +66,13 @@ export const useAssignmentStore = defineStore('assignment', {
       };
       const startDate = formatDate(startDay, startTime);
       const endDate = formatDate(endDay, endTime);
-      const assignment = await groupsService.updateAssignment(
-        groupId,
-        assignmentId,
-        {
-          name,
-          startDate,
-          endDate,
-        }
-      );
-      this.assignment = assignment;
+
+      const groupStore = useGroupStore();
+      this.assignment = await groupStore.updateAssignment(assignmentId, {
+        name,
+        startDate,
+        endDate,
+      });
     },
     async getAssignment(groupId, assignmentId) {
       /* if (assignmentId !== this.assignment._id) { */
