@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
 
 import groupsService from '../services/groups.service.js';
+import usersService from '../services/users.service.js';
 
 export const useGroupStore = defineStore('group', {
-  // TODO Maintain data in local storage for unwanted refresh? 🤔
   state: () => ({
     group: {
+      _id: null,
       name: '',
       teachers: [],
       students: [],
@@ -15,7 +16,7 @@ export const useGroupStore = defineStore('group', {
   }),
   actions: {
     clear() {
-      /* this.group._id = null; */
+      this.group._id = null;
       this.group.name = '';
       this.group.teachers = [];
       this.group.students = [];
@@ -49,23 +50,28 @@ export const useGroupStore = defineStore('group', {
       this.group.results = results;
       /* } */
     },
-    addTeacher(email) {
-      this.group.teachers.push({ email });
-    },
-    deleteTeacher(teacherIndex) {
-      this.group.teachers.splice(teacherIndex, 1);
-      this.group.teachers.forEach((teacher, index) => {
-        teacher.index = index;
+    async addStudent({ email, firstName, lastName, role = 'student' }) {
+      this.group = await groupsService.enrollStudents(this.group._id, {
+        students: [
+          {
+            role,
+            email,
+            firstName,
+            lastName,
+          },
+        ],
       });
     },
-    addStudent(email) {
-      this.group.students.push({ email });
+    updateStudent(studentId, studentData) {
+      // Actual update is made in student store, this only updates table data
+      const index = this.group.students.findIndex((s) => s._id === studentId);
+      this.group.students[index] = studentData;
     },
-    deleteStudent(studentIndex) {
-      this.group.students.splice(studentIndex, 1);
-      this.group.students.forEach((student, index) => {
-        student.index = index;
-      });
+    async deleteStudent(studentId) {
+      await usersService.deleteUser(studentId, this.group._id);
+      this.group.students = this.group.students.filter(
+        (s) => s._id !== studentId
+      );
     },
   },
   getters: {

@@ -56,10 +56,9 @@
 </template>
 
 <script>
-import SpinnerIcon from '../../icons/SpinnerIcon.vue';
-
 import { useStudentStore } from '../../../stores/student.js';
-import usersService from '../../../services/users.service';
+
+import SpinnerIcon from '../../icons/SpinnerIcon.vue';
 
 export default {
   name: 'StudentEditor',
@@ -74,7 +73,6 @@ export default {
   data() {
     return {
       loading: false,
-      createdStudentId: null,
     };
   },
   setup() {
@@ -120,20 +118,18 @@ export default {
     async submit() {
       if (this.action === 'create') {
         this.loading = true;
-        const student = await this.studentStore.createStudent(this.groupId, {
+        await this.studentStore.createStudent({
           email: this.email,
           firstName: this.firstName,
           lastName: this.lastName,
         });
 
-        this.createdStudentId = student._id;
-        // TODO Students view but adding student to the table
         this.$router.push({
-          name: 'group',
+          name: 'students',
           params: { groupId: this.groupId },
         });
       } else {
-        await usersService.updateUser(this.userId, {
+        await this.studentStore.updateStudent(this.userId, {
           email: this.email,
           firstName: this.firstName,
           lastName: this.lastName,

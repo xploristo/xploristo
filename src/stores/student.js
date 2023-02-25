@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
+import { useGroupStore } from './group.js';
 import usersService from '../services/users.service.js';
-import groupsService from '../services/groups.service.js';
 
 export const useStudentStore = defineStore('student', {
   state: () => ({
@@ -20,29 +20,38 @@ export const useStudentStore = defineStore('student', {
       this.student.firstName = null;
       this.student.lastName = null;
     },
-    async createStudent(
-      groupId,
-      { email, firstName, lastName, role = 'student' }
-    ) {
-      const studentData = await groupsService.enrollStudents(groupId, {
-        students: [
-          {
-            email,
-            firstName,
-            lastName,
-            role,
-          },
-        ],
-      });
-      this.student = studentData;
-
-      return studentData;
-    },
     async getStudent(userId) {
       /* if (userId !== this.student._id) { */
       // TODO Send home (or not found page) if student not found
       this.student = await usersService.getUser(userId);
       /* } */
+    },
+    async createStudent({ email, firstName, lastName, role = 'student' }) {
+      const groupStore = useGroupStore();
+      await groupStore.addStudent({
+        role,
+        email,
+        firstName,
+        lastName,
+      });
+
+      this.student = {
+        role,
+        email,
+        firstName,
+        lastName,
+      };
+      return this.student;
+    },
+    async updateStudent(userId, { email, firstName, lastName }) {
+      this.student = await usersService.updateUser(userId, {
+        email,
+        firstName,
+        lastName,
+      });
+
+      const groupStore = useGroupStore();
+      groupStore.updateStudent(userId, this.student);
     },
   },
   getters: {

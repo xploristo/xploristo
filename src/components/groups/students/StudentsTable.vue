@@ -4,8 +4,9 @@ import {
   TrashIcon,
   EnvelopeIcon,
 } from '@heroicons/vue/24/outline';
+
+import { useGroupStore } from '../../../stores/group.js';
 import authService from '../../../services/auth.service';
-import usersService from '../../../services/users.service';
 import ConfirmModal from '../../modals/ConfirmModal.vue';
 
 export default {
@@ -16,6 +17,10 @@ export default {
     EnvelopeIcon,
     ConfirmModal,
   },
+  props: {
+    students: { type: Array },
+    groupId: { type: String, required: true },
+  },
   data() {
     return {
       showDeleteModal: false,
@@ -23,9 +28,10 @@ export default {
       studentToActOn: {},
     };
   },
-  props: {
-    students: { type: Array },
-    groupId: { type: String, required: true },
+  setup() {
+    const groupStore = useGroupStore();
+
+    return { groupStore };
   },
   methods: {
     confirmStudentDelete(student) {
@@ -38,10 +44,7 @@ export default {
     },
     async deleteStudent(studentId) {
       this.showDeleteModal = false;
-      await usersService.deleteUser(studentId, this.groupId);
-      // Reload page
-      // TODO Remove student from table without reloading
-      this.$router.go(0);
+      await this.groupStore.deleteStudent(studentId);
     },
     async resendPasswordEmail(studentId) {
       await authService.resetPassword({ userId: studentId });

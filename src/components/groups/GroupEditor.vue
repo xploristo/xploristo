@@ -15,8 +15,6 @@
         <!-- TODO Teachers list and input -->
       </template>
 
-      <!-- TODO Students' emails input -->
-
       <div class="mt-4">
         <button
           type="submit"
@@ -69,12 +67,6 @@ export default {
         this.groupStore.group.name = value;
       },
     },
-    teachers() {
-      return this.groupStore.teachers;
-    },
-    students() {
-      return this.groupStore.students;
-    },
     submitDisabled() {
       return !this.name.length;
     },
@@ -85,8 +77,6 @@ export default {
         this.loading = true;
         const group = await this.groupStore.createGroup({
           name: this.name,
-          teachers: this.teachers,
-          students: this.students,
         });
 
         this.$router.push({ name: 'group', params: { groupId: group._id } });
@@ -94,21 +84,9 @@ export default {
         this.loading = true;
         await groupsService.updateGroup(this.groupId, {
           name: this.name,
-          teachers: this.teachers,
-          students: this.students,
         });
         this.loading = false;
       }
-    },
-    addStudent(email) {
-      this.studentStore.addStudent({
-        index: this.students.length,
-        email,
-        role: 'student',
-      });
-    },
-    deleteStudent(studentIndex) {
-      this.studentStore.deleteStudent(studentIndex);
     },
   },
 };

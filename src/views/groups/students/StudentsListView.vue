@@ -1,3 +1,34 @@
+<script>
+import { UserIcon } from '@heroicons/vue/24/outline';
+
+import { useGroupStore } from '../../../stores/group.js';
+import StudentsTable from '../../../components/groups/students/StudentsTable.vue';
+
+export default {
+  name: 'StudentsListView',
+  components: {
+    UserIcon,
+    StudentsTable,
+  },
+  props: {
+    groupId: {
+      type: String,
+      required: true,
+    },
+  },
+  setup() {
+    const groupStore = useGroupStore();
+
+    return { groupStore };
+  },
+  computed: {
+    students() {
+      return this.groupStore.students;
+    },
+  },
+};
+</script>
+
 <template>
   <div>
     <div v-if="students?.length">
@@ -30,34 +61,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { UserIcon } from '@heroicons/vue/24/outline';
-
-import { useGroupStore } from '../../../stores/group.js';
-import StudentsTable from '../../../components/groups/students/StudentsTable.vue';
-
-export default {
-  name: 'StudentsListView',
-  components: {
-    UserIcon,
-    StudentsTable,
-  },
-  props: {
-    groupId: {
-      type: String,
-      required: true,
-    },
-  },
-  setup() {
-    const groupStore = useGroupStore();
-
-    return { groupStore };
-  },
-  computed: {
-    students() {
-      return this.groupStore.students;
-    },
-  },
-};
-</script>
