@@ -4,7 +4,8 @@ import {
   TrashIcon,
   CheckIcon,
 } from '@heroicons/vue/24/outline';
-import groupsService from '../../../services/groups.service';
+
+import { useGroupStore } from '../../../stores/group.js';
 import ConfirmModal from '../../modals/ConfirmModal.vue';
 import DateMixin from '../../../mixins/parse-date.js';
 
@@ -16,16 +17,21 @@ export default {
     CheckIcon,
     ConfirmModal,
   },
+  mixins: [DateMixin],
+  props: {
+    assignments: { type: Array },
+    groupId: { type: String },
+  },
   data() {
     return {
       showDeleteModal: false,
       assignmentToDelete: {},
     };
   },
-  mixins: [DateMixin],
-  props: {
-    assignments: { type: Array },
-    groupId: { type: String },
+  setup() {
+    const groupStore = useGroupStore();
+
+    return { groupStore };
   },
   methods: {
     confirmAssignmentDelete(assignment) {
@@ -34,10 +40,7 @@ export default {
     },
     async deleteAssignment(assignmentId) {
       this.showDeleteModal = false;
-      await groupsService.deleteAssignment(this.groupId, assignmentId);
-      // Reload page
-      // TODO Remove assignment from table without reloading
-      this.$router.go(0);
+      await this.groupStore.deleteAssignment(assignmentId);
     },
     completeTest(assignment) {
       if (assignment.result) {

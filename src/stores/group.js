@@ -73,6 +73,12 @@ export const useGroupStore = defineStore('group', {
         (s) => s._id !== studentId
       );
     },
+    async deleteAssignment(assignmentId) {
+      await groupsService.deleteAssignment(this.group._id, assignmentId);
+      this.group.assignments = this.group.assignments.filter(
+        (a) => a._id !== assignmentId
+      );
+    },
   },
   getters: {
     name(state) {
