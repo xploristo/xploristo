@@ -3,11 +3,13 @@ import SpinnerIcon from '../icons/SpinnerIcon.vue';
 
 import { useTeacherStore } from '../../stores/teacher.js';
 import teachersService from '../../services/teachers.service';
+import TopBar from '../nav/TopBar.vue';
 
 export default {
   name: 'TeacherEditor',
   components: {
     SpinnerIcon,
+    TopBar,
   },
   props: {
     teacherId: { type: String },
@@ -85,6 +87,9 @@ export default {
 
 <template>
   <div>
+    <TopBar
+      :title="$t('teacher.' + (action === 'create' ? 'new' : 'update'))"
+    ></TopBar>
     <form @submit.prevent="submit">
       <label for="email" class="input-label">{{
         $t('teacher.form.email')

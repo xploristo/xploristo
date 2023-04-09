@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
 } from '@heroicons/vue/24/outline';
 
+import TopBar from '../nav/TopBar.vue';
 import TestQuestion from './questions/TestQuestion.vue';
 import PdfViewer from '../viewer/PdfViewer.vue';
 import resultsService from '../../services/results.service.js';
@@ -16,6 +17,7 @@ export default {
     PencilSquareIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
+    TopBar,
     PdfViewer,
     TestQuestion,
   },
@@ -96,7 +98,7 @@ export default {
 <template>
   <!-- TODO Test for ultra wide screens (max width?) -->
   <div v-if="questions.length" id="test-container" class="test-container">
-    <div class="section-title">Test</div>
+    <TopBar :title="$t('test.title')" :backUrl="isPreview && '/tests'"></TopBar>
 
     <div class="flex items-center place-content-between">
       <div class="text-bold mb-1">

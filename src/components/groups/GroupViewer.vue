@@ -25,7 +25,6 @@ export default {
 
 <template>
   <div>
-    <div class="section-title">{{ name }}</div>
     <div class="sub-section-title">{{ $t('group.tabs.assignments') }}</div>
     <AssignmentsTable :assignments="assignments"></AssignmentsTable>
   </div>

@@ -4,6 +4,7 @@
 import SpinnerIcon from '../icons/SpinnerIcon.vue';
 import DocumentUploader from '../documents/DocumentUploader.vue';
 import QuestionsEditor from './QuestionsEditor.vue';
+import TopBar from '../nav/TopBar.vue';
 
 import { useTestStore } from '../../stores/test.js';
 import testsService from '../../services/tests.service';
@@ -14,6 +15,7 @@ export default {
     SpinnerIcon,
     DocumentUploader,
     QuestionsEditor,
+    TopBar,
   },
   props: {
     testId: { type: String, required: true },
@@ -113,6 +115,9 @@ export default {
 
 <template>
   <div>
+    <TopBar
+      :title="$t('test.' + (action === 'create' ? 'new' : 'update'))"
+    ></TopBar>
     <form @submit.prevent="submit">
       <label for="name" class="input-label">{{ $t('test.form.name') }}</label>
       <input

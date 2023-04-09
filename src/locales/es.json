@@ -40,7 +40,8 @@
       "data": "Datos",
       "results": "Resultados",
       "students": "Estudiantes"
-    }
+    },
+    "title": "Asignatura"
   },
   "groups": {
     "empty": "Todavía no hay ninguna asignatura."
@@ -176,7 +177,8 @@
         "confirm": "Sí, proceder",
         "cancel": "No, cancelar"
       }
-    }
+    },
+    "update": "Editar docente"
   },
   "teachers": {
     "empty": "Todavía no hay ningún docente",
@@ -204,15 +206,18 @@
       "name": "Nombre del test"
     },
     "new": "Nuevo test",
-    "save": "Guardar test",
-    "saveSelection": "Guardar selección",
-    "sendResult": "Enviar",
+    "preview": "Previsualizar test",
     "question": {
       "instructions": {
         "selection": "Selecciona el texto del documento que corresponda a la pregunta."
       },
       "title": "Pregunta {index} (de {total})"
-    }
+    },
+    "save": "Guardar test",
+    "saveSelection": "Guardar selección",
+    "sendResult": "Enviar",
+    "title": "Test",
+    "update": "Editar test"
   },
   "tests": {
     "empty": "Todavía no hay ningún test."

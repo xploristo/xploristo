@@ -20,7 +20,6 @@ export default {
 
 <template>
   <div>
-    <div class="section-title">{{ $t('test.new') }}</div>
     <TestEditor action="create"></TestEditor>
   </div>
 </template>

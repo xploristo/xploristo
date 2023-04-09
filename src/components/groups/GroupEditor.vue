@@ -1,38 +1,3 @@
-<template>
-  <div>
-    <form @submit.prevent="submit">
-      <label for="name" class="input-label">{{ $t('group.form.name') }}</label>
-      <input
-        type="text"
-        id="name"
-        v-model="name"
-        class="text-input"
-        :placeholder="$t('group.form.name')"
-        required
-      />
-
-      <template v-if="action === 'update'">
-        <!-- TODO Teachers list and input -->
-      </template>
-
-      <div class="mt-4">
-        <button
-          type="submit"
-          :disabled="submitDisabled"
-          class="button-blue mb-4"
-          :class="{
-            'button-disabled': submitDisabled,
-            'button-loading': loading,
-          }"
-        >
-          <SpinnerIcon v-if="loading"></SpinnerIcon>
-          {{ action === 'create' ? $t('group.create') : $t('group.save') }}
-        </button>
-      </div>
-    </form>
-  </div>
-</template>
-
 <script>
 import SpinnerIcon from '../icons/SpinnerIcon.vue';
 
@@ -91,3 +56,38 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <form @submit.prevent="submit">
+      <label for="name" class="input-label">{{ $t('group.form.name') }}</label>
+      <input
+        type="text"
+        id="name"
+        v-model="name"
+        class="text-input"
+        :placeholder="$t('group.form.name')"
+        required
+      />
+
+      <template v-if="action === 'update'">
+        <!-- TODO Teachers list and input -->
+      </template>
+
+      <div class="mt-4">
+        <button
+          type="submit"
+          :disabled="submitDisabled"
+          class="button-blue mb-4"
+          :class="{
+            'button-disabled': submitDisabled,
+            'button-loading': loading,
+          }"
+        >
+          <SpinnerIcon v-if="loading"></SpinnerIcon>
+          {{ action === 'create' ? $t('group.create') : $t('group.save') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</template>

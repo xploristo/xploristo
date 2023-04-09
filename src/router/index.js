@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import { hasPermissionTo } from '../plugins/permissions.js';
 import { useUserStore } from '../stores/user.js';
+import { useAppStore } from '../stores/app.js';
 
 import HomeView from '../views/HomeView.vue';
 import TestsView from '../views/TestsView.vue';
@@ -282,6 +283,9 @@ router.beforeEach(async (to, from, next) => {
       if (to.meta.permissions && !hasPermissionTo(to.meta.permissions)) {
         next('/');
       } else {
+        const appStore = useAppStore();
+        appStore.setPreviousRoute(from);
+
         // TODO Unwanted redirects ?
         const landingPath = sessionStorage.getItem('landing');
         sessionStorage.removeItem('landing');
