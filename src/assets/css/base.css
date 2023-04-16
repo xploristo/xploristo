@@ -4,4 +4,15 @@
 
 .main {
   top: 60px;
+  margin: 40px 60px;
+}
+
+.section {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.subsection {
+  margin-left: 1.75rem;
+  margin-right: 1.75rem;
 }

@@ -1,69 +1,14 @@
-<template>
-  <div>
-    <form @submit.prevent="submit">
-      <label for="email" class="input-label">{{
-        $t('student.form.email')
-      }}</label>
-      <input
-        type="email"
-        id="email"
-        v-model="email"
-        class="text-input mb-4"
-        :placeholder="$t('student.form.email')"
-        required
-      />
-
-      <label for="firstName" class="input-label">{{
-        $t('student.form.firstName')
-      }}</label>
-      <input
-        type="text"
-        id="firstName"
-        v-model="firstName"
-        class="text-input mb-4"
-        :placeholder="$t('student.form.firstName')"
-        required
-      />
-
-      <label for="lastName" class="input-label">{{
-        $t('student.form.lastName')
-      }}</label>
-      <input
-        type="text"
-        id="lastName"
-        v-model="lastName"
-        class="text-input mb-4"
-        :placeholder="$t('student.form.lastName')"
-        required
-      />
-
-      <div class="mt-4">
-        <button
-          type="submit"
-          :disabled="submitDisabled"
-          class="button-blue mb-4"
-          :class="{
-            'button-disabled': submitDisabled,
-            'button-loading': loading,
-          }"
-        >
-          <SpinnerIcon v-if="loading"></SpinnerIcon>
-          {{ action === 'create' ? $t('student.create') : $t('student.save') }}
-        </button>
-      </div>
-    </form>
-  </div>
-</template>
-
 <script>
 import { useStudentStore } from '../../../stores/student.js';
 
 import SpinnerIcon from '../../icons/SpinnerIcon.vue';
+import TopBar from '../../nav/TopBar.vue';
 
 export default {
   name: 'StudentEditor',
   components: {
     SpinnerIcon,
+    TopBar,
   },
   props: {
     userId: { type: String },
@@ -139,3 +84,69 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <TopBar
+      :title="$t('student.' + (action === 'create' ? 'new' : 'update'))"
+      :isSubsection="true"
+    ></TopBar>
+
+    <div class="subsection">
+      <form @submit.prevent="submit">
+        <label for="email" class="input-label">{{
+          $t('student.form.email')
+        }}</label>
+        <input
+          type="email"
+          id="email"
+          v-model="email"
+          class="text-input mb-4"
+          :placeholder="$t('student.form.email')"
+          required
+        />
+
+        <label for="firstName" class="input-label">{{
+          $t('student.form.firstName')
+        }}</label>
+        <input
+          type="text"
+          id="firstName"
+          v-model="firstName"
+          class="text-input mb-4"
+          :placeholder="$t('student.form.firstName')"
+          required
+        />
+
+        <label for="lastName" class="input-label">{{
+          $t('student.form.lastName')
+        }}</label>
+        <input
+          type="text"
+          id="lastName"
+          v-model="lastName"
+          class="text-input mb-4"
+          :placeholder="$t('student.form.lastName')"
+          required
+        />
+
+        <div class="mt-4">
+          <button
+            type="submit"
+            :disabled="submitDisabled"
+            class="button-blue mb-4"
+            :class="{
+              'button-disabled': submitDisabled,
+              'button-loading': loading,
+            }"
+          >
+            <SpinnerIcon v-if="loading"></SpinnerIcon>
+            {{
+              action === 'create' ? $t('student.create') : $t('student.save')
+            }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>

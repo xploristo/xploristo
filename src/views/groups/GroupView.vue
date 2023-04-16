@@ -36,59 +36,64 @@ export default {
 
 <template>
   <main>
-    <!-- Tabs -->
     <TopBar
       :title="$t('group.title') + ': ' + groupName"
       :backUrl="$route.meta.tabName !== 'results' && '/groups'"
     ></TopBar>
-    <div
-      v-if="$hasPermissionTo('groups.edit')"
-      class="mb-8 text-sm font-medium text-center text-gray-500 border-b border-gray-200"
-    >
-      <ul class="flex flex-wrap -mb-px">
-        <!-- Group data tab -->
-        <li class="mr-2">
-          <a
-            @click="changeActiveTab('group')"
-            id="data-tab"
-            :class="activeTab === 'group' ? 'active-tab' : 'inactive-tab'"
-            >{{ $t('group.tabs.data') }}</a
-          >
-        </li>
-        <!-- Students tab -->
-        <li class="mr-2">
-          <a
-            @click="changeActiveTab('students')"
-            id="students-tab"
-            :class="activeTab === 'students' ? 'active-tab' : 'inactive-tab'"
-            aria-current="page"
-            >{{ $t('group.tabs.students') }}</a
-          >
-        </li>
-        <!-- Assignments tab -->
-        <li class="mr-2">
-          <a
-            @click="changeActiveTab('assignments')"
-            id="assignments-tab"
-            :class="activeTab === 'assignments' ? 'active-tab' : 'inactive-tab'"
-            >{{ $t('group.tabs.assignments') }}</a
-          >
-        </li>
-        <!-- Results tab -->
-        <li class="mr-2">
-          <a
-            @click="changeActiveTab('results')"
-            id="results-tab"
-            :class="activeTab === 'results' ? 'active-tab' : 'inactive-tab'"
-            >{{ $t('group.tabs.results') }}</a
-          >
-        </li>
-      </ul>
-    </div>
 
-    <!-- Tab content -->
-    <div>
-      <RouterView></RouterView>
+    <div class="section">
+      <!-- Tabs -->
+      <div
+        v-if="$hasPermissionTo('groups.edit')"
+        class="mb-8 text-sm font-medium text-center text-gray-500 border-b border-gray-200"
+      >
+        <ul class="flex flex-wrap -mb-px">
+          <!-- Group data tab -->
+          <li class="mr-2">
+            <a
+              @click="changeActiveTab('group')"
+              id="data-tab"
+              :class="activeTab === 'group' ? 'active-tab' : 'inactive-tab'"
+              >{{ $t('group.tabs.data') }}</a
+            >
+          </li>
+          <!-- Students tab -->
+          <li class="mr-2">
+            <a
+              @click="changeActiveTab('students')"
+              id="students-tab"
+              :class="activeTab === 'students' ? 'active-tab' : 'inactive-tab'"
+              aria-current="page"
+              >{{ $t('group.tabs.students') }}</a
+            >
+          </li>
+          <!-- Assignments tab -->
+          <li class="mr-2">
+            <a
+              @click="changeActiveTab('assignments')"
+              id="assignments-tab"
+              :class="
+                activeTab === 'assignments' ? 'active-tab' : 'inactive-tab'
+              "
+              >{{ $t('group.tabs.assignments') }}</a
+            >
+          </li>
+          <!-- Results tab -->
+          <li class="mr-2">
+            <a
+              @click="changeActiveTab('results')"
+              id="results-tab"
+              :class="activeTab === 'results' ? 'active-tab' : 'inactive-tab'"
+              >{{ $t('group.tabs.results') }}</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tab content -->
+      <div>
+        <RouterView></RouterView>
+      </div>
     </div>
   </main>
 </template>

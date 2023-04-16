@@ -13,7 +13,8 @@
       "test": "Test"
     },
     "new": "Nuevo examen",
-    "save": "Guardar examen"
+    "save": "Guardar examen",
+    "update": "Editar examen"
   },
   "assignments": {
     "empty": "Todavía no hay ningún examen."
@@ -128,12 +129,14 @@
         "cancel": "No, cancelar"
       }
     },
-    "save": "Guardar estudiante"
+    "save": "Guardar estudiante",
+    "update": "Editar estudiante"
   },
   "result": {
-    "view": "Ver resultado",
     "correct": "Respuesta correcta: {value}",
-    "correctSelection": "Selección correcta: {value}"
+    "correctSelection": "Selección correcta: {value}",
+    "title": "Resultado",
+    "view": "Ver resultado"
   },
   "results": {
     "empty": "Todavía no hay ningún resultado."

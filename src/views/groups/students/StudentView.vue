@@ -1,13 +1,3 @@
-<template>
-  <div>
-    <StudentEditor
-      :groupId="groupId"
-      :userId="userId"
-      action="update"
-    ></StudentEditor>
-  </div>
-</template>
-
 <script>
 import StudentEditor from '../../../components/groups/students/StudentEditor.vue';
 import { useStudentStore } from '../../../stores/student';
@@ -31,3 +21,13 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <StudentEditor
+      :groupId="groupId"
+      :userId="userId"
+      action="update"
+    ></StudentEditor>
+  </div>
+</template>

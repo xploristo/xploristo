@@ -3,7 +3,7 @@ import { ArrowSmallLeftIcon } from '@heroicons/vue/24/outline';
 
 import { useAppStore } from '../../stores/app.js';
 
-/* TODO Previous route when it's first page (and not home) */
+// TODO Previous route when first page is not home (reloads, etc.)
 
 export default {
   name: 'TopBar',
@@ -13,6 +13,7 @@ export default {
   props: {
     title: { type: String },
     backUrl: { type: String },
+    isSubsection: { type: Boolean, default: false },
   },
   setup() {
     const appStore = useAppStore();
@@ -37,9 +38,12 @@ export default {
     <ArrowSmallLeftIcon
       v-if="backTo"
       @click="goBack()"
-      class="icon-medium-blue stroke-3 cursor-pointer mr-2 hover:text-blue-600"
+      :class="isSubsection ? 'back-icon-small' : 'back-icon'"
     ></ArrowSmallLeftIcon>
 
-    <h1 v-if="title" class="text-xl">{{ title }}</h1>
+    <template v-if="title">
+      <h1 v-if="!isSubsection" class="text-xl">{{ title }}</h1>
+      <h2 v-else class="text-lg">{{ title }}</h2>
+    </template>
   </div>
 </template>

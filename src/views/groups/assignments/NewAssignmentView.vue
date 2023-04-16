@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="section-title">{{ $t('assignment.new') }}</div>
     <AssignmentEditor :groupId="groupId"></AssignmentEditor>
   </div>
 </template>

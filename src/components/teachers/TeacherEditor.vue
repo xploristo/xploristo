@@ -90,57 +90,62 @@ export default {
     <TopBar
       :title="$t('teacher.' + (action === 'create' ? 'new' : 'update'))"
     ></TopBar>
-    <form @submit.prevent="submit">
-      <label for="email" class="input-label">{{
-        $t('teacher.form.email')
-      }}</label>
-      <input
-        type="email"
-        id="email"
-        v-model="email"
-        class="text-input mb-4"
-        :placeholder="$t('teacher.form.email')"
-        required
-      />
 
-      <label for="firstName" class="input-label">{{
-        $t('teacher.form.firstName')
-      }}</label>
-      <input
-        type="text"
-        id="email"
-        v-model="firstName"
-        class="text-input mb-4"
-        :placeholder="$t('teacher.form.firstName')"
-        required
-      />
+    <div class="section">
+      <form @submit.prevent="submit">
+        <label for="email" class="input-label">{{
+          $t('teacher.form.email')
+        }}</label>
+        <input
+          type="email"
+          id="email"
+          v-model="email"
+          class="text-input mb-4"
+          :placeholder="$t('teacher.form.email')"
+          required
+        />
 
-      <label for="lastName" class="input-label">{{
-        $t('teacher.form.lastName')
-      }}</label>
-      <input
-        type="text"
-        id="lastName"
-        v-model="lastName"
-        class="text-input mb-4"
-        :placeholder="$t('teacher.form.lastName')"
-        required
-      />
+        <label for="firstName" class="input-label">{{
+          $t('teacher.form.firstName')
+        }}</label>
+        <input
+          type="text"
+          id="email"
+          v-model="firstName"
+          class="text-input mb-4"
+          :placeholder="$t('teacher.form.firstName')"
+          required
+        />
 
-      <div class="mt-4">
-        <button
-          type="submit"
-          :disabled="submitDisabled"
-          class="button-blue mb-4"
-          :class="{
-            'button-disabled': submitDisabled,
-            'button-loading': loading,
-          }"
-        >
-          <SpinnerIcon v-if="loading"></SpinnerIcon>
-          {{ action === 'create' ? $t('teacher.create') : $t('teacher.save') }}
-        </button>
-      </div>
-    </form>
+        <label for="lastName" class="input-label">{{
+          $t('teacher.form.lastName')
+        }}</label>
+        <input
+          type="text"
+          id="lastName"
+          v-model="lastName"
+          class="text-input mb-4"
+          :placeholder="$t('teacher.form.lastName')"
+          required
+        />
+
+        <div class="mt-4">
+          <button
+            type="submit"
+            :disabled="submitDisabled"
+            class="button-blue mb-4"
+            :class="{
+              'button-disabled': submitDisabled,
+              'button-loading': loading,
+            }"
+          >
+            <SpinnerIcon v-if="loading"></SpinnerIcon>
+            {{
+              action === 'create' ? $t('teacher.create') : $t('teacher.save')
+            }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>

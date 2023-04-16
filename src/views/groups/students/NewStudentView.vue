@@ -1,10 +1,3 @@
-<template>
-  <div>
-    <div class="section-title">{{ $t('student.new') }}</div>
-    <StudentEditor :groupId="groupId" action="create"></StudentEditor>
-  </div>
-</template>
-
 <script>
 import StudentEditor from '../../../components/groups/students/StudentEditor.vue';
 import { useStudentStore } from '../../../stores/student';
@@ -27,3 +20,9 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <StudentEditor :groupId="groupId" action="create"></StudentEditor>
+  </div>
+</template>
