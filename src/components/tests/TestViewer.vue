@@ -107,6 +107,7 @@ export default {
         assignmentId: this.assignmentId,
         questions: this.questions,
       });
+      // FIXME Assignment table does not get reloaded!
       // TODO Do not let users come back here via browser history?
       this.$router.push({ name: 'group', params: { groupId: this.groupId } });
     },
@@ -175,7 +176,7 @@ export default {
         <!-- TODO Confirm modal -->
         <button
           v-else-if="assignmentId"
-          @click="!isPreview && sendResult"
+          @click="!isPreview && sendResult()"
           class="button-small button-blue ml-2"
         >
           {{ $t('test.sendResult') }}

@@ -143,7 +143,7 @@ export default {
               :name="questions[questionIndex].index"
               :value="answer.index"
               :checked="answer.correct"
-              @change="!isPreview && onSingleChoiceAnswerChange"
+              @change="!isPreview && onSingleChoiceAnswerChange($event)"
               :disabled="isPreview"
             />
             <input
