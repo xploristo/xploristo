@@ -1,13 +1,14 @@
 // TODO Add option to shuffle questions and/or answers for students
 
 <script>
+import { DocumentDuplicateIcon } from '@heroicons/vue/24/outline';
+
 import SpinnerIcon from '../icons/SpinnerIcon.vue';
 import DocumentUploader from '../documents/DocumentUploader.vue';
 import QuestionsEditor from './QuestionsEditor.vue';
 import TopBar from '../nav/TopBar.vue';
 
 import { useTestStore } from '../../stores/test.js';
-import testsService from '../../services/tests.service';
 
 export default {
   name: 'TestEditor',
@@ -16,9 +17,12 @@ export default {
     DocumentUploader,
     QuestionsEditor,
     TopBar,
+    DocumentDuplicateIcon,
   },
   props: {
-    testId: { type: String, required: true },
+    testId: { type: String },
+    assignmentId: { type: String },
+    groupId: { type: String },
     action: { type: String, required: true },
   },
   data() {
@@ -30,13 +34,15 @@ export default {
     };
   },
   setup() {
-    const testStore = useTestStore();
-
-    return { testStore };
+    return { testStore: useTestStore() };
   },
   async created() {
-    if (this.testId) {
-      await this.testStore.getTest(this.testId);
+    if (this.testId || this.assignmentId) {
+      await this.testStore.getTest(
+        this.testId,
+        this.assignmentId,
+        this.groupId
+      );
     }
   },
   computed: {
@@ -53,7 +59,7 @@ export default {
         return this.testStore.documentName;
       },
       set(value) {
-        this.testStore.test.document.path = value;
+        this.testStore.test.document.name = value;
       },
     },
     questions() {
@@ -76,9 +82,12 @@ export default {
       this.file = file;
       if (this.action === 'update') {
         // TODO Show confirm modal
-        const { documentUploadUrl } = await testsService.updateTestDocument(
+
+        const { documentUploadUrl } = await this.testStore.updateTestDocument(
           this.testId,
-          { type: 'application/pdf', path: this.file.name }
+          this.assignmentId,
+          this.groupId,
+          { type: 'application/pdf', name: this.file.name }
         );
         this.documentUploadUrl = documentUploadUrl;
       }
@@ -102,11 +111,17 @@ export default {
         this.createdTestId = test._id;
         this.loading = true;
       } else {
-        await testsService.updateTest(this.testId, {
-          name: this.name,
-          questions: this.questions,
-        });
-        this.$router.push('/tests');
+        await this.testStore.updateTest(
+          this.testId,
+          this.assignmentId,
+          this.groupId,
+          {
+            name: this.name,
+            questions: this.questions,
+          }
+        );
+
+        this.$router.replace({ name: this.testId ? 'tests' : 'assignment' });
       }
     },
   },
@@ -117,9 +132,21 @@ export default {
   <div>
     <TopBar
       :title="$t('test.' + (action === 'create' ? 'new' : 'update'))"
+      :isSubsection="!!assignmentId"
     ></TopBar>
 
     <div class="section">
+      <div
+        v-if="assignmentId"
+        class="flex p-3 mb-5 text-sm text-blue-600 rounded-lg bg-blue-50"
+        role="alert"
+      >
+        <DocumentDuplicateIcon
+          class="flex-shrink-0 inline w-5 h-5 mr-3"
+        ></DocumentDuplicateIcon>
+        <div>{{ $t('assignment.test.update.infoMessage') }}</div>
+      </div>
+
       <form @submit.prevent="submit">
         <label for="name" class="input-label">{{ $t('test.form.name') }}</label>
         <input

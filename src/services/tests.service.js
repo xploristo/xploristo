@@ -11,6 +11,9 @@ export default {
   getTest(testId) {
     return customFetch(`/tests/${testId}`);
   },
+  getTestDocumentDownloadUrl(testId) {
+    return customFetch(`/tests/${testId}/document-download-url`);
+  },
   updateTest(testId, testData) {
     return customFetch(`/tests/${testId}`, 'PUT', testData);
   },

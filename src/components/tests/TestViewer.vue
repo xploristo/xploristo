@@ -39,7 +39,12 @@ export default {
     return { testStore };
   },
   async created() {
-    await this.testStore.getTest(this.testId);
+    await this.testStore.getTest(this.testId, this.assignmentId, this.groupId);
+    await this.testStore.getDocumentDownloadUrl(
+      this.testId,
+      this.assignmentId,
+      this.groupId
+    );
 
     this.setDocumentContainerTop();
   },
@@ -74,6 +79,20 @@ export default {
     pdfUrl() {
       return this.testStore.documentDownloadUrl;
     },
+    backRoute() {
+      if (this.assignmentId) {
+        return { name: 'assignment' };
+      } else if (this.isPreview) {
+        return '/tests';
+      }
+      return null;
+    },
+    editRoute() {
+      if (this.assignmentId) {
+        return { name: 'assignmentTestEdit' };
+      }
+      return '/tests/' + this.testId;
+    },
   },
   methods: {
     setDocumentContainerTop() {
@@ -98,7 +117,7 @@ export default {
 <template>
   <!-- TODO Test for ultra wide screens (max width?) -->
   <div v-if="questions.length" id="test-container" class="test-container">
-    <TopBar :title="$t('test.title')" :backUrl="isPreview && '/tests'"></TopBar>
+    <TopBar :title="$t('test.title')" :backRoute="backRoute"></TopBar>
 
     <div class="flex items-center place-content-between">
       <div class="text-bold mb-1">
@@ -148,7 +167,7 @@ export default {
           "
         ></ChevronRightIcon>
 
-        <RouterLink v-if="isPreview" :to="'/tests/' + testId" replace>
+        <RouterLink v-if="isPreview" :to="editRoute" replace>
           <PencilSquareIcon
             class="ml-2 icon-small-blue cursor-pointer"
           ></PencilSquareIcon>
@@ -173,7 +192,7 @@ export default {
     ></TestQuestion>
   </div>
 
-  <!-- TODO: -->
+  <!-- TODO (pdf viewer improvements): -->
   <!-- https://github.com/FranckFreiburger/vue-pdf/issues/15 -->
   <!-- https://stackoverflow.com/questions/55848544/zoom-part-of-webpage-independently-from-the-rest-of-the-page -->
   <!-- https://stackoverflow.com/questions/17782465/zoom-specific-element-on-webcontent-html-css-javascript -->

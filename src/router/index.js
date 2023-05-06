@@ -221,6 +221,12 @@ const router = createRouter({
                   component: AssignmentTestView,
                   props: true,
                 },
+                {
+                  path: 'test/edit',
+                  name: 'assignmentTestEdit',
+                  component: TestView,
+                  props: true,
+                },
               ],
             },
           ],

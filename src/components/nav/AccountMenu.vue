@@ -36,7 +36,8 @@
       <div class="font-medium">{{ $t('nav.account.role.' + role) }}</div>
       <div class="truncate">{{ email }}</div>
     </div>
-    <!-- TODO Settings and credits -->
+    <!-- TODO Settings -->
+    <!-- FIXME Credits -->
     <!--     <ul
       class="py-1 text-sm text-gray-700 dark:text-gray-200"
       aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton"

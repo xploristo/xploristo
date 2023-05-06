@@ -14,6 +14,18 @@
     },
     "new": "Nuevo examen",
     "save": "Guardar examen",
+    "test": {
+      "update": {
+        "infoMessage": "Editar el test de este examen no actualizará la plantilla. Puedes editar la plantilla y después revertir el test del examen al mismo estado de la plantilla, si así lo deseas."
+      },
+      "reset": {
+        "modal": {
+          "title": "¿Seguro que quieres revertir el test (<b>{name}</b>) del examen al estado de la plantilla?",
+          "confirm": "Sí, revertir",
+          "cancel": "No, cancelar"
+        }
+      }
+    },
     "update": "Editar examen"
   },
   "assignments": {

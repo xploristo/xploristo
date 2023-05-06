@@ -4,43 +4,84 @@ import testsService from '../services/tests.service.js';
 import { useAssignmentStore } from './assignment.js';
 
 export const useTestStore = defineStore('test', {
-  // TODO Maintain data in local storage for unwanted refresh? 🤔
   state: () => ({
+    // TODO Save assignmentId and groupId in state?
     test: {
+      _id: null,
       name: '',
       document: {},
+      // TODO Get documentDownloadUrl again after it expires?
       documentDownloadUrl: null,
       questions: [],
     },
   }),
   actions: {
     clear() {
-      /* this.test._id = null; */
+      this.test._id = null;
       this.test.name = '';
       this.test.document = {};
       this.test.documentDownloadUrl = null;
       this.test.questions = [];
     },
+    async getTest(testId, assignmentId, groupId) {
+      if (testId) {
+        // TODO Send home (or not found page) if test not found
+        if (testId !== this.test._id) {
+          this.test = await testsService.getTest(testId);
+        }
+      } else if (assignmentId) {
+        const assignmentStore = useAssignmentStore();
+        await assignmentStore.getAssignment(groupId, assignmentId);
+        this.test = assignmentStore.test;
+      }
+    },
+    async getDocumentDownloadUrl(testId, assignmentId, groupId) {
+      if (testId) {
+        if (testId !== this.test._id || !this.test.documentDownloadUrl) {
+          this.test.documentDownloadUrl =
+            await testsService.getTestDocumentDownloadUrl(testId);
+        }
+      } else if (assignmentId) {
+        const assignmentStore = useAssignmentStore();
+        this.test.documentDownloadUrl =
+          await assignmentStore.getTestDocumentDownloadUrl(
+            groupId,
+            assignmentId
+          );
+      }
+    },
     async createTest({ name, fileName }) {
       const testData = await testsService.createTest({
         name: name,
-        document: { type: 'application/pdf', path: fileName },
+        document: { type: 'application/pdf', name: fileName },
       });
       const { documentUploadUrl, ...test } = testData;
       this.test = test;
 
       return { documentUploadUrl, test };
     },
-    async getTest(testId) {
-      /* if (testId !== this.test._id) { */
-      const assignment = useAssignmentStore();
-      if (assignment.test?.questions) {
-        this.test = assignment.test;
-      } else {
-        // TODO Send home (or not found page) if test not found
-        this.test = await testsService.getTest(testId);
+    async updateTest(testId, assignmentId, groupId, { name, questions }) {
+      if (testId) {
+        await testsService.updateTest(testId, { name, questions });
+      } else if (assignmentId) {
+        const assignmentStore = useAssignmentStore();
+        await assignmentStore.updateAssignmentTest(groupId, assignmentId, {
+          name,
+          questions,
+        });
       }
-      /* } */
+    },
+    async updateTestDocument(testId, assignmentId, groupId, document) {
+      if (testId) {
+        return testsService.updateTestDocument(testId, document);
+      } else if (assignmentId) {
+        const assignmentStore = useAssignmentStore();
+        return assignmentStore.updateAssignmentTestDocument(
+          groupId,
+          assignmentId,
+          document
+        );
+      }
     },
     addQuestion(question) {
       this.test.questions.push(question);
@@ -139,7 +180,7 @@ export const useTestStore = defineStore('test', {
       return state.test.questions;
     },
     documentName(state) {
-      return state.test.document?.path;
+      return state.test.document?.name;
     },
     documentDownloadUrl(state) {
       return state.test.documentDownloadUrl;
@@ -159,7 +200,7 @@ export const useTestStore = defineStore('test', {
         question.answers.forEach((answer) => {
           if (question.type === 'selection') {
             isCorrectAnswerSelected = true;
-            if (!answer.answer.textSelection) {
+            if (!answer.answer?.textSelection) {
               errors.push({
                 questionIndex: question.index,
                 reason: 'emptySelectionAnswer',

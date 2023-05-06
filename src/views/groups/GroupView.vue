@@ -38,7 +38,7 @@ export default {
   <main>
     <TopBar
       :title="$t('group.title') + ': ' + groupName"
-      :backUrl="$route.meta.tabName !== 'results' && '/groups'"
+      :backRoute="$route.meta.tabName !== 'results' && '/groups'"
     ></TopBar>
 
     <div class="section">

@@ -10,6 +10,8 @@ export default {
   },
   props: {
     testId: String,
+    assignmentId: String,
+    groupId: String,
   },
 };
 </script>
@@ -17,10 +19,15 @@ export default {
 <template>
   <main>
     <template v-if="$hasPermissionTo('tests.edit')">
-      <TestEditor :testId="testId" action="update"></TestEditor>
+      <TestEditor
+        :testId="testId"
+        :assignmentId="assignmentId"
+        :groupId="groupId"
+        action="update"
+      ></TestEditor>
     </template>
     <template v-else>
-      <!-- TODO Does this ever happen? Students go through AssignmentTestView -->
+      <!-- FIXME Does this ever happen? Students go through AssignmentTestView -->
       <TestViewer :testId="testId"></TestViewer>
     </template>
   </main>

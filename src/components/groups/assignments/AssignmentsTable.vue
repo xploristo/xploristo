@@ -134,7 +134,7 @@ export default {
             scope="row"
             class="py-4 px-6 text-gray-900 whitespace-nowrap"
           >
-            {{ assignment.test.document.path }}
+            {{ assignment.test.document.name }}
           </td>
 
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">

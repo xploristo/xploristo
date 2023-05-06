@@ -12,8 +12,8 @@ export default {
   },
   props: {
     title: { type: String },
-    backUrl: { type: String },
     isSubsection: { type: Boolean, default: false },
+    backRoute: undefined,
   },
   setup() {
     const appStore = useAppStore();
@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     backTo() {
-      return this.backUrl || this.appStore.previousRoute.path;
+      return this.backRoute || this.appStore.previousRoute.path;
     },
   },
   methods: {

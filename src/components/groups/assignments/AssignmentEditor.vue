@@ -1,8 +1,15 @@
 <script>
-import { EyeIcon, CalendarIcon, ClockIcon } from '@heroicons/vue/24/outline';
+import {
+  EyeIcon,
+  CalendarIcon,
+  ClockIcon,
+  PencilSquareIcon,
+  ArrowUturnLeftIcon,
+} from '@heroicons/vue/24/outline';
 
 import { useAssignmentStore } from '../../../stores/assignment.js';
 import testsService from '../../../services/tests.service.js';
+import ConfirmModal from '../../modals/ConfirmModal.vue';
 import SpinnerIcon from '../../icons/SpinnerIcon.vue';
 import TopBar from '../../nav/TopBar.vue';
 
@@ -14,6 +21,9 @@ export default {
     EyeIcon,
     CalendarIcon,
     ClockIcon,
+    PencilSquareIcon,
+    ArrowUturnLeftIcon,
+    ConfirmModal,
     SpinnerIcon,
     TopBar,
   },
@@ -26,6 +36,7 @@ export default {
       testId: null,
       loading: false,
       tests: [],
+      showResetTestModal: false,
     };
   },
   setup() {
@@ -91,9 +102,15 @@ export default {
     },
   },
   methods: {
+    confirmResetTest() {
+      this.showResetTestModal = true;
+    },
+    async resetTest() {
+      this.showResetTestModal = false;
+      await this.assignmentStore.resetAssignmentTest(this.assignmentId);
+    },
     async submit() {
       if (this.assignmentId) {
-        // TODO Do this via store
         this.loading = true;
         await this.assignmentStore.updateAssignment(
           this.groupId,
@@ -133,6 +150,7 @@ export default {
     <TopBar
       :title="$t('assignment.' + (assignmentId ? 'update' : 'new'))"
       :isSubsection="true"
+      :backRoute="{ name: 'assignments' }"
     ></TopBar>
 
     <div class="subsection">
@@ -162,15 +180,23 @@ export default {
               {{ test.name }}
             </div>
             <RouterLink
-              v-if="test?._id"
-              :to="{
-                name: 'test',
-                params: { testId: test._id },
-              }"
+              :to="{ name: 'assignmentTest' }"
               class="text-blue-500 hover:text-blue-600"
             >
               <EyeIcon class="ml-2 mt-1 w-8 h-8"></EyeIcon>
             </RouterLink>
+            <RouterLink
+              :to="{ name: 'assignmentTestEdit' }"
+              class="text-blue-500 hover:text-blue-600"
+            >
+              <PencilSquareIcon class="ml-2 mt-1 w-8 h-8"></PencilSquareIcon>
+            </RouterLink>
+            <!-- TODO Add title text -->
+            <!-- TODO Disable if clone OR template were not edited -->
+            <ArrowUturnLeftIcon
+              @click="confirmResetTest()"
+              class="ml-2 mt-1 w-8 h-8 text-blue-500 hover:text-blue-600 cursor-pointer"
+            ></ArrowUturnLeftIcon>
           </div>
         </template>
         <template v-else>
@@ -258,8 +284,6 @@ export default {
           <!-- TODO Teachers list and input -->
         </template>
 
-        <!-- TODO Students' emails input -->
-
         <div class="mt-4">
           <button
             type="submit"
@@ -275,6 +299,17 @@ export default {
           </button>
         </div>
       </form>
+
+      <!-- TODO Add date the template was updated on modal title (or text) -->
+      <ConfirmModal
+        v-if="showResetTestModal"
+        title="assignment.test.reset.modal.title"
+        :titleData="{ name: test.name }"
+        confirm="assignment.test.reset.modal.confirm"
+        cancel="assignment.test.reset.modal.cancel"
+        @confirm="resetTest()"
+        @close="showResetTestModal = false"
+      ></ConfirmModal>
     </div>
   </div>
 </template>

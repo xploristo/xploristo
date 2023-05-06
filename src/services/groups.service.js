@@ -31,6 +31,26 @@ export default {
       assignmentData
     );
   },
+  updateAssignmentTest(groupId, assignmentId, testData) {
+    return customFetch(
+      `/groups/${groupId}/assignments/${assignmentId}/test`,
+      'PUT',
+      testData
+    );
+  },
+  updateAssignmentTestDocument(groupId, assignmentId, document) {
+    return customFetch(
+      `/groups/${groupId}/assignments/${assignmentId}/test/document`,
+      'PUT',
+      document
+    );
+  },
+  resetAssignmentTest(groupId, assignmentId) {
+    return customFetch(
+      `/groups/${groupId}/assignments/${assignmentId}/test/reset`,
+      'PUT'
+    );
+  },
   deleteAssignment(groupId, assignmentId) {
     return customFetch(
       `/groups/${groupId}/assignments/${assignmentId}`,
@@ -39,6 +59,11 @@ export default {
   },
   getAssignment(groupId, assignmentId) {
     return customFetch(`/groups/${groupId}/assignments/${assignmentId}`);
+  },
+  getAssignmentTestDocumentDownloadUrl(groupId, assignmentId) {
+    return customFetch(
+      `/groups/${groupId}/assignments/${assignmentId}/test/document-download-url`
+    );
   },
   enrollStudents(groupId, studentsData) {
     return customFetch(`/groups/${groupId}/students`, 'POST', studentsData);

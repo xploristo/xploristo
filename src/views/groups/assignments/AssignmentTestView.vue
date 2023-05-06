@@ -22,21 +22,15 @@ export default {
 
     return { assignmentStore };
   },
-  computed: {
-    testId() {
-      return this.assignmentStore.testId;
-    },
-  },
 };
 </script>
 
 <template>
   <div>
     <TestViewer
-      v-if="testId"
-      :testId="testId"
       :assignmentId="assignmentId"
       :groupId="groupId"
+      :isPreview="$hasPermissionTo('assignments.edit')"
     ></TestViewer>
   </div>
 </template>

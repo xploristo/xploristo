@@ -74,7 +74,7 @@ export default {
             </RouterLink>
           </td>
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
-            {{ test.document.path }}
+            {{ test.document.name }}
           </td>
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             {{ this.parseDate(test.updatedAt) }}
