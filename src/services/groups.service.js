@@ -68,4 +68,12 @@ export default {
   enrollStudents(groupId, studentsData) {
     return customFetch(`/groups/${groupId}/students`, 'POST', studentsData);
   },
+  addTeacher(groupId, { teacherEmail }) {
+    return customFetch(`/groups/${groupId}/teachers`, 'POST', {
+      teacherEmail,
+    });
+  },
+  deleteTeacher(groupId, teacherId) {
+    return customFetch(`/groups/${groupId}/teachers/${teacherId}`, 'DELETE');
+  },
 };

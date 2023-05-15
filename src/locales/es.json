@@ -44,7 +44,18 @@
       }
     },
     "form": {
-      "name": "Nombre de la asignatura"
+      "addTeacherModal": {
+        "inputLabel": "Correo electrónico del docente",
+        "submitLabel": "Añadir docente"
+      },
+      "deleteTeacherModal": {
+        "title": "¿Seguro que quieres eliminar al docente <b>{name}</b> de la asignatura?",
+        "confirm": "Sí, eliminar",
+        "cancel": "No, cancelar"
+      },
+      "name": "Nombre de la asignatura",
+      "teachers": "Docentes",
+      "teachersEmpty": "Aún no hay docentes asignados a la asignatura."
     },
     "new": "Nueva asignatura",
     "save": "Guardar asignatura",

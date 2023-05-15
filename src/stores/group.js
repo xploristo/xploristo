@@ -50,6 +50,14 @@ export const useGroupStore = defineStore('group', {
       this.group.results = results;
       /* } */
     },
+    async addTeacher(teacherEmail) {
+      this.group = await groupsService.addTeacher(this.group._id, {
+        teacherEmail,
+      });
+    },
+    async deleteTeacher(teacherId) {
+      this.group = await groupsService.deleteTeacher(this.group._id, teacherId);
+    },
     async addStudent({ email, firstName, lastName, role = 'student' }) {
       this.group = await groupsService.enrollStudents(this.group._id, {
         students: [
