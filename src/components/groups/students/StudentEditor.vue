@@ -68,11 +68,6 @@ export default {
           firstName: this.firstName,
           lastName: this.lastName,
         });
-
-        this.$router.push({
-          name: 'students',
-          params: { groupId: this.groupId },
-        });
       } else {
         await this.studentStore.updateStudent(this.userId, {
           email: this.email,
@@ -80,6 +75,11 @@ export default {
           lastName: this.lastName,
         });
       }
+
+      this.$router.push({
+        name: 'students',
+        params: { groupId: this.groupId },
+      });
     },
   },
 };

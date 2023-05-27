@@ -71,8 +71,6 @@ export default {
         });
 
         this.createdTeacherId = teacher._id;
-        // TODO Teachers view but adding teacher to the table
-        this.$router.push({ name: 'teachers' });
       } else {
         await teachersService.updateTeacher(this.teacherId, {
           email: this.email,
@@ -80,6 +78,8 @@ export default {
           lastName: this.lastName,
         });
       }
+
+      this.$router.push({ name: 'teachers' });
     },
   },
 };
