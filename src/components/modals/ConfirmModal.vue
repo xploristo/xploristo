@@ -1,3 +1,20 @@
+<script>
+import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
+
+export default {
+  name: 'ConfirmModal',
+  components: {
+    ExclamationTriangleIcon,
+  },
+  props: {
+    title: { type: String, required: true },
+    titleData: { type: Object },
+    confirm: { type: String, required: true },
+    cancel: { type: String, required: true },
+  },
+};
+</script>
+
 <template>
   <div
     id="popup-modal"
@@ -38,20 +55,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
-
-export default {
-  name: 'ConfirmModal',
-  components: {
-    ExclamationTriangleIcon,
-  },
-  props: {
-    title: { type: String, required: true },
-    titleData: { type: Object },
-    confirm: { type: String, required: true },
-    cancel: { type: String, required: true },
-  },
-};
-</script>

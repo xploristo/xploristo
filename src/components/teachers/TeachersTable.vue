@@ -55,8 +55,9 @@ export default {
       await this.teachersStore.deleteTeacher(teacherId);
     },
     async resendPasswordEmail(teacherId) {
+      this.showResendPasswordEmailModal = false;
       await authService.resetPassword({ userId: teacherId });
-      // TODO Show confirm
+      // TODO Show confirmM
     },
     async changeAdminStatus(teacher) {
       this.showChangeAdminStatusModal = false;

@@ -147,7 +147,7 @@
     "new": "Nuevo estudiante",
     "resendPasswordEmail": {
       "modal": {
-        "title": "¿Deseas reenviar el email con su contraseña a {name}? Si ha definido una contraseña, esta se reestablecerá.",
+        "title": "¿Deseas reenviar el email con su contraseña a {name}? Si ha definido una contraseña, esta <b>se restablecerá</b>.",
         "confirm": "Sí, proceder",
         "cancel": "No, cancelar"
       }
@@ -184,7 +184,7 @@
     "new": "Nuevo docente",
     "resendPasswordEmail": {
       "modal": {
-        "title": "¿Deseas reenviar el email con su contraseña a {name}? Si ha definido una contraseña, esta se reestablecerá.",
+        "title": "¿Deseas reenviar el email con su contraseña a {name}? Si ha definido una contraseña, esta <b>se restablecerá</b>.",
         "confirm": "Sí, proceder",
         "cancel": "No, cancelar"
       }
