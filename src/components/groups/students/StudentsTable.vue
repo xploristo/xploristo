@@ -47,6 +47,7 @@ export default {
       await this.groupStore.deleteStudent(studentId);
     },
     async resendPasswordEmail(studentId) {
+      this.showResendPasswordEmailModal = false;
       await authService.resetPassword({ userId: studentId });
       // TODO Show confirm
     },
