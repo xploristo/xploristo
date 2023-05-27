@@ -11,6 +11,7 @@ import { useAssignmentStore } from '../../../stores/assignment.js';
 import testsService from '../../../services/tests.service.js';
 import ConfirmModal from '../../modals/ConfirmModal.vue';
 import SpinnerIcon from '../../icons/SpinnerIcon.vue';
+import TooltipIcon from '../../icons/TooltipIcon.vue';
 import TopBar from '../../nav/TopBar.vue';
 
 // TODO Add option to shuffle questions and/or answers for students
@@ -25,6 +26,7 @@ export default {
     ArrowUturnLeftIcon,
     ConfirmModal,
     SpinnerIcon,
+    TooltipIcon,
     TopBar,
   },
   props: {
@@ -179,7 +181,7 @@ export default {
           >Test</label
         >
         <template v-if="assignmentId">
-          <div id="test" class="flex mt-2 mb-2">
+          <div id="test" class="flex mt-2 mb-4">
             <div class="p-2 w-full rounded-lg border border-gray-300">
               {{ test.name }}
             </div>
@@ -187,20 +189,26 @@ export default {
               :to="{ name: 'assignmentTest' }"
               class="text-blue-500 hover:text-blue-600"
             >
-              <EyeIcon class="ml-2 mt-1 w-8 h-8"></EyeIcon>
+              <TooltipIcon :text="$t('assignment.test.view.tooltip')">
+                <EyeIcon class="ml-2 mt-1 w-8 h-8"></EyeIcon>
+              </TooltipIcon>
             </RouterLink>
             <RouterLink
               :to="{ name: 'assignmentTestEdit' }"
               class="text-blue-500 hover:text-blue-600"
             >
-              <PencilSquareIcon class="ml-2 mt-1 w-8 h-8"></PencilSquareIcon>
+              <TooltipIcon :text="$t('assignment.test.update.tooltip')">
+                <PencilSquareIcon class="ml-2 mt-1 w-8 h-8"></PencilSquareIcon>
+              </TooltipIcon>
             </RouterLink>
             <!-- TODO Add title text -->
             <!-- TODO Disable if clone OR template were not edited -->
-            <ArrowUturnLeftIcon
-              @click="confirmResetTest()"
-              class="ml-2 mt-1 w-8 h-8 text-blue-500 hover:text-blue-600 cursor-pointer"
-            ></ArrowUturnLeftIcon>
+            <TooltipIcon :text="$t('assignment.test.reset.tooltip')">
+              <ArrowUturnLeftIcon
+                @click="confirmResetTest()"
+                class="ml-2 mt-1 w-8 h-8 text-blue-500 hover:text-blue-600 cursor-pointer"
+              ></ArrowUturnLeftIcon>
+            </TooltipIcon>
           </div>
         </template>
         <template v-else>
