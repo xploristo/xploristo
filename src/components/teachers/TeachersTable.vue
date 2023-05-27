@@ -3,7 +3,6 @@ import {
   PencilSquareIcon,
   EnvelopeIcon,
   TrashIcon,
-  WrenchIcon,
 } from '@heroicons/vue/24/outline';
 
 import authService from '../../services/auth.service';
@@ -17,7 +16,6 @@ export default {
     PencilSquareIcon,
     EnvelopeIcon,
     TrashIcon,
-    WrenchIcon,
     ConfirmModal,
   },
   data() {
@@ -116,16 +114,16 @@ export default {
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             {{ teacher.email }}
           </td>
-          <td
-            scope="row"
-            class="py-4 px-6 text-gray-900 whitespace-nowrap"
-            :class="{ 'text-green-400': teacher.role === 'admin' }"
-          >
-            {{
-              teacher.role === 'admin'
-                ? $t('teachers.table.adminYes')
-                : $t('teachers.table.adminNo')
-            }}
+          <td scope="row" class="py-4 px-6">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                class="sr-only peer"
+                :checked="teacher.role === 'admin'"
+                @click.prevent="confirmChangeAdminStatus(teacher)"
+              />
+              <div class="blue-toggle peer"></div>
+            </label>
           </td>
           <td class="flex py-4 px-6">
             <RouterLink
@@ -139,15 +137,6 @@ export default {
               class="text-blue-500 hover:text-blue-600 mr-1 w-6 h-6 cursor-pointer"
             >
             </EnvelopeIcon>
-            <WrenchIcon
-              @click="confirmChangeAdminStatus(teacher)"
-              class="mr-1 w-6 h-6 cursor-pointer"
-              :class="
-                teacher.role === 'admin'
-                  ? 'text-red-500 hover:text-red-600'
-                  : 'text-blue-500 hover:text-blue-600'
-              "
-            ></WrenchIcon>
             <TrashIcon
               @click="confirmTeacherDelete(teacher)"
               class="text-red-500 hover:text-red-600 mr-1 w-6 h-6 cursor-pointer"
