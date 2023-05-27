@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import { hasPermissionTo } from '../plugins/permissions.js';
+import { useNotificationsStore } from '../stores/notifications.js';
 import { useUserStore } from '../stores/user.js';
 import { useAppStore } from '../stores/app.js';
 
@@ -274,6 +275,8 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const isLoginPage = ['login', 'resetPassword'].includes(to.name);
 
+  clearNotification();
+
   if (isLoginPage) {
     next();
   } else {
@@ -301,5 +304,10 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 });
+
+function clearNotification() {
+  const notificationsStore = useNotificationsStore();
+  notificationsStore.popError();
+}
 
 export default router;
