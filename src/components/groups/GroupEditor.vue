@@ -53,9 +53,12 @@ export default {
   methods: {
     async addTeacher(teacherEmail) {
       this.loading = true;
-      await this.groupStore.addTeacher(teacherEmail);
-      this.loading = false;
-      this.showAddTeacherModal = false;
+      try {
+        await this.groupStore.addTeacher(teacherEmail);
+      } finally {
+        this.loading = false;
+        this.showAddTeacherModal = false;
+      }
     },
     confirmTeacherDelete(teacher) {
       // TODO Show a warning if last teacher or trying to delete themselves and not and admin
@@ -65,22 +68,27 @@ export default {
     async deleteTeacher(teacherId) {
       this.showDeleteTeacherModal = false;
       this.loading = true;
-      await this.groupStore.deleteTeacher(teacherId);
-      this.loading = false;
+      try {
+        await this.groupStore.deleteTeacher(teacherId);
+      } finally {
+        this.loading = false;
+      }
     },
     async submit() {
-      if (this.action === 'create') {
-        this.loading = true;
-        const group = await this.groupStore.createGroup({
-          name: this.name,
-        });
+      this.loading = true;
+      try {
+        if (this.action === 'create') {
+          const group = await this.groupStore.createGroup({
+            name: this.name,
+          });
 
-        this.$router.push({ name: 'group', params: { groupId: group._id } });
-      } else {
-        this.loading = true;
-        await groupsService.updateGroup(this.groupId, {
-          name: this.name,
-        });
+          this.$router.push({ name: 'group', params: { groupId: group._id } });
+        } else {
+          await groupsService.updateGroup(this.groupId, {
+            name: this.name,
+          });
+        }
+      } finally {
         this.loading = false;
       }
     },

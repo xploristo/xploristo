@@ -18,7 +18,6 @@ export default {
   data() {
     return {
       loading: false,
-      createdTeacherId: null,
     };
   },
   setup() {
@@ -62,24 +61,25 @@ export default {
   },
   methods: {
     async submit() {
-      if (this.action === 'create') {
-        this.loading = true;
-        const teacher = await this.teacherStore.createTeacher({
-          email: this.email,
-          firstName: this.firstName,
-          lastName: this.lastName,
-        });
-
-        this.createdTeacherId = teacher._id;
-      } else {
-        await teachersService.updateTeacher(this.teacherId, {
-          email: this.email,
-          firstName: this.firstName,
-          lastName: this.lastName,
-        });
+      this.loading = true;
+      try {
+        if (this.action === 'create') {
+          await this.teacherStore.createTeacher({
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName,
+          });
+        } else {
+          await teachersService.updateTeacher(this.teacherId, {
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName,
+          });
+        }
+        this.$router.push({ name: 'teachers' });
+      } finally {
+        this.loading = false;
       }
-
-      this.$router.push({ name: 'teachers' });
     },
   },
 };

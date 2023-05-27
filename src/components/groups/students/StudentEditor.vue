@@ -61,25 +61,28 @@ export default {
   },
   methods: {
     async submit() {
-      if (this.action === 'create') {
-        this.loading = true;
-        await this.studentStore.createStudent({
-          email: this.email,
-          firstName: this.firstName,
-          lastName: this.lastName,
+      this.loading = true;
+      try {
+        if (this.action === 'create') {
+          await this.studentStore.createStudent({
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName,
+          });
+        } else {
+          await this.studentStore.updateStudent(this.userId, {
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName,
+          });
+        }
+        this.$router.push({
+          name: 'students',
+          params: { groupId: this.groupId },
         });
-      } else {
-        await this.studentStore.updateStudent(this.userId, {
-          email: this.email,
-          firstName: this.firstName,
-          lastName: this.lastName,
-        });
+      } finally {
+        this.loading = false;
       }
-
-      this.$router.push({
-        name: 'students',
-        params: { groupId: this.groupId },
-      });
     },
   },
 };

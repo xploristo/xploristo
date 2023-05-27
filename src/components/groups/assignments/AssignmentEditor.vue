@@ -110,35 +110,39 @@ export default {
       await this.assignmentStore.resetAssignmentTest(this.assignmentId);
     },
     async submit() {
-      if (this.assignmentId) {
-        this.loading = true;
-        await this.assignmentStore.updateAssignment(
-          this.groupId,
-          this.assignmentId,
-          {
+      this.loading = true;
+
+      try {
+        if (this.assignmentId) {
+          await this.assignmentStore.updateAssignment(
+            this.groupId,
+            this.assignmentId,
+            {
+              name: this.name,
+              startDay: this.startDay,
+              endDay: this.endDay,
+              startTime: this.startTime,
+              endTime: this.endTime,
+            }
+          );
+
+          // TODO Show feedback instead of routing?
+          this.$router.push({ name: 'assignments' });
+        } else {
+          await this.assignmentStore.createAssignment(this.groupId, {
             name: this.name,
+            testId: this.testId,
             startDay: this.startDay,
             endDay: this.endDay,
             startTime: this.startTime,
             endTime: this.endTime,
-          }
-        );
+          });
 
-        // TODO Show feedback instead of routing
-        this.$router.push({ name: 'assignments' });
-      } else {
-        this.loading = true;
-        await this.assignmentStore.createAssignment(this.groupId, {
-          name: this.name,
-          testId: this.testId,
-          startDay: this.startDay,
-          endDay: this.endDay,
-          startTime: this.startTime,
-          endTime: this.endTime,
-        });
-
-        // TODO Assignment view?
-        this.$router.push({ name: 'assignments' });
+          // TODO Assignment view?
+          this.$router.push({ name: 'assignments' });
+        }
+      } finally {
+        this.loading = false;
       }
     },
   },
