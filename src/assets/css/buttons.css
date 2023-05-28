@@ -26,6 +26,10 @@
   @apply w-5 h-5 rounded-full inline-flex items-center justify-center text-sm;
 }
 
+.circle-number-selected {
+  @apply ring-4 ring-blue-200;
+}
+
 .circle-number-filled-blue {
   @apply circle-number bg-blue-500 text-white;
 }

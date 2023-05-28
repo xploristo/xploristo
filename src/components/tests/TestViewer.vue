@@ -149,6 +149,7 @@ export default {
             :class="{
               'circle-number-outline-blue': !completedQuestions.includes(i - 1),
               'circle-number-filled-blue': completedQuestions.includes(i - 1),
+              'circle-number-selected': selectedQuestionIndex === i - 1,
             }"
             @click="selectedQuestionIndex = i - 1"
           >
