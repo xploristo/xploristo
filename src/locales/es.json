@@ -47,6 +47,24 @@
   "document": {
     "title": "Documento"
   },
+  "errors": {
+    "ALREADY_COMPLETED_ASSIGNMENT": "Ya has completado este examen.",
+    "ASSIGNMENT_NOT_FOUND": "No se ha encontrado el examen.",
+    "DUPLICATE_USER_EMAIL": "Ya existe un usuario con este correo electrónico.",
+    "EMAIL_NOT_SENT": "No se ha podido enviar al usuario el correo electrónico con su contraseña.",
+    "FORBIDDEN": "No tienes autorización para realizar esta acción.",
+    "GROUP_NOT_FOUND": "No se ha encontrado la asignatura.",
+    "INVALID_EMAIL": "La dirección de correo electrónico no es válida.",
+    "INVALID_END_DATE": "La fecha de fin no puede ser anterior a la fecha de inicio",
+    "PASSWORD_DID_NOT_CHANGE": "La nueva contraseña no puede ser la misma que la anterior.",
+    "PASSWORDS_DO_NOT_MATCH": "Las contraseñas no coinciden.",
+    "RESULT_NOT_FOUND": "No se ha encontrado el resultado para este examen.",
+    "TEST_NOT_FOUND": "No se ha encontrado el test.",
+    "UNAUTHORIZED": "Debes iniciar sesión.",
+    "UNAVAILABLE_ASSIGNMENT": "Este examen no está disponible.",
+    "USER_NOT_FOUND": "No se ha encontrado el usuario.",
+    "WRONG_PASSWORD": "La contraseña no es correcta."
+  },
   "group": {
     "create": "Crear asignatura",
     "delete": {

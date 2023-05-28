@@ -42,7 +42,7 @@ export default {
     <div class="ml-3 text-sm font-medium text-red-700">
       {{
         $te(`errors.${error.errorCode}`)
-          ? $t(`errors.${errorCode}`)
+          ? $t(`errors.${error.errorCode}`)
           : `${error.errorCode}: ${error.message}`
       }}
     </div>
