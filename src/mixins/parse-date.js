@@ -1,4 +1,4 @@
-import DateTime from 'luxon/src/datetime.js';
+import { DateTime } from 'luxon';
 
 export default {
   methods: {
@@ -7,6 +7,7 @@ export default {
       timezone = 'Europe/Madrid',
       format = DateTime.DATETIME_MED
     ) {
+      // TODO Use native Intl.DateTimeFormat?
       if (!value) {
         return '';
       }
