@@ -114,8 +114,15 @@ export default {
     resultCount() {
       return this.assignmentStore.resultCount;
     },
+    isEndDateBeforeStartDate() {
+      return new Date(this.endDay) < new Date(this.startDay);
+    },
     submitDisabled() {
-      return !this.name.length || (!this.templateId && !this.test);
+      return (
+        !this.name.length ||
+        (!this.templateId && !this.test) ||
+        this.isEndDateBeforeStartDate
+      );
     },
   },
   methods: {
@@ -338,6 +345,9 @@ export default {
             id="endDay"
             v-model="endDay"
             class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 mr-4"
+            :class="{
+              'border-red-500 bg-red-200': isEndDateBeforeStartDate,
+            }"
           />
 
           <ClockIcon
