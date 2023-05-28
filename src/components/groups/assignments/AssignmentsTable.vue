@@ -67,32 +67,49 @@ export default {
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="py-3 px-6">Nombre</th>
-          <th scope="col" class="py-3 px-6">Test</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('assignments.table.name') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('assignments.table.test') }}
+          </th>
           <th
             v-if="$hasPermissionTo('tests.edit')"
             scope="col"
             class="py-3 px-6"
           >
-            Documento
+            {{ $t('assignments.table.document') }}
           </th>
-          <th scope="col" class="py-3 px-6">Fecha de inicio</th>
-          <th scope="col" class="py-3 px-6">Fecha de fin</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('assignments.table.startDate') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('assignments.table.endDate') }}
+          </th>
+          <th
+            v-if="$hasPermissionTo('tests.edit')"
+            scope="col"
+            class="py-3 px-6"
+          >
+            {{ $t('assignments.table.isVisible') }}
+          </th>
           <th
             v-if="$hasPermissionTo('tests.complete')"
             scope="col"
             class="py-3 px-6"
           >
-            Completado
+            {{ $t('assignments.table.isCompleted') }}
           </th>
           <th
             v-if="$hasPermissionTo('tests.complete')"
             scope="col"
             class="py-3 px-6"
           >
-            Puntuación
+            {{ $t('assignments.table.score') }}
           </th>
-          <th scope="col" class="py-3 px-6">Acción</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('assignments.table.action') }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -143,6 +160,18 @@ export default {
 
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             {{ this.parseDate(assignment.endDate) }}
+          </td>
+          <td
+            v-if="$hasPermissionTo('tests.edit')"
+            scope="row"
+            class="py-4 px-6 whitespace-nowrap"
+            :class="assignment.isVisible ? 'text-gray-900' : 'text-red-500'"
+          >
+            {{
+              assignment.isVisible
+                ? $t('assignments.table.visibleYes')
+                : $t('assignments.table.visibleNo')
+            }}
           </td>
 
           <!-- Completion date -->

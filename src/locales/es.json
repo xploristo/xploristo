@@ -9,6 +9,7 @@
       }
     },
     "form": {
+      "isVisible": "Mostrar este examen a los estudiantes",
       "name": "Nombre del examen",
       "test": "Test"
     },
@@ -42,7 +43,20 @@
     "update": "Editar examen"
   },
   "assignments": {
-    "empty": "Todavía no hay ningún examen."
+    "empty": "Todavía no hay ningún examen.",
+    "table": {
+      "action": "Acción",
+      "document": "Documento",
+      "endDate": "Fecha de fin",
+      "isCompleted": "Completado",
+      "isVisible": "Visible",
+      "name": "Nombre",
+      "score": "Puntuación",
+      "startDate": "Fecha de inicio",
+      "test": "Test",
+      "visibleNo": "No",
+      "visibleYes": "Sí"
+    }
   },
   "document": {
     "title": "Documento"

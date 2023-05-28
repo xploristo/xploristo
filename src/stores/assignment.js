@@ -14,6 +14,7 @@ export const useAssignmentStore = defineStore('assignment', {
       startTime: '00:00',
       endTime: '23:59',
       resultCount: 0,
+      isVisible: true,
     },
   }),
   actions: {
@@ -26,6 +27,7 @@ export const useAssignmentStore = defineStore('assignment', {
       this.assignment.startTime = '00:00';
       this.assignment.endTime = '23:59';
       this.assignment.resultCount = 0;
+      this.assignment.isVisible = true;
     },
     async getAssignment(groupId, assignmentId) {
       if (assignmentId !== this.assignment._id) {
@@ -53,7 +55,7 @@ export const useAssignmentStore = defineStore('assignment', {
     },
     async createAssignment(
       groupId,
-      { name, testId, startDay, endDay, startTime, endTime }
+      { name, testId, startDay, endDay, startTime, endTime, isVisible }
     ) {
       const formatDate = (day, time) => {
         if (!day) return null;
@@ -72,6 +74,7 @@ export const useAssignmentStore = defineStore('assignment', {
         testId,
         startDate,
         endDate,
+        isVisible,
       });
 
       _formatAssignmentDates(this.assignment);
@@ -79,7 +82,7 @@ export const useAssignmentStore = defineStore('assignment', {
     async updateAssignment(
       groupId,
       assignmentId,
-      { name, startDay, endDay, startTime, endTime }
+      { name, startDay, endDay, startTime, endTime, isVisible }
     ) {
       const startDate = _formatDate(startDay, startTime);
       const endDate = _formatDate(endDay, endTime);
@@ -89,6 +92,7 @@ export const useAssignmentStore = defineStore('assignment', {
         name,
         startDate,
         endDate,
+        isVisible,
       });
 
       _formatAssignmentDates(this.assignment);
@@ -147,6 +151,9 @@ export const useAssignmentStore = defineStore('assignment', {
     },
     resultCount(state) {
       return state.assignment.resultCount;
+    },
+    isVisible(state) {
+      return state.assignment.isVisible;
     },
   },
 });

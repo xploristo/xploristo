@@ -100,6 +100,14 @@ export default {
         this.assignmentStore.assignment.endTime = value;
       },
     },
+    isVisible: {
+      get() {
+        return this.assignmentStore.isVisible;
+      },
+      set(value) {
+        this.assignmentStore.assignment.isVisible = value;
+      },
+    },
     test() {
       return this.assignmentStore.test;
     },
@@ -149,6 +157,7 @@ export default {
               endDay: this.endDay,
               startTime: this.startTime,
               endTime: this.endTime,
+              isVisible: this.isVisible,
             }
           );
 
@@ -162,6 +171,7 @@ export default {
             endDay: this.endDay,
             startTime: this.startTime,
             endTime: this.endTime,
+            isVisible: this.isVisible,
           });
 
           // TODO Assignment view?
@@ -344,9 +354,20 @@ export default {
           />
         </div>
 
-        <template v-if="!!assignmentId">
-          <!-- TODO Teachers list and input -->
-        </template>
+        <div class="flex items-center">
+          <input
+            id="is-visible"
+            type="checkbox"
+            :value="true"
+            v-model="isVisible"
+            class="checkbox"
+          />
+          <label
+            for="is-visible"
+            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >{{ $t('assignment.form.isVisible') }}</label
+          >
+        </div>
 
         <div class="mt-4">
           <button
