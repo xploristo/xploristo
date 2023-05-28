@@ -23,6 +23,14 @@
         },
         "tooltip": "Revertir a plantilla"
       },
+      "change": {
+        "currentTemplate": "❯❯❯ Plantilla del test actual del examen",
+        "modal": {
+          "title": "¿Seguro que quieres cambiar el test del examen por la plantilla <b>{name}</b>?",
+          "confirm": "Sí, cambiar",
+          "cancel": "No, cancelar"
+        }
+      },
       "update": {
         "infoMessage": "Editar el test de este examen no actualizará la plantilla. Puedes editar la plantilla y después revertir el test del examen al mismo estado de la plantilla, si así lo deseas.",
         "tooltip": "Editar test"

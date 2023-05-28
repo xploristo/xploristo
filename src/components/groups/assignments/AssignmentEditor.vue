@@ -35,10 +35,12 @@ export default {
   },
   data() {
     return {
-      testId: null,
+      templateId: null,
       loading: false,
       tests: [],
       showResetTestModal: false,
+      showChangeTestModal: false,
+      newTemplateName: '',
     };
   },
   setup() {
@@ -52,6 +54,8 @@ export default {
     } else {
       // Creating new assignment
       this.assignmentStore.clear();
+    }
+    if (!this.assignmentId || !this.resultCount) {
       this.tests = await testsService.getTests();
     }
   },
@@ -99,8 +103,11 @@ export default {
     test() {
       return this.assignmentStore.test;
     },
+    resultCount() {
+      return this.assignmentStore.resultCount;
+    },
     submitDisabled() {
-      return !this.name.length || (!this.testId && !this.test);
+      return !this.name.length || (!this.templateId && !this.test);
     },
   },
   methods: {
@@ -110,6 +117,23 @@ export default {
     async resetTest() {
       this.showResetTestModal = false;
       await this.assignmentStore.resetAssignmentTest(this.assignmentId);
+    },
+    confirmChangeTest(event) {
+      this.newTemplateName = this.tests.find(
+        (t) => t._id === event.target.value
+      ).name;
+      this.showChangeTestModal = true;
+    },
+    cancelChangeTest() {
+      this.templateId = null;
+      this.showChangeTestModal = false;
+    },
+    async changeTest() {
+      this.showChangeTestModal = false;
+      await this.assignmentStore.resetAssignmentTest(
+        this.assignmentId,
+        this.templateId
+      );
     },
     async submit() {
       this.loading = true;
@@ -133,7 +157,7 @@ export default {
         } else {
           await this.assignmentStore.createAssignment(this.groupId, {
             name: this.name,
-            testId: this.testId,
+            testId: this.templateId,
             startDay: this.startDay,
             endDay: this.endDay,
             startTime: this.startTime,
@@ -182,9 +206,30 @@ export default {
         >
         <template v-if="assignmentId">
           <div id="test" class="flex mt-2 mb-4">
-            <div class="p-2 w-full rounded-lg border border-gray-300">
+            <div
+              v-if="resultCount"
+              class="p-2 w-full rounded-lg border border-gray-300"
+            >
               {{ test.name }}
             </div>
+            <select
+              v-else
+              id="test"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
+              v-model="templateId"
+              @change="confirmChangeTest"
+            >
+              <option selected :value="null">{{ test.name }}</option>
+              <option v-for="t in tests" v-bind:key="t._id" :value="t._id">
+                {{ t.name }}
+                {{
+                  t._id === this.test.templateId
+                    ? this.$t('assignment.test.change.currentTemplate')
+                    : ''
+                }}
+              </option>
+            </select>
+
             <RouterLink
               :to="{ name: 'assignmentTest' }"
               class="text-blue-500 hover:text-blue-600"
@@ -193,29 +238,36 @@ export default {
                 <EyeIcon class="ml-2 mt-1 w-8 h-8"></EyeIcon>
               </TooltipIcon>
             </RouterLink>
-            <RouterLink
-              :to="{ name: 'assignmentTestEdit' }"
-              class="text-blue-500 hover:text-blue-600"
-            >
-              <TooltipIcon :text="$t('assignment.test.update.tooltip')">
-                <PencilSquareIcon class="ml-2 mt-1 w-8 h-8"></PencilSquareIcon>
+
+            <template v-if="!resultCount">
+              <RouterLink
+                :to="{ name: 'assignmentTestEdit' }"
+                class="text-blue-500 hover:text-blue-600"
+              >
+                <TooltipIcon :text="$t('assignment.test.update.tooltip')">
+                  <PencilSquareIcon
+                    class="ml-2 mt-1 w-8 h-8"
+                  ></PencilSquareIcon>
+                </TooltipIcon>
+              </RouterLink>
+
+              <!-- TODO Add title text -->
+              <!-- TODO Disable if clone OR template were not edited -->
+              <TooltipIcon :text="$t('assignment.test.reset.tooltip')">
+                <ArrowUturnLeftIcon
+                  @click="confirmResetTest()"
+                  class="ml-2 mt-1 w-8 h-8 text-blue-500 hover:text-blue-600 cursor-pointer"
+                ></ArrowUturnLeftIcon>
               </TooltipIcon>
-            </RouterLink>
-            <!-- TODO Add title text -->
-            <!-- TODO Disable if clone OR template were not edited -->
-            <TooltipIcon :text="$t('assignment.test.reset.tooltip')">
-              <ArrowUturnLeftIcon
-                @click="confirmResetTest()"
-                class="ml-2 mt-1 w-8 h-8 text-blue-500 hover:text-blue-600 cursor-pointer"
-              ></ArrowUturnLeftIcon>
-            </TooltipIcon>
+            </template>
           </div>
         </template>
+
         <template v-else>
           <select
             id="test"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
-            v-model="testId"
+            v-model="templateId"
           >
             <option selected :value="null">Selecciona un test</option>
             <option
@@ -321,6 +373,16 @@ export default {
         cancel="assignment.test.reset.modal.cancel"
         @confirm="resetTest()"
         @close="showResetTestModal = false"
+      ></ConfirmModal>
+
+      <ConfirmModal
+        v-if="showChangeTestModal"
+        title="assignment.test.change.modal.title"
+        :titleData="{ name: newTemplateName }"
+        confirm="assignment.test.change.modal.confirm"
+        cancel="assignment.test.change.modal.cancel"
+        @confirm="changeTest()"
+        @close="cancelChangeTest()"
       ></ConfirmModal>
     </div>
   </div>

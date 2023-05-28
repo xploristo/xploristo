@@ -142,10 +142,11 @@ export const useGroupStore = defineStore('group', {
 
       return assignment;
     },
-    async resetAssignmentTest(assignmentId) {
+    async resetAssignmentTest(assignmentId, templateId) {
       const assignment = await groupsService.resetAssignmentTest(
         this.group._id,
-        assignmentId
+        assignmentId,
+        templateId
       );
 
       const index = this.group.assignments.findIndex(

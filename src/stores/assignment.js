@@ -13,6 +13,7 @@ export const useAssignmentStore = defineStore('assignment', {
       endDay: null,
       startTime: '00:00',
       endTime: '23:59',
+      resultCount: 0,
     },
   }),
   actions: {
@@ -24,6 +25,7 @@ export const useAssignmentStore = defineStore('assignment', {
       this.assignment.endDay = null;
       this.assignment.startTime = '00:00';
       this.assignment.endTime = '23:59';
+      this.assignment.resultCount = 0;
     },
     async getAssignment(groupId, assignmentId) {
       if (assignmentId !== this.assignment._id) {
@@ -106,9 +108,12 @@ export const useAssignmentStore = defineStore('assignment', {
       );
       return this.assignment;
     },
-    async resetAssignmentTest(assignmentId) {
+    async resetAssignmentTest(assignmentId, templateId) {
       const groupStore = useGroupStore();
-      this.assignment = await groupStore.resetAssignmentTest(assignmentId);
+      this.assignment = await groupStore.resetAssignmentTest(
+        assignmentId,
+        templateId
+      );
     },
   },
   getters: {
@@ -132,6 +137,9 @@ export const useAssignmentStore = defineStore('assignment', {
     },
     endTime(state) {
       return state.assignment.endTime;
+    },
+    resultCount(state) {
+      return state.assignment.resultCount;
     },
   },
 });

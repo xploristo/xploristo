@@ -45,9 +45,10 @@ export default {
       document
     );
   },
-  resetAssignmentTest(groupId, assignmentId) {
+  resetAssignmentTest(groupId, assignmentId, templateId) {
+    const query = templateId ? `?templateId=${templateId}` : '';
     return customFetch(
-      `/groups/${groupId}/assignments/${assignmentId}/test/reset`,
+      `/groups/${groupId}/assignments/${assignmentId}/test/reset${query}`,
       'PUT'
     );
   },
