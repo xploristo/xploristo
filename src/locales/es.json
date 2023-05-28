@@ -98,6 +98,7 @@
         "confirm": "Sí, eliminar",
         "cancel": "No, cancelar"
       },
+      "isVisible": "Mostrar esta asignatura a los estudiantes",
       "name": "Nombre de la asignatura",
       "teachers": "Docentes",
       "teachersEmpty": "Aún no hay docentes asignados a la asignatura."
@@ -113,7 +114,15 @@
     "title": "Asignatura"
   },
   "groups": {
-    "empty": "Todavía no hay ninguna asignatura."
+    "empty": "Todavía no hay ninguna asignatura.",
+    "table": {
+      "action": "Acción",
+      "editedAt": "Fecha de última edición",
+      "isVisible": "Visible",
+      "name": "Asignatura",
+      "visibleNo": "No",
+      "visibleYes": "Sí"
+    }
   },
   "login": {
     "action": "Iniciar sesión",

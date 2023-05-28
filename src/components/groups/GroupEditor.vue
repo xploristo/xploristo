@@ -43,6 +43,14 @@ export default {
         this.groupStore.group.name = value;
       },
     },
+    isVisible: {
+      get() {
+        return this.groupStore.isVisible;
+      },
+      set(value) {
+        this.groupStore.group.isVisible = value;
+      },
+    },
     teachers() {
       return this.groupStore.teachers;
     },
@@ -80,12 +88,15 @@ export default {
         if (this.action === 'create') {
           const group = await this.groupStore.createGroup({
             name: this.name,
+            isVisible: this.isVisible,
           });
 
           this.$router.push({ name: 'group', params: { groupId: group._id } });
         } else {
+          // TODO Use store
           await groupsService.updateGroup(this.groupId, {
             name: this.name,
+            isVisible: this.isVisible,
           });
         }
       } finally {
@@ -114,7 +125,7 @@ export default {
           $t('group.form.teachers')
         }}</label>
         <div
-          class="flex mt-4 p-4 w-full bg-white rounded-lg border shadow-md sm:p-8"
+          class="flex mt-4 mb-4 p-4 w-full bg-white rounded-lg border shadow-md sm:p-8"
         >
           <div class="flex-auto">
             <p
@@ -185,6 +196,19 @@ export default {
           </div>
         </div>
       </template>
+
+      <div class="flex items-center">
+        <input
+          id="is-visible"
+          type="checkbox"
+          :value="true"
+          v-model="isVisible"
+          class="checkbox"
+        />
+        <label for="is-visible" class="checkbox-label">{{
+          $t('group.form.isVisible')
+        }}</label>
+      </div>
 
       <div class="mt-4">
         <button

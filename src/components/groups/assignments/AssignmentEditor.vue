@@ -362,11 +362,9 @@ export default {
             v-model="isVisible"
             class="checkbox"
           />
-          <label
-            for="is-visible"
-            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >{{ $t('assignment.form.isVisible') }}</label
-          >
+          <label for="is-visible" class="checkbox-label">{{
+            $t('assignment.form.isVisible')
+          }}</label>
         </div>
 
         <div class="mt-4">

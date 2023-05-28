@@ -8,6 +8,7 @@ export const useGroupStore = defineStore('group', {
     group: {
       _id: null,
       name: '',
+      isVisible: true,
       teachers: [],
       students: [],
       assignments: [],
@@ -18,14 +19,16 @@ export const useGroupStore = defineStore('group', {
     clear() {
       this.group._id = null;
       this.group.name = '';
+      this.group.isVisible = true;
       this.group.teachers = [];
       this.group.students = [];
       this.group.assignments = [];
       this.group.results = [];
     },
-    async createGroup({ name, teachers, students }) {
+    async createGroup({ name, isVisible, teachers, students }) {
       const groupData = await groupsService.createGroup({
         name,
+        isVisible,
         teachers,
         students,
       });
@@ -183,6 +186,9 @@ export const useGroupStore = defineStore('group', {
     },
     results(state) {
       return state.group.results;
+    },
+    isVisible(state) {
+      return state.group.isVisible;
     },
   },
 });

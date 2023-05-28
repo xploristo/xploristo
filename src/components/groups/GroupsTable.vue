@@ -53,9 +53,14 @@ export default {
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="py-3 px-6">Asignatura</th>
-          <th scope="col" class="py-3 px-6">Fecha de última edición</th>
-          <th scope="col" class="py-3 px-6">Acción</th>
+          <th scope="col" class="py-3 px-6">{{ $t('groups.table.name') }}</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('groups.table.isVisible') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('groups.table.editedAt') }}
+          </th>
+          <th scope="col" class="py-3 px-6">{{ $t('groups.table.action') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -72,6 +77,19 @@ export default {
             >
               {{ group.name }}
             </RouterLink>
+          </td>
+
+          <!-- Visible to students -->
+          <td
+            scope="row"
+            class="py-4 px-6 whitespace-nowrap"
+            :class="group.isVisible ? 'text-gray-900' : 'text-red-500'"
+          >
+            {{
+              group.isVisible
+                ? $t('groups.table.visibleYes')
+                : $t('groups.table.visibleNo')
+            }}
           </td>
 
           <!-- Update date -->
@@ -98,6 +116,7 @@ export default {
             ></TrashIcon>
           </td>
         </tr>
+
         <ConfirmModal
           v-if="showDeleteModal"
           title="group.delete.modal.title"
