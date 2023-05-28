@@ -34,11 +34,7 @@ export const useAssignmentStore = defineStore('assignment', {
           groupId,
           assignmentId
         );
-        const { startDate, endDate } = this.assignment;
-        this.assignment.startDay = _formatDay(startDate);
-        this.assignment.endDay = _formatDay(endDate);
-        this.assignment.startTime = _formatTime(startDate, 0, 0);
-        this.assignment.endTime = _formatTime(endDate, 23, 59);
+        _formatAssignmentDates(this.assignment);
       }
     },
     async getTestDocumentDownloadUrl(groupId, assignmentId) {
@@ -77,6 +73,8 @@ export const useAssignmentStore = defineStore('assignment', {
         startDate,
         endDate,
       });
+
+      _formatAssignmentDates(this.assignment);
     },
     async updateAssignment(
       groupId,
@@ -92,6 +90,8 @@ export const useAssignmentStore = defineStore('assignment', {
         startDate,
         endDate,
       });
+
+      _formatAssignmentDates(this.assignment);
     },
     async updateAssignmentTest(groupId, assignmentId, { name, questions }) {
       const groupStore = useGroupStore();
@@ -99,6 +99,8 @@ export const useAssignmentStore = defineStore('assignment', {
         name,
         questions,
       });
+
+      _formatAssignmentDates(this.assignment);
     },
     async updateAssignmentTestDocument(groupId, assignmentId, document) {
       const groupStore = useGroupStore();
@@ -106,6 +108,9 @@ export const useAssignmentStore = defineStore('assignment', {
         assignmentId,
         document
       );
+
+      _formatAssignmentDates(this.assignment);
+
       return this.assignment;
     },
     async resetAssignmentTest(assignmentId, templateId) {
@@ -114,6 +119,8 @@ export const useAssignmentStore = defineStore('assignment', {
         assignmentId,
         templateId
       );
+
+      _formatAssignmentDates(this.assignment);
     },
   },
   getters: {
@@ -163,7 +170,7 @@ function _formatDay(date) {
   return (
     date.getFullYear() +
     '-' +
-    timeFormat.format(date.getMonth()) +
+    timeFormat.format(date.getMonth() + 1) +
     '-' +
     timeFormat.format(date.getDate())
   );
@@ -179,4 +186,13 @@ function _formatTime(date, defaultHour, defaultMinutes) {
   const hour = date.getHours();
   const minutes = date.getMinutes();
   return `${timeFormat.format(hour)}:${timeFormat.format(minutes)}`;
+}
+
+function _formatAssignmentDates(assignment) {
+  const { startDate, endDate } = assignment;
+  assignment.startDay = _formatDay(startDate);
+  assignment.endDay = _formatDay(endDate);
+  assignment.startTime = _formatTime(startDate, 0, 0);
+  assignment.endTime = _formatTime(endDate, 23, 59);
+  return assignment;
 }
