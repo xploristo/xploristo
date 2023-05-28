@@ -87,6 +87,7 @@ export default {
               <PencilSquareIcon class="mr-1 w-6 h-6"></PencilSquareIcon>
             </RouterLink>
             <RouterLink
+              v-if="test.questions?.length"
               :to="'/tests/' + test._id + '/preview'"
               class="text-blue-500 hover:text-blue-600"
             >
