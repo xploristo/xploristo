@@ -54,7 +54,11 @@ export default {
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
           <th scope="col" class="py-3 px-6">{{ $t('groups.table.name') }}</th>
-          <th scope="col" class="py-3 px-6">
+          <th
+            v-if="$hasPermissionTo('groups.edit')"
+            scope="col"
+            class="py-3 px-6"
+          >
             {{ $t('groups.table.isVisible') }}
           </th>
           <th scope="col" class="py-3 px-6">
@@ -81,6 +85,7 @@ export default {
 
           <!-- Visible to students -->
           <td
+            v-if="$hasPermissionTo('groups.edit')"
             scope="row"
             class="py-4 px-6 whitespace-nowrap"
             :class="group.isVisible ? 'text-gray-900' : 'text-red-500'"
