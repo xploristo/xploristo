@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 import groupsService from '../services/groups.service.js';
 import usersService from '../services/users.service.js';
+import resultsService from '../services/results.service.js';
 
 export const useGroupStore = defineStore('group', {
   state: () => ({
@@ -169,6 +170,17 @@ export const useGroupStore = defineStore('group', {
       this.group.assignments = this.group.assignments.filter(
         (a) => a._id !== assignmentId
       );
+    },
+    async createAssignmentResult(assignmentId, questions) {
+      const result = await resultsService.createResult({
+        assignmentId,
+        questions,
+      });
+
+      const index = this.group.assignments.findIndex(
+        (a) => a._id === assignmentId
+      );
+      this.group.assignments[index].result = result;
     },
   },
   getters: {

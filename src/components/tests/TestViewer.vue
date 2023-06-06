@@ -8,8 +8,8 @@ import {
 import TopBar from '../nav/TopBar.vue';
 import TestQuestion from './questions/TestQuestion.vue';
 import PdfViewer from '../viewer/PdfViewer.vue';
-import resultsService from '../../services/results.service.js';
 import { useTestStore } from '../../stores/test.js';
+import { useGroupStore } from '../../stores/group.js';
 
 export default {
   name: 'TestView',
@@ -35,8 +35,9 @@ export default {
   },
   setup() {
     const testStore = useTestStore();
+    const groupStore = useGroupStore();
 
-    return { testStore };
+    return { testStore, groupStore };
   },
   async created() {
     await this.testStore.getTest(this.testId, this.assignmentId, this.groupId);
@@ -103,13 +104,15 @@ export default {
       this.documentContainerTop = questionCardHeight + questionCardTop;
     },
     async sendResult() {
-      await resultsService.createResult({
-        assignmentId: this.assignmentId,
-        questions: this.questions,
+      await this.groupStore.createAssignmentResult(
+        this.assignmentId,
+        this.questions
+      );
+
+      this.$router.replace({
+        name: 'group',
+        params: { groupId: this.groupId },
       });
-      // FIXME Assignment table does not get reloaded!
-      // TODO Do not let users come back here via browser history?
-      this.$router.push({ name: 'group', params: { groupId: this.groupId } });
     },
   },
 };
