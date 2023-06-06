@@ -1,3 +1,31 @@
+<script>
+import { AcademicCapIcon } from '@heroicons/vue/24/outline';
+
+import { useGroupStore } from '../../../stores/group.js';
+import AssignmentsTable from '../../../components/groups/assignments/AssignmentsTable.vue';
+
+export default {
+  name: 'AssignmentsListView',
+  components: {
+    AcademicCapIcon,
+    AssignmentsTable,
+  },
+  props: {
+    groupId: { type: String, required: true },
+  },
+  setup() {
+    const groupStore = useGroupStore();
+
+    return { groupStore };
+  },
+  computed: {
+    assignments() {
+      return this.groupStore.assignments;
+    },
+  },
+};
+</script>
+
 <template>
   <div>
     <div v-if="assignments?.length">
@@ -36,31 +64,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { AcademicCapIcon } from '@heroicons/vue/24/outline';
-
-import { useGroupStore } from '../../../stores/group.js';
-import AssignmentsTable from '../../../components/groups/assignments/AssignmentsTable.vue';
-
-export default {
-  name: 'AssignmentsListView',
-  components: {
-    AcademicCapIcon,
-    AssignmentsTable,
-  },
-  props: {
-    groupId: { type: String, required: true },
-  },
-  setup() {
-    const groupStore = useGroupStore();
-
-    return { groupStore };
-  },
-  computed: {
-    assignments() {
-      return this.groupStore.assignments;
-    },
-  },
-};
-</script>
