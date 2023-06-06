@@ -115,7 +115,11 @@ export default {
       return this.assignmentStore.resultCount;
     },
     isEndDateBeforeStartDate() {
-      return new Date(this.endDay) < new Date(this.startDay);
+      return (
+        this.endDay &&
+        this.startDay &&
+        new Date(this.endDay) < new Date(this.startDay)
+      );
     },
     submitDisabled() {
       return (
