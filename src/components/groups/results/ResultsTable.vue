@@ -42,8 +42,9 @@
           </td>
           <td scope="row" class="py-4 px-6 text-gray-900 whitespace-nowrap">
             <span class="flex"
-              >{{ result.score }} ({{ result.correctAnswersCount }}/{{
-                result.questions.length
+              >{{ +Number(result.score).toFixed(2) }} ({{
+                result.correctAnswersCount
+              }}/{{ result.questions.length
               }}<CheckIcon class="pt-1 w-4 h-4"></CheckIcon>)</span
             >
           </td>

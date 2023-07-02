@@ -211,7 +211,6 @@
   },
   "result": {
     "correct": "Respuesta correcta: {value}",
-    "correctSelection": "Selección correcta: {value}",
     "title": "Resultado",
     "view": "Ver resultado"
   },

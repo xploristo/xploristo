@@ -1,5 +1,9 @@
 <script>
-import { InformationCircleIcon } from '@heroicons/vue/24/outline';
+import {
+  InformationCircleIcon,
+  Bars3BottomLeftIcon,
+  TrashIcon,
+} from '@heroicons/vue/24/outline';
 import rangySerializer from 'rangy/lib/rangy-serializer';
 
 import { useTestStore } from '../../../stores/test';
@@ -8,6 +12,8 @@ export default {
   name: 'TestQuestion',
   components: {
     InformationCircleIcon,
+    Bars3BottomLeftIcon,
+    TrashIcon,
   },
   props: {
     isPreview: { type: Boolean, default: false },
@@ -36,7 +42,10 @@ export default {
             }
             break;
           case 'selection':
-            if (question.answers[0].answer?.textSelection?.length) {
+            if (
+              question.answers?.length &&
+              question.answers[0].answer?.textSelection?.length
+            ) {
               acc.push(index);
             }
             break;
@@ -58,13 +67,19 @@ export default {
       const range = selection.getRangeAt(0);
       const serializedRange = rangySerializer.serializeRange(range, true);
 
-      const answer = {
-        selection,
-        textSelection: selection.toString(),
-        serializedRange,
-      };
-      this.questions[this.questionIndex].answers[0].answer = answer;
+      this.questions[this.questionIndex].answers.push({
+        index: this.questions[this.questionIndex].answers.length,
+        answer: {
+          selection,
+          textSelection: selection.toString(),
+          serializedRange,
+        },
+        correct: true,
+      });
       this.$emit('selectionSaved');
+    },
+    deleteSelectionAnswer(questionIndex, answerIndex) {
+      this.questions[questionIndex].answers.splice(answerIndex, 1);
     },
     onSingleChoiceAnswerChange(event) {
       const answerIndex = +event.target.value;
@@ -96,10 +111,29 @@ export default {
       <!-- Selection answer -->
       <div v-if="questions[questionIndex].type === 'selection'">
         <div
-          v-if="questions[questionIndex].answers[0].answer?.textSelection"
-          class="mb-4 p-2 pl-4 pr-4 w-full bg-gray-50 rounded-lg border border-gray-300"
+          v-for="answer in questions[questionIndex].answers"
+          :key="answer.index"
+          class="flex flex-row"
         >
-          {{ questions[questionIndex].answers[0].answer?.textSelection }}
+          <div class="mr-3 py-2">
+            <Bars3BottomLeftIcon
+              aria-hidden="true"
+              class="icon-small"
+            ></Bars3BottomLeftIcon>
+          </div>
+          <div
+            class="mb-4 p-2 pl-4 pr-4 w-full bg-gray-50 rounded-lg border border-gray-300"
+          >
+            {{ answer.answer?.textSelection }}
+          </div>
+          <!-- Delete answer -->
+          <div v-if="!isPreview" class="ml-3 py-2">
+            <TrashIcon
+              aria-hidden="true"
+              class="icon-small cursor-pointer"
+              @click="deleteSelectionAnswer(question.index, answer.index)"
+            ></TrashIcon>
+          </div>
         </div>
         <button
           type="button"

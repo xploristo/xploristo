@@ -55,8 +55,7 @@ export default {
             <TestQuestion
               :questionIndex="questionIndex"
               @selectionSaved="
-                () => /* selection, range */ {
-                  /* $emit('answerSelected', selection, range); */
+                () => {
                   $emit('close');
                 }
               "

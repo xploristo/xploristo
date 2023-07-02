@@ -165,9 +165,6 @@ export const useTestStore = defineStore('test', {
         this.test.questions[questionIndex].answers[answerIndex] = nextAnswer;
       }
     },
-    saveAnswer(questionIndex, answer) {
-      this.test.questions[questionIndex].answers[answer.index] = answer;
-    },
     saveAnswers(questionIndex, answers) {
       this.test.questions[questionIndex].answers = answers;
     },

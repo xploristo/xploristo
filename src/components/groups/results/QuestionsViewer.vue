@@ -1,3 +1,31 @@
+<script>
+import { XMarkIcon, CheckIcon, PlusIcon } from '@heroicons/vue/24/outline';
+
+export default {
+  name: 'QuestionsViewer',
+  components: {
+    XMarkIcon,
+    CheckIcon,
+    PlusIcon,
+  },
+  props: {
+    result: Object,
+  },
+  methods: {
+    isAnswerCorrect(answer, type) {
+      if (['singleChoice', 'multiChoice'].includes(type)) {
+        return answer.correctAnswer?.correct;
+      } else if (type === 'text') {
+        return answer.correctAnswer?.correct;
+      }
+    },
+    getCorrectAnswer(answer) {
+      return answer.correctAnswer?.value;
+    },
+  },
+};
+</script>
+
 <template>
   <div>
     <div
@@ -14,27 +42,50 @@
         <div class="mt-2">
           <!-- Selection answer -->
           <template v-if="question.type === 'selection'">
-            <template v-if="question.answers[0].answer">
+            <div
+              v-for="answer in question.answers"
+              v-bind:key="answer.index"
+              class="flex flex-row mt-4"
+            >
+              <div class="mr-3 pt-2.5">
+                <CheckIcon
+                  v-if="answer.isAnswerCorrect"
+                  aria-hidden="true"
+                  class="icon-small stroke-2 text-green-500"
+                ></CheckIcon>
+                <XMarkIcon
+                  v-else
+                  aria-hidden="true"
+                  class="icon-small stroke-2 text-red-500"
+                ></XMarkIcon>
+              </div>
               <div
-                class="mt-2 mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
+                class="p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
                 :class="{
-                  'correct-input': isAnswerCorrect(question.answers[0]),
-                  'incorrect-input': !isAnswerCorrect(question.answers[0]),
+                  'correct-input': answer.isAnswerCorrect,
+                  'incorrect-input': !answer.isAnswerCorrect,
                 }"
               >
-                {{ question.answers[0].answer?.textSelection }}
+                {{ answer.answer?.textSelection }}
+              </div>
+            </div>
+            <div
+              v-for="missingAnswer in question.missingAnswers"
+              v-bind:key="'m' + missingAnswer.index"
+              class="flex flex-row mt-4"
+            >
+              <div class="mr-3 pt-2.5">
+                <PlusIcon
+                  aria-hidden="true"
+                  class="icon-small stroke-2 text-gray-500"
+                ></PlusIcon>
               </div>
               <div
-                v-if="!isAnswerCorrect(question.answers[0])"
-                class="mt-2 mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
+                class="p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
               >
-                {{
-                  $t('result.correctSelection', {
-                    value: getCorrectAnswer(question.answers[0]),
-                  })
-                }}
+                {{ missingAnswer.answer.textSelection }}
               </div>
-            </template>
+            </div>
           </template>
 
           <!-- Text answer -->
@@ -98,7 +149,7 @@
                   disabled
                   :class="{
                     'correct-input': isAnswerCorrect(answer, question.type),
-                    'incorrect-input': !isAnswerCorrect(answer),
+                    'incorrect-input': !isAnswerCorrect(answer, question.type),
                   }"
                 >
                 </textarea>
@@ -111,22 +162,3 @@
     <br />
   </div>
 </template>
-
-<script>
-export default {
-  name: 'QuestionsViewer',
-  props: {
-    result: Object,
-  },
-  methods: {
-    isAnswerCorrect(answer, type) {
-      return ['singleChoice', 'multiChoice'].includes(type)
-        ? answer.correct && answer.correctAnswer?.correct
-        : answer.correctAnswer?.correct;
-    },
-    getCorrectAnswer(answer) {
-      return answer.correctAnswer?.value;
-    },
-  },
-};
-</script>

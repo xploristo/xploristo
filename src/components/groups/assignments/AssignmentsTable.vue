@@ -190,7 +190,7 @@ export default {
             class="py-4 px-6 text-gray-900 whitespace-nowrap"
           >
             <span v-if="assignment.result" class="flex"
-              >{{ assignment.result.score }} ({{
+              >{{ +Number(assignment.result.score).toFixed(2) }} ({{
                 assignment.result.correctAnswersCount
               }}/{{ assignment.result.questions.length
               }}<CheckIcon class="pt-1 w-4 h-4"></CheckIcon>)</span

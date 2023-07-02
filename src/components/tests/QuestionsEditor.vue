@@ -3,6 +3,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   TrashIcon,
+  Bars3BottomLeftIcon,
 } from '@heroicons/vue/24/outline';
 
 import { useTestStore } from '../../stores/test.js';
@@ -14,6 +15,7 @@ export default {
     ChevronDownIcon,
     ChevronUpIcon,
     TrashIcon,
+    Bars3BottomLeftIcon,
     DocumentModal,
   },
   props: {
@@ -42,13 +44,16 @@ export default {
   },
   methods: {
     addQuestion(type) {
-      const answers = [
-        {
-          index: 0,
-          answer: null,
-          correct: ['selection', 'text'].includes(type),
-        },
-      ];
+      const answers =
+        type === 'selection'
+          ? []
+          : [
+              {
+                index: 0,
+                answer: null,
+                correct: ['selection', 'text'].includes(type),
+              },
+            ];
 
       if (['singleChoice', 'multiChoice'].includes(type)) {
         answers.push({ index: 1, answer: null, correct: false });
@@ -62,20 +67,6 @@ export default {
         answers,
       });
       this.shouldShowAddQuestionDropdown = false;
-    },
-    onAnswerSelected(selection, serializedRange) {
-      const questionIndex = this.questions.findIndex(
-        (question) => question.index === this.questionToSelectIndex
-      );
-      this.testStore.saveAnswer(questionIndex, {
-        index: 0,
-        answer: {
-          selection,
-          textSelection: selection.toString(),
-          serializedRange,
-        },
-        correct: true,
-      });
     },
     addChoiceAnswer(questionIndex) {
       this.testStore.addAnswer(questionIndex, {
@@ -138,18 +129,66 @@ export default {
         </div>
 
         <!-- Answer -->
-        <!-- TODO Allow reordering answers -->
         <div class="mt-2">
           <!-- Selection answer -->
           <template v-if="question.type === 'selection'">
-            <template v-if="question.answers[0].answer">
-              <p>{{ $t('questions.answers.selectLabel') }}</p>
-              <div
-                class="mt-2 mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
-              >
-                {{ question.answers[0].answer?.textSelection }}
+            <p class="mb-2">{{ $t('questions.answers.title') }}</p>
+
+            <div
+              v-for="answer in question.answers"
+              v-bind:key="answer.index"
+              class="flex flex-row mt-2"
+            >
+              <div class="mr-3 py-2">
+                <Bars3BottomLeftIcon
+                  aria-hidden="true"
+                  class="icon-small"
+                ></Bars3BottomLeftIcon>
               </div>
-            </template>
+              <div class="basis-full">
+                <div
+                  class="mb-2 p-2 w-full bg-gray-50 rounded-lg border border-gray-300"
+                >
+                  {{ answer.answer?.textSelection }}
+                </div>
+              </div>
+              <!-- Move answer up -->
+              <div class="ml-3 py-2">
+                <ChevronUpIcon
+                  aria-hidden="true"
+                  class="icon-small"
+                  :class="{
+                    'cursor-pointer': answer.index > 0,
+                    'icon-small-disabled': answer.index < 1,
+                  }"
+                  @click="moveAnswerUp(question.index, answer.index)"
+                ></ChevronUpIcon>
+              </div>
+              <!-- Move answer down -->
+              <div class="ml-3 py-2">
+                <ChevronDownIcon
+                  aria-hidden="true"
+                  class="icon-small"
+                  :class="{
+                    'cursor-pointer':
+                      question.answers.length > 1 &&
+                      answer.index < question.answers.length - 1,
+                    'icon-small-disabled':
+                      question.answers.length < 2 ||
+                      answer.index === question.answers.length - 1,
+                  }"
+                  @click="moveAnswerDown(question.index, answer.index)"
+                ></ChevronDownIcon>
+              </div>
+              <!-- Delete answer -->
+              <div class="ml-3 py-2">
+                <TrashIcon
+                  aria-hidden="true"
+                  class="icon-small cursor-pointer"
+                  @click="deleteAnswer(question.index, answer.index)"
+                ></TrashIcon>
+              </div>
+            </div>
 
             <button
               type="button"
@@ -163,7 +202,6 @@ export default {
               v-if="questionToSelectIndex != null"
               :pdfUrl="pdfUrl"
               :questionIndex="questionToSelectIndex"
-              @answerSelected="onAnswerSelected"
               @close="questionToSelectIndex = null"
             ></DocumentModal>
           </template>

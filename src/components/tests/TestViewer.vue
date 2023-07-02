@@ -62,7 +62,10 @@ export default {
             }
             break;
           case 'selection':
-            if (question.answers[0].answer?.textSelection?.length) {
+            if (
+              question.answers?.length &&
+              question.answers[0].answer?.textSelection?.length
+            ) {
               acc.push(index);
             }
             break;
