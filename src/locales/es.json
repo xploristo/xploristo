@@ -172,6 +172,12 @@
       "selectLabel": "Selección",
       "title": "Respuestas"
     },
+    "help": {
+      "selection": {
+        "title": "Pregunta de selección",
+        "tooltip": "Selecciona tantos fragmentos de texto como desees como respuesta a la pregunta. Cuando pulses el botón \"Seleccionar respuesta\" se abrirá el documento para que puedas seleccionar el texto."
+      }
+    },
     "question": {
       "title": "Pregunta {index}",
       "placeholder": "Texto de la pregunta"

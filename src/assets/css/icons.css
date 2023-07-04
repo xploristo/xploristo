@@ -32,7 +32,4 @@
 
 .icon-tooltip {
   @apply absolute mb-1 z-10 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg bottom-full -left-1/2 opacity-0 group-hover:opacity-100 pointer-events-none;
-
-  left: -141%;
-  width: 400%;
 }

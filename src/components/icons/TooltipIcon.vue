@@ -3,6 +3,8 @@ export default {
   name: 'TooltipIcon',
   props: {
     text: { type: String, required: true },
+    left: { type: String, default: '-141%' },
+    width: { type: String, default: '400%' },
   },
 };
 </script>
@@ -11,7 +13,7 @@ export default {
   <div class="group cursor-pointer relative inline-block text-center">
     <slot></slot>
 
-    <div class="icon-tooltip">
+    <div class="icon-tooltip" :style="{ left, width }">
       {{ text }}
       <svg
         class="absolute text-black h-2 w-full left-0 top-full"

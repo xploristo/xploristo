@@ -4,9 +4,11 @@ import {
   ChevronUpIcon,
   TrashIcon,
   Bars3BottomLeftIcon,
+  InformationCircleIcon,
 } from '@heroicons/vue/24/outline';
 
 import { useTestStore } from '../../stores/test.js';
+import TooltipIcon from '../icons/TooltipIcon.vue';
 import DocumentModal from './DocumentModal.vue';
 
 export default {
@@ -16,6 +18,8 @@ export default {
     ChevronUpIcon,
     TrashIcon,
     Bars3BottomLeftIcon,
+    InformationCircleIcon,
+    TooltipIcon,
     DocumentModal,
   },
   props: {
@@ -115,6 +119,16 @@ export default {
       <div class="flex-auto">
         <div>
           {{ $t('questions.question.title', { index: question.index + 1 }) }}
+        </div>
+        <div class="flex flex-row items-center mt-1 mb-3 text-gray-400">
+          <p class="text-sm mr-1">{{ $t('questions.help.selection.title') }}</p>
+          <TooltipIcon
+            :text="$t('questions.help.selection.tooltip')"
+            :width="'2000%'"
+            :left="'-950%'"
+          >
+            <InformationCircleIcon class="w-4 h-4"></InformationCircleIcon>
+          </TooltipIcon>
         </div>
 
         <!-- Question text -->
