@@ -78,8 +78,8 @@ export default {
       });
       this.$emit('selectionSaved');
     },
-    deleteSelectionAnswer(questionIndex, answerIndex) {
-      this.questions[questionIndex].answers.splice(answerIndex, 1);
+    deleteSelectionAnswer(answerIndex) {
+      this.questions[this.questionIndex].answers.splice(answerIndex, 1);
     },
     onSingleChoiceAnswerChange(event) {
       const answerIndex = +event.target.value;
@@ -131,7 +131,7 @@ export default {
             <TrashIcon
               aria-hidden="true"
               class="icon-small cursor-pointer"
-              @click="deleteSelectionAnswer(question.index, answer.index)"
+              @click="deleteSelectionAnswer(answer.index)"
             ></TrashIcon>
           </div>
         </div>
