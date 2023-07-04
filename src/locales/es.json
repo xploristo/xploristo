@@ -37,7 +37,7 @@
         "tooltip": "Editar test"
       },
       "view": {
-        "tooltip": "Ver test"
+        "tooltip": "Previsualizar test en vista de estudiante"
       }
     },
     "update": "Editar examen"
@@ -185,9 +185,9 @@
     "title": "Preguntas",
     "types": {
       "multiChoice": "Pregunta de elección múltiple",
-      "selection": "Pregunta de selección",
+      "selection": "Pregunta de selección de texto",
       "singleChoice": "Pregunta de elección simple",
-      "text": "Pregunta de texto"
+      "text": "Pregunta de respuesta abierta"
     }
   },
   "student": {
@@ -291,7 +291,6 @@
       "name": "Nombre del test"
     },
     "new": "Nuevo test",
-    "preview": "Previsualizar test",
     "question": {
       "instructions": {
         "selection": "Selecciona el texto del documento que corresponda a la pregunta."
