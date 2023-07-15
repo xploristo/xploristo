@@ -73,10 +73,10 @@
     "PASSWORD_DID_NOT_CHANGE": "La nueva contraseña no puede ser la misma que la anterior.",
     "PASSWORDS_DO_NOT_MATCH": "Las contraseñas no coinciden.",
     "RESULT_NOT_FOUND": "No se ha encontrado el resultado para este examen.",
+    "TEACHER_NOT_FOUND": "No se ha encontrado el docente.",
     "TEST_NOT_FOUND": "No se ha encontrado el test.",
     "UNAUTHORIZED": "Debes iniciar sesión.",
     "UNAVAILABLE_ASSIGNMENT": "Este examen no está disponible.",
-    "USER_NOT_FOUND": "No se ha encontrado el usuario.",
     "WRONG_PASSWORD": "La contraseña no es correcta."
   },
   "group": {
