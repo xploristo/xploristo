@@ -120,7 +120,10 @@ export default {
         <div>
           {{ $t('questions.question.title', { index: question.index + 1 }) }}
         </div>
-        <div class="flex flex-row items-center mt-1 mb-3 text-gray-400">
+        <div
+          v-if="question.type === 'selection'"
+          class="flex flex-row items-center mt-1 mb-3 text-gray-400"
+        >
           <p class="text-sm mr-1">{{ $t('questions.help.selection.title') }}</p>
           <TooltipIcon
             :text="$t('questions.help.selection.tooltip')"
@@ -231,7 +234,7 @@ export default {
               v-model="question.answers[0].answer"
               :id="`question${question.index}-answer1`"
               :placeholder="$t('questions.answers.label')"
-              class="text-input"
+              class="text-input mt-2"
             >
             </textarea>
           </template>
