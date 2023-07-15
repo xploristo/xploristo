@@ -22,3 +22,21 @@ app.mount('#app');
 
 // TODO Do this somewhere else
 setI18nLocale('es');
+
+function toggleTranslations(lang) {
+  const debugLang = sessionStorage.getItem('debug_lang');
+
+  if (debugLang && !lang) {
+    console.info('㊗️㊗️㊗️ Exiting translations debug mode ㊗️㊗️㊗️');
+    sessionStorage.removeItem('debug_lang');
+  } else {
+    lang = lang || 'labels';
+    console.info(
+      '㊗️㊗️㊗️ Entering translations debug mode with lang: ' + lang + ' ㊗️㊗️㊗️'
+    );
+    sessionStorage.setItem('debug_lang', lang);
+  }
+  location.reload();
+}
+
+window.toggleTranslations = toggleTranslations;

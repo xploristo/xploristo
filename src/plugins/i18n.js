@@ -15,6 +15,15 @@ export async function loadLocaleMessages(locale) {
 }
 
 export function setI18nLocale(locale) {
+  // See main.js
+  const debugLang = sessionStorage.getItem('debug_lang');
+  if (debugLang) {
+    if (debugLang === 'labels') {
+      return;
+    }
+    locale = debugLang;
+  }
+
   const isLocaleLoaded = i18n.global.availableLocales.includes(locale);
   if (!isLocaleLoaded) {
     loadLocaleMessages(locale);
