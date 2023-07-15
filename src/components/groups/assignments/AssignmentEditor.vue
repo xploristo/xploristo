@@ -290,7 +290,9 @@ export default {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
             v-model="templateId"
           >
-            <option selected :value="null">Selecciona un test</option>
+            <option selected :value="null">
+              {{ $t('assignment.test.placeholder') }}
+            </option>
             <option
               v-for="test in tests"
               v-bind:key="test._id"

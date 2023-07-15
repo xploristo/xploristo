@@ -1,3 +1,20 @@
+<script>
+import { CheckIcon, EyeIcon } from '@heroicons/vue/24/outline';
+import DateMixin from '../../../mixins/parse-date.js';
+
+export default {
+  name: 'ResultsTable',
+  components: {
+    CheckIcon,
+    EyeIcon,
+  },
+  mixins: [DateMixin],
+  props: {
+    results: { type: Array },
+  },
+};
+</script>
+
 <template>
   <div class="overflow-x-auto relative sm:rounded-lg">
     <!-- TODO Search input -->
@@ -6,12 +23,22 @@
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="py-3 px-6">Examen</th>
-          <th scope="col" class="py-3 px-6">Nombre</th>
-          <th scope="col" class="py-3 px-6">Apellidos</th>
-          <th scope="col" class="py-3 px-6">Completado</th>
-          <th scope="col" class="py-3 px-6">Puntuación</th>
-          <th scope="col" class="py-3 px-6">Acción</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('results.table.assignment') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('results.table.firstName') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('results.table.lastName') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('results.table.completed') }}
+          </th>
+          <th scope="col" class="py-3 px-6">{{ $t('results.table.score') }}</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('results.table.action') }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -64,20 +91,3 @@
     </table>
   </div>
 </template>
-
-<script>
-import { CheckIcon, EyeIcon } from '@heroicons/vue/24/outline';
-import DateMixin from '../../../mixins/parse-date.js';
-
-export default {
-  name: 'ResultsTable',
-  components: {
-    CheckIcon,
-    EyeIcon,
-  },
-  mixins: [DateMixin],
-  props: {
-    results: { type: Array },
-  },
-};
-</script>

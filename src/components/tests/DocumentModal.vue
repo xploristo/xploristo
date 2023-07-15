@@ -81,7 +81,7 @@ export default {
                 clip-rule="evenodd"
               ></path>
             </svg>
-            <span class="sr-only">Close modal</span>
+            <span class="sr-only">{{ $t('document.modal.srClose') }}</span>
           </button>
         </div>
 

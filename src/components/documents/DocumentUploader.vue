@@ -4,6 +4,7 @@ import {
   DocumentArrowUpIcon,
   ArrowUpTrayIcon,
 } from '@heroicons/vue/24/outline';
+
 import documentsService from '../../services/documents.service';
 import SpinnerIcon from '../icons/SpinnerIcon.vue';
 
@@ -111,23 +112,29 @@ export default {
             </p>
             <hr class="document-uploader-separator" />
             <p class="text-sm text-gray-500">
-              <span class="font-semibold">¿Quieres subir otro documento?</span>
+              <span class="font-semibold">{{
+                $t('document.update.title')
+              }}</span>
             </p>
             <p class="mb-2 text-sm text-gray-500">
-              Haz clic o arrastra el nuevo fichero hasta aquí
+              {{ $t('document.update.instructionsTitle') }}
             </p>
-            <p class="text-xs text-gray-500">Un único PDF permitido por test</p>
+            <p class="text-xs text-gray-500">
+              {{ $t('document.update.instructionsSubtitle') }}
+            </p>
           </template>
 
           <template v-else>
             <ArrowUpTrayIcon
               class="mb-3 w-10 h-10 text-gray-400"
             ></ArrowUpTrayIcon>
-            <p class="mb-2 text-sm text-gray-500">
-              <span class="font-semibold">Haz clic</span>
-              o arrastra el fichero hasta aquí
+            <p
+              class="mb-2 text-sm text-gray-500"
+              v-html="$t('document.create.instructionsTitle')"
+            ></p>
+            <p class="text-xs text-gray-500">
+              {{ $t('document.create.instructionsSubtitle') }}
             </p>
-            <p class="text-xs text-gray-500">Un único PDF permitido por test</p>
           </template>
         </div>
         <input

@@ -63,10 +63,18 @@ export default {
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="py-3 px-6">Nombre</th>
-          <th scope="col" class="py-3 px-6">Apellidos</th>
-          <th scope="col" class="py-3 px-6">Correo electrónico</th>
-          <th scope="col" class="py-3 px-6">Acción</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('students.table.firstName') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('students.table.lastName') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            C{{ $t('students.table.email') }}o
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('students.table.action') }}
+          </th>
         </tr>
       </thead>
       <tbody>

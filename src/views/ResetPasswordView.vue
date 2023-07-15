@@ -1,3 +1,37 @@
+<script>
+import { useUserStore } from '../stores/user.js';
+
+export default {
+  name: 'ResetPasswordView',
+  props: {
+    generatedPassword: { type: String },
+  },
+  data() {
+    return {
+      oldPassword: this.generatedPassword,
+      password: null,
+      confirmPassword: null,
+    };
+  },
+  methods: {
+    async setPassword() {
+      try {
+        const userStore = useUserStore();
+        await userStore.setPassword(
+          this.oldPassword,
+          this.password,
+          this.confirmPassword
+        );
+        this.$router.push({ name: 'home' });
+      } catch (error) {
+        // TODO Handle error properly
+        console.error(error);
+      }
+    },
+  },
+};
+</script>
+
 <template>
   <div class="flex justify-center mt-20">
     <div class="login-title">{{ $t('reset.title') }}</div>
@@ -66,37 +100,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { useUserStore } from '../stores/user.js';
-
-export default {
-  name: 'ResetPasswordView',
-  props: {
-    generatedPassword: { type: String },
-  },
-  data() {
-    return {
-      oldPassword: this.generatedPassword,
-      password: null,
-      confirmPassword: null,
-    };
-  },
-  methods: {
-    async setPassword() {
-      try {
-        const userStore = useUserStore();
-        await userStore.setPassword(
-          this.oldPassword,
-          this.password,
-          this.confirmPassword
-        );
-        this.$router.push({ name: 'home' });
-      } catch (error) {
-        // TODO Handle error properly
-        console.error(error);
-      }
-    },
-  },
-};
-</script>

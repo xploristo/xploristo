@@ -53,10 +53,14 @@ export default {
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="py-3 px-6">Test</th>
-          <th scope="col" class="py-3 px-6">Documento</th>
-          <th scope="col" class="py-3 px-6">Fecha de última edición</th>
-          <th scope="col" class="py-3 px-6">Acción</th>
+          <th scope="col" class="py-3 px-6">{{ $t('tests.table.name') }}</th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('tests.table.document') }}
+          </th>
+          <th scope="col" class="py-3 px-6">
+            {{ $t('tests.table.updatedAt') }}
+          </th>
+          <th scope="col" class="py-3 px-6">{{ $t('tests.table.action') }}</th>
         </tr>
       </thead>
       <tbody>

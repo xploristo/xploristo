@@ -1,14 +1,3 @@
-<template>
-  <header v-if="isLoggedIn">
-    <NavBar></NavBar>
-  </header>
-
-  <main class="main">
-    <ErrorNotification></ErrorNotification>
-    <RouterView></RouterView>
-  </main>
-</template>
-
 <script>
 import { RouterView } from 'vue-router';
 
@@ -34,6 +23,16 @@ export default {
 </script>
 
 <style lang="scss">
-/* TODO */
 @import './assets/scss/index.scss';
 </style>
+
+<template>
+  <header v-if="isLoggedIn">
+    <NavBar></NavBar>
+  </header>
+
+  <main class="main">
+    <ErrorNotification></ErrorNotification>
+    <RouterView></RouterView>
+  </main>
+</template>

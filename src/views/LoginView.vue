@@ -1,3 +1,39 @@
+<script>
+import { useUserStore } from '../stores/user.js';
+
+export default {
+  name: 'LoginView',
+  data() {
+    return {
+      email: null,
+      password: null,
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const userStore = useUserStore();
+        const { mustResetPassword } = await userStore.login(
+          this.email,
+          this.password
+        );
+        if (mustResetPassword) {
+          this.$router.push({
+            name: 'resetPassword',
+            params: { generatedPassword: this.password },
+          });
+        } else {
+          this.$router.push({ name: 'home' });
+        }
+      } catch (error) {
+        // TODO Handle error properly
+        console.error(error);
+      }
+    },
+  },
+};
+</script>
+
 <template>
   <div class="flex justify-center mt-20">
     <div class="login-title">{{ $t('login.title') }}</div>
@@ -43,39 +79,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { useUserStore } from '../stores/user.js';
-
-export default {
-  name: 'LoginView',
-  data() {
-    return {
-      email: null,
-      password: null,
-    };
-  },
-  methods: {
-    async login() {
-      try {
-        const userStore = useUserStore();
-        const { mustResetPassword } = await userStore.login(
-          this.email,
-          this.password
-        );
-        if (mustResetPassword) {
-          this.$router.push({
-            name: 'resetPassword',
-            params: { generatedPassword: this.password },
-          });
-        } else {
-          this.$router.push({ name: 'home' });
-        }
-      } catch (error) {
-        // TODO Handle error properly
-        console.error(error);
-      }
-    },
-  },
-};
-</script>

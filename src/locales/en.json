@@ -1,1 +1,343 @@
-{}
+{
+  "assignment": {
+    "create": "Create assignment",
+    "delete": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, delete",
+        "title": "¿Are you sure you want to delete the assignment <b>{name}</b>?"
+      }
+    },
+    "form": {
+      "isVisible": "Show this assignment to students",
+      "name": "Assignment name",
+      "test": "Test"
+    },
+    "new": "New assignment",
+    "save": "Save assignment",
+    "test": {
+      "change": {
+        "currentTemplate": "❯❯❯ Current assignment's test's template",
+        "modal": {
+          "cancel": "No, cancel",
+          "confirm": "Yes, change it",
+          "title": "¿Are you sure you want to change assignment's test to template <b>{name}</b>?"
+        }
+      },
+      "placeholder": "Select a test",
+      "reset": {
+        "modal": {
+          "cancel": "No, cancel",
+          "confirm": "Yes, revert",
+          "title": "¿Are you sure you want to revert assignment's test (<b>{name}</b>) to template's current state?"
+        },
+        "tooltip": "Revert to template"
+      },
+      "update": {
+        "infoMessage": "Editing this assignment's test will not update the template. You can update the template and then revert the assignment's test to the current template's state, if you wish.",
+        "tooltip": "Edit test"
+      },
+      "view": {
+        "tooltip": "Preview test in student view"
+      }
+    },
+    "update": "Edit assignment"
+  },
+  "assignments": {
+    "empty": "There are no assignments yet.",
+    "table": {
+      "action": "Action",
+      "document": "Document",
+      "endDate": "End date",
+      "isCompleted": "Completed",
+      "isVisible": "Visible",
+      "name": "Name",
+      "score": "Score",
+      "startDate": "Start date",
+      "test": "Test",
+      "visibleNo": "No",
+      "visibleYes": "Yes"
+    }
+  },
+  "document": {
+    "create": {
+      "instructionsSubtitle": "You can upload one PDF by test.",
+      "instructionsTitle": "<span class='font-semibold'>Click here</span> or drag and drop the file"
+    },
+    "modal": {
+      "srClose": "Close modal"
+    },
+    "title": "Document",
+    "update": {
+      "instructionsSubtitle": "You can upload one PDF by test.",
+      "instructionsTitle": "Click here or drag and drop the file",
+      "title": "¿Do you want to upload a different document?"
+    }
+  },
+  "errors": {
+    "ALREADY_COMPLETED_ASSIGNMENT": "You have already completed this assignment.",
+    "ASSIGNMENT_NOT_FOUND": "Assignment not found.",
+    "DUPLICATE_USER_EMAIL": "Another user already exists with given email.",
+    "EMAIL_NOT_SENT": "The password email could not be sent to the user.",
+    "FORBIDDEN": "You are not authorized to perform this action.",
+    "GROUP_NOT_FOUND": "The group was not found.",
+    "INVALID_EMAIL": "The email address is not valid.",
+    "INVALID_END_DATE": "The end date cannot be earlier than the start date",
+    "PASSWORDS_DO_NOT_MATCH": "Passwords do not match.",
+    "PASSWORD_DID_NOT_CHANGE": "The new password cannot be the same as the old one.",
+    "RESULT_NOT_FOUND": "No result found for this assignment.",
+    "TEACHER_NOT_FOUND": "Teacher not found.",
+    "TEST_NOT_FOUND": "Test not found.",
+    "UNAUTHORIZED": "You must log in.",
+    "UNAVAILABLE_ASSIGNMENT": "This assignment is not available.",
+    "WRONG_PASSWORD": "The password is not correct."
+  },
+  "group": {
+    "create": "Create group",
+    "delete": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, delete it",
+        "title": "Are you sure you want to delete the group <b>{name}</b>?"
+      }
+    },
+    "form": {
+      "addTeacherModal": {
+        "inputLabel": "Teacher's email",
+        "submitLabel": "Add teacher"
+      },
+      "deleteTeacherModal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, delete it",
+        "title": "Are you sure you want to remove teacher <b>{name}</b> from the group?"
+      },
+      "isVisible": "Show this group to students",
+      "name": "Group's name",
+      "teachers": "Teachers",
+      "teachersEmpty": "There are no teachers assigned to the group yet."
+    },
+    "new": "New group",
+    "save": "Save group",
+    "tabs": {
+      "assignments": "Assignments",
+      "data": "Data",
+      "results": "Results",
+      "students": "Students"
+    },
+    "title": "Group"
+  },
+  "groups": {
+    "empty": "There are no groups yet.",
+    "table": {
+      "action": "Action",
+      "editedAt": "Updated at",
+      "isVisible": "Visible",
+      "name": "Group",
+      "visibleNo": "No",
+      "visibleYes": "Yes"
+    }
+  },
+  "login": {
+    "action": "Log in",
+    "email": "Email",
+    "emailPlaceholder": "name{'@'}example.org",
+    "password": "Password",
+    "subtitle": "to xploristo",
+    "title": "Log in"
+  },
+  "nav": {
+    "account": {
+      "logout": "Log out",
+      "role": {
+        "admin": "Teacher (admin)",
+        "student": "Student",
+        "teacher": "Teacher"
+      },
+      "srAction": "Open account menu"
+    },
+    "groups": "Groups",
+    "home": "Home",
+    "results": "Results",
+    "teachers": "Teachers",
+    "tests": "Tests"
+  },
+  "notifications": {
+    "close": "Close",
+    "error": "Error"
+  },
+  "questions": {
+    "add": "Add question",
+    "answers": {
+      "add": "Add answer",
+      "label": "Answer",
+      "multiLabel": "Answer {index}",
+      "select": "Select answer",
+      "selectLabel": "Selection",
+      "title": "Answers"
+    },
+    "help": {
+      "selection": {
+        "title": "Selection question",
+        "tooltip": "Select as many pieces of text as you want as an answer to the question. When you press the \"Select answer\" button, the document will open so you can select the text."
+      }
+    },
+    "question": {
+      "placeholder": "Question title",
+      "title": "Question {index}"
+    },
+    "title": "Questions",
+    "types": {
+      "multiChoice": "Multiple choice question",
+      "selection": "Text selection question",
+      "singleChoice": "Simple choice question",
+      "text": "Open-ended question"
+    }
+  },
+  "reset": {
+    "action": "Reset password",
+    "confirmPassword": "Confirm your password",
+    "email": "Email",
+    "emailPlaceholder": "name{'@'}example.org",
+    "oldPassword": "Current password",
+    "password": "New Password",
+    "passwordsDoNotMatch": "Passwords do not match.",
+    "subtitle": "for xploristo",
+    "title": "Reset your password"
+  },
+  "result": {
+    "correct": "Correct answer: {value}",
+    "title": "Result",
+    "view": "See result"
+  },
+  "results": {
+    "empty": "There are no results yet.",
+    "table": {
+      "action": "Action",
+      "assignment": "Assignment",
+      "completed": "Completed",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "score": "Score"
+    }
+  },
+  "student": {
+    "create": "Enroll student",
+    "delete": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, delete it",
+        "title": "Are you sure you want to remove student <b>{name}</b> from the group?"
+      }
+    },
+    "form": {
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name"
+    },
+    "new": "New student",
+    "resendPasswordEmail": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, proceed",
+        "title": "Do you want to re-send the email with their password to {name}? If they had set a password, it will <b>be reset</b>."
+      }
+    },
+    "save": "Save student",
+    "update": "Edit student"
+  },
+  "students": {
+    "empty": "There are no students yet.",
+    "table": {
+      "action": "Action",
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name"
+    }
+  },
+  "teacher": {
+    "create": "Create teacher",
+    "delete": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, delete it",
+        "title": "Are you sure you want to delete the teacher <b>{name}</b>?"
+      }
+    },
+    "form": {
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name"
+    },
+    "new": "New teacher",
+    "resendPasswordEmail": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, proceed",
+        "title": "Do you want to re-send the email with their password to {name}? If they had set a password, it will <b>be reset</b>."
+      }
+    },
+    "save": "Save teacher",
+    "setAdmin": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, proceed",
+        "title": "Are you sure you want to give admin privileges to teacher <b>{name}</b>?"
+      }
+    },
+    "unsetAdmin": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, proceed",
+        "title": "Are you sure you want to remove admin privileges from teacher <b>{name}</b>?"
+      }
+    },
+    "update": "Edit teacher"
+  },
+  "teachers": {
+    "empty": "There are no teachers yet",
+    "table": {
+      "action": "Action",
+      "admin": "Admin",
+      "adminNo": "No",
+      "adminYes": "Yes",
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name"
+    }
+  },
+  "test": {
+    "complete": "Complete test",
+    "create": "Create test",
+    "delete": {
+      "modal": {
+        "cancel": "No, cancel",
+        "confirm": "Yes, delete it",
+        "title": "Are you sure you want to delete test <b>{name}</b>?"
+      }
+    },
+    "form": {
+      "name": "Test's name"
+    },
+    "new": "New test",
+    "question": {
+      "instructions": {
+        "selection": "Select the text from the document that corresponds to the question."
+      },
+      "title": "Question {index} (of {total})"
+    },
+    "save": "Save test",
+    "saveSelection": "Save selection",
+    "sendResult": "Send",
+    "title": "Test",
+    "update": "Edit test"
+  },
+  "tests": {
+    "empty": "There are no tests yet.",
+    "table": {
+      "action": "Action",
+      "document": "Document",
+      "name": "Name",
+      "updatedAt": "Updated at"
+    }
+  }
+}

@@ -16,14 +16,6 @@
     "new": "Nuevo examen",
     "save": "Guardar examen",
     "test": {
-      "reset": {
-        "modal": {
-          "title": "¿Seguro que quieres revertir el test (<b>{name}</b>) del examen al estado de la plantilla?",
-          "confirm": "Sí, revertir",
-          "cancel": "No, cancelar"
-        },
-        "tooltip": "Revertir a plantilla"
-      },
       "change": {
         "currentTemplate": "❯❯❯ Plantilla del test actual del examen",
         "modal": {
@@ -31,6 +23,15 @@
           "confirm": "Sí, cambiar",
           "cancel": "No, cancelar"
         }
+      },
+      "placeholder": "Selecciona un test",
+      "reset": {
+        "modal": {
+          "title": "¿Seguro que quieres revertir el test (<b>{name}</b>) del examen al estado de la plantilla?",
+          "confirm": "Sí, revertir",
+          "cancel": "No, cancelar"
+        },
+        "tooltip": "Revertir a plantilla"
       },
       "update": {
         "infoMessage": "Editar el test de este examen no actualizará la plantilla. Puedes editar la plantilla y después revertir el test del examen al mismo estado de la plantilla, si así lo deseas.",
@@ -59,7 +60,19 @@
     }
   },
   "document": {
-    "title": "Documento"
+    "create": {
+      "instructionsTitle": "<span class='font-semibold'>Haz clic</span> o arrastra el fichero hasta aquí",
+      "instructionsSubtitle": "Un único PDF permitido por test"
+    },
+    "modal": {
+      "srClose": "Cerrar modal"
+    },
+    "title": "Documento",
+    "update": {
+      "title": "¿Quieres subir otro documento?",
+      "instructionsTitle": "Haz clic o arrastra el nuevo fichero hasta aquí",
+      "instructionsSubtitle": "Un único PDF permitido por test"
+    }
   },
   "errors": {
     "ALREADY_COMPLETED_ASSIGNMENT": "Ya has completado este examen.",
@@ -132,21 +145,6 @@
     "subtitle": "en xploristo",
     "title": "Inicia sesión"
   },
-  "notifications": {
-    "close": "Cerrar",
-    "error": "Error"
-  },
-  "reset": {
-    "action": "Resetear contraseña",
-    "confirmPassword": "Confirma la contraseña",
-    "email": "Correo electrónico",
-    "emailPlaceholder": "name{'@'}example.org",
-    "oldPassword": "Contraseña actual",
-    "password": "Nueva contraseña",
-    "passwordsDoNotMatch": "Las contraseñas no coinciden.",
-    "subtitle": "en xploristo",
-    "title": "Resetea tu contraseña"
-  },
   "nav": {
     "account": {
       "logout": "Cerrar sesión",
@@ -154,13 +152,18 @@
         "admin": "Docente (admin)",
         "teacher": "Docente",
         "student": "Estudiante"
-      }
+      },
+      "srAction": "Abrir menú de cuenta"
     },
     "home": "Inicio",
     "teachers": "Docentes",
     "tests": "Tests",
     "groups": "Asignaturas",
     "results": "Resultados"
+  },
+  "notifications": {
+    "close": "Cerrar",
+    "error": "Error"
   },
   "questions": {
     "add": "Añadir pregunta",
@@ -190,6 +193,33 @@
       "text": "Pregunta de respuesta abierta"
     }
   },
+  "reset": {
+    "action": "Resetear contraseña",
+    "confirmPassword": "Confirma la contraseña",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "name{'@'}example.org",
+    "oldPassword": "Contraseña actual",
+    "password": "Nueva contraseña",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden.",
+    "subtitle": "en xploristo",
+    "title": "Resetea tu contraseña"
+  },
+  "result": {
+    "correct": "Respuesta correcta: {value}",
+    "title": "Resultado",
+    "view": "Ver resultado"
+  },
+  "results": {
+    "empty": "Todavía no hay ningún resultado.",
+    "table": {
+      "action": "Acción",
+      "assignment": "Examen",
+      "completed": "Completado",
+      "firstName": "Nombre",
+      "lastName": "Apellidos",
+      "score": "Puntuación"
+    }
+  },
   "student": {
     "create": "Matricular estudiante",
     "delete": {
@@ -215,16 +245,14 @@
     "save": "Guardar estudiante",
     "update": "Editar estudiante"
   },
-  "result": {
-    "correct": "Respuesta correcta: {value}",
-    "title": "Resultado",
-    "view": "Ver resultado"
-  },
-  "results": {
-    "empty": "Todavía no hay ningún resultado."
-  },
   "students": {
-    "empty": "Todavía no hay ningún estudiante."
+    "empty": "Todavía no hay ningún estudiante.",
+    "table": {
+      "action": "Acción",
+      "email": "Correo electrónico",
+      "firstName": "Nombre",
+      "lastName": "Apellidos"
+    }
   },
   "teacher": {
     "create": "Crear docente",
@@ -304,6 +332,12 @@
     "update": "Editar test"
   },
   "tests": {
-    "empty": "Todavía no hay ningún test."
+    "empty": "Todavía no hay ningún test.",
+    "table": {
+      "action": "Acción",
+      "document": "Documento",
+      "name": "Nombre",
+      "updatedAt": "Fecha de última edición"
+    }
   }
 }

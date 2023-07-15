@@ -1,3 +1,45 @@
+<script>
+import { UserCircleIcon } from '@heroicons/vue/24/outline';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/20/solid';
+
+import { useUserStore } from '../../stores/user.js';
+
+export default {
+  name: 'AccountMenu',
+  components: {
+    UserCircleIcon,
+    ChevronDownIcon,
+    ChevronUpIcon,
+  },
+  data() {
+    return {
+      showDropdown: false,
+    };
+  },
+  setup() {
+    const userStore = useUserStore();
+
+    return { userStore };
+  },
+  computed: {
+    fullName() {
+      return this.userStore.fullName;
+    },
+    email() {
+      return this.userStore.email;
+    },
+    role() {
+      return this.userStore.role;
+    },
+  },
+  methods: {
+    async logout() {
+      await this.userStore.logout();
+    },
+  },
+};
+</script>
+
 <template>
   <button
     id="dropdownAvatarNameButton"
@@ -6,7 +48,7 @@
     type="button"
     @click="showDropdown = !showDropdown"
   >
-    <span class="sr-only">Open user menu</span>
+    <span class="sr-only">{{ $t('nav.account.srAction') }}</span>
     <UserCircleIcon class="mr-1 w-8 h-8 rounded-full"></UserCircleIcon>
     {{ fullName }}
     <ChevronDownIcon
@@ -66,45 +108,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { UserCircleIcon } from '@heroicons/vue/24/outline';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/20/solid';
-
-import { useUserStore } from '../../stores/user.js';
-
-export default {
-  name: 'AccountMenu',
-  components: {
-    UserCircleIcon,
-    ChevronDownIcon,
-    ChevronUpIcon,
-  },
-  data() {
-    return {
-      showDropdown: false,
-    };
-  },
-  setup() {
-    const userStore = useUserStore();
-
-    return { userStore };
-  },
-  computed: {
-    fullName() {
-      return this.userStore.fullName;
-    },
-    email() {
-      return this.userStore.email;
-    },
-    role() {
-      return this.userStore.role;
-    },
-  },
-  methods: {
-    async logout() {
-      await this.userStore.logout();
-    },
-  },
-};
-</script>

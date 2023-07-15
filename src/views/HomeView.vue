@@ -1,7 +1,3 @@
-<template>
-  <main></main>
-</template>
-
 <script>
 export default {
   name: 'HomeView',
@@ -14,3 +10,7 @@ export default {
   },
 };
 </script>
+
+<template>
+  <main></main>
+</template>
